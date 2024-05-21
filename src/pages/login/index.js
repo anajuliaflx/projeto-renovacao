@@ -59,7 +59,6 @@ function Login() {
 
     return (
         <div className="container">
-            <header className="header"></header>
             <h1>Login</h1>
             <Formik
                 initialValues={{ email: '', senha: '' }}

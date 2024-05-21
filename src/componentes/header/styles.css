@@ -1,0 +1,83 @@
+body {
+    margin: 0;
+    display: block;
+}
+
+.header {
+    background-color: #8390C8;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    box-sizing: border-box; /* Inclui padding na largura total */
+}
+
+.logo {
+    height: 40px; /* Altura padrão para a logo */
+    margin-right: 20px;
+}
+
+/* Responsividade */
+
+/* Tamanhos pequenos (telefones pequenos e alguns tablets em modo retrato) */
+@media only screen and (max-width: 576px) {
+    .header {
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+    }
+
+    .logo {
+        height: 50px; /* Ajuste da altura da logo para telas pequenas */
+        margin-bottom: 10px;
+    }
+}
+
+/* Tamanhos médios (tablets em modo paisagem e alguns laptops) */
+@media only screen and (min-width: 577px) and (max-width: 768px) {
+    .header {
+        padding: 0 15px;
+    }
+
+    .logo {
+        height: 45px; /* Ajuste da altura da logo para telas médias */
+        margin-right: 15px;
+    }
+}
+
+/* Tamanhos grandes (desktops e laptops maiores) */
+@media only screen and (min-width: 769px) and (max-width: 992px) {
+    .header {
+        padding: 0 10px;
+    }
+
+    .logo {
+        height: 40px; /* Ajuste da altura da logo para telas grandes */
+        margin-right: 10px;
+    }
+}
+
+/* Tamanhos extra grandes (telas maiores, como monitores widescreen) */
+@media only screen and (min-width: 993px) and (max-width: 1200px) {
+    .header {
+        padding: 0 5px;
+    }
+
+    .logo {
+        height: 35px; /* Ajuste da altura da logo para telas extra grandes */
+        margin-right: 5px;
+    }
+}
+
+/* Tamanhos extra extra grandes (telas muito grandes, como monitores ultrawide) */
+@media only screen and (min-width: 1201px) {
+    .header {
+        padding: 0 20px;
+    }
+
+    .logo {
+        height: 30px; /* Ajuste da altura da logo para telas extra extra grandes */
+        margin-right: 20px;
+    }
+}

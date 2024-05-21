@@ -5,8 +5,6 @@ function Psicologo() {
 
   return (
     <div className='container'>
-      <header className='header'>
-      </header>
       <div className='text'>
         <h1>Psicologo</h1>
         <p>

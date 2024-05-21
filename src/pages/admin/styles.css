@@ -8,16 +8,6 @@ body{
     text-align: center;
     overflow-x: hidden
   }
-
-  .header {
-    background-color: #8390C8;
-    width: 100%;
-    height: 100px; /* Altura reduzida do cabeçalho */
-    text-align: left;
-  
-
-  }
-  
   
   .text p{
     text-align: justify;

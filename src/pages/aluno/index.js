@@ -5,8 +5,6 @@ function Aluno() {
 
   return (
     <div className='container'>
-      <header className='header'>
-      </header>
       <div className='text'>
         <h1>Aluno</h1>
         <p>
