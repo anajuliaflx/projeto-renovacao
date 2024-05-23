@@ -1,35 +1,30 @@
-body {
-    margin: 0;
-    display: block;
-}
-
 .header {
     background-color: #8390C8;
     width: 100%;
-    height: 50px;
+    height: 80px; /* Altura padrão para o cabeçalho */
     display: flex;
     align-items: center;
+    justify-content: flex-end; /* Alinhar conteúdo à direita */
     padding: 0 20px;
     box-sizing: border-box; /* Inclui padding na largura total */
 }
 
 .logo {
-    height: 40px; /* Altura padrão para a logo */
+    height: 80px; /* Ajuste da altura da logo */
     margin-right: 20px;
 }
-
 /* Responsividade */
 
 /* Tamanhos pequenos (telefones pequenos e alguns tablets em modo retrato) */
 @media only screen and (max-width: 576px) {
     .header {
         flex-direction: column;
-        height: auto;
+        height: 62px;
         padding: 10px;
     }
 
     .logo {
-        height: 50px; /* Ajuste da altura da logo para telas pequenas */
+        height: 60px; /* Ajuste da altura da logo para telas pequenas */
         margin-bottom: 10px;
     }
 }
@@ -37,11 +32,12 @@ body {
 /* Tamanhos médios (tablets em modo paisagem e alguns laptops) */
 @media only screen and (min-width: 577px) and (max-width: 768px) {
     .header {
+        height: 72px;
         padding: 0 15px;
     }
 
     .logo {
-        height: 45px; /* Ajuste da altura da logo para telas médias */
+        height: 70px; /* Ajuste da altura da logo para telas médias */
         margin-right: 15px;
     }
 }
@@ -49,11 +45,12 @@ body {
 /* Tamanhos grandes (desktops e laptops maiores) */
 @media only screen and (min-width: 769px) and (max-width: 992px) {
     .header {
+        height: 92px;
         padding: 0 10px;
     }
 
     .logo {
-        height: 40px; /* Ajuste da altura da logo para telas grandes */
+        height: 90px; /* Ajuste da altura da logo para telas grandes */
         margin-right: 10px;
     }
 }
@@ -61,11 +58,12 @@ body {
 /* Tamanhos extra grandes (telas maiores, como monitores widescreen) */
 @media only screen and (min-width: 993px) and (max-width: 1200px) {
     .header {
+        height: 112px;
         padding: 0 5px;
     }
 
     .logo {
-        height: 35px; /* Ajuste da altura da logo para telas extra grandes */
+        height: 110px; /* Ajuste da altura da logo para telas extra grandes */
         margin-right: 5px;
     }
 }
@@ -73,11 +71,12 @@ body {
 /* Tamanhos extra extra grandes (telas muito grandes, como monitores ultrawide) */
 @media only screen and (min-width: 1201px) {
     .header {
+        height: 122px;
         padding: 0 20px;
     }
 
     .logo {
-        height: 30px; /* Ajuste da altura da logo para telas extra extra grandes */
+        height: 120px; /* Ajuste da altura da logo para telas extra extra grandes */
         margin-right: 20px;
     }
 }

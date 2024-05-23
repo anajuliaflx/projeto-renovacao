@@ -1,9 +1,13 @@
-import React from "react";
-import "./styles.css";
-import * as yup from "yup";
-import { ErrorMessage, Formik, Form, Field } from "formik";
-import Axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { ErrorMessage, Formik, Form, Field } from "formik";
+import EmailIcon from '@mui/icons-material/Email';
+import PasswordIcon from '@mui/icons-material/Password';
+import React from "react";
+import Axios from "axios";
+import * as yup from "yup";
+import "./styles.css";
+
+
 
 function Login() {
     const navigate = useNavigate();
@@ -67,6 +71,7 @@ function Login() {
             >
                 <Form className="login-form">
                     <div className="login-form-group">
+                        {/*<EmailIcon /> */}
                         <Field name="email" className="form-field" placeholder="Email" />
                         <ErrorMessage
                             component="span"
@@ -75,6 +80,7 @@ function Login() {
                         />
                     </div>
                     <div className="login-form-group">
+                        {/*<PasswordIcon /> */}
                         <Field name="senha" className="form-field" type="password" placeholder="Senha" />
                         <ErrorMessage
                             component="span"

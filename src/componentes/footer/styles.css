@@ -1,0 +1,60 @@
+body {
+    margin: 0; /* Remover margens padrão do corpo da página */
+    padding-bottom: 60px; /* Adicionar margem inferior para deixar espaço para o rodapé */
+    box-sizing: border-box; /* Inclui padding e borda na largura total */
+}
+
+footer {
+    background: #8390C8;
+    color: white;
+    padding: 0; /* Remover todo o preenchimento */
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box; /* Inclui padding e borda na largura total */
+    position: fixed; /* Fixar o rodapé */
+    bottom: 0; /* Colocar o rodapé na parte inferior */
+    flex-shrink: 0;
+}
+
+footer p {
+    margin: 0;
+}
+
+/* Responsividade */
+
+/* Tamanhos pequenos (telefones pequenos e alguns tablets em modo retrato) */
+@media only screen and (max-width: 576px) {
+    footer {
+        flex-direction: column;
+        height: auto;
+        padding: 0; /* Remover preenchimento para telas pequenas */
+    }
+}
+
+/* Tamanhos médios (tablets em modo paisagem e alguns laptops) */
+@media only screen and (min-width: 577px) and (max-width: 768px) {
+    footer {
+        padding: 0; /* Remover preenchimento para telas médias */
+    }
+}
+
+/* Tamanhos grandes (desktops e laptops maiores) */
+@media only screen and (min-width: 769px) and (max-width: 992px) {
+    footer {
+        padding: 0; /* Remover preenchimento para telas grandes */
+    }
+}
+
+/* Tamanhos extra grandes (telas maiores, como monitores widescreen) */
+@media only screen and (min-width: 993px) and (max-width: 1200px) {
+    footer {
+        padding: 0; /* Remover preenchimento para telas extra grandes */
+    }
+}
+
+/* Tamanhos extra extra grandes (telas muito grandes, como monitores ultrawide) */
+@media only screen and (min-width: 1201px) {
+    footer {
+        padding: 0; /* Remover preenchimento para telas extra extra grandes */
+    }
+}
