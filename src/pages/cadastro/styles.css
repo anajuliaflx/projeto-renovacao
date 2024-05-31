@@ -21,12 +21,28 @@ h1 {
   border-radius: 5px;
 }
 
+.icon {
+  color: #0395BA; /* Define a cor do ícone */
+  position: absolute;
+  left: 10px; /* Ajuste conforme necessário */
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.input-with-icon {
+  position: relative;
+  display: inline-block;
+}
+
 .form-field {
   display: inline-block;
   padding: 15px 50px;
   margin-top: 20px;
   border-radius: 15px;
   position: relative;
+  padding-left: 35px; /* Ajusta o espaço à esquerda para acomodar o ícone */
+  border-color:#0395BA; /* Adiciona uma borda ao input */
+  border-radius: 5px; /* Arredonda as bordas do input */
 }
 
 .form-error {

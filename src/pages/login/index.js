@@ -1,16 +1,16 @@
 import { Link, useNavigate } from "react-router-dom";
 import { ErrorMessage, Formik, Form, Field } from "formik";
+import { UserContext } from "../../contexts/UserContext";
 import EmailIcon from '@mui/icons-material/Email';
 import PasswordIcon from '@mui/icons-material/Password';
-import React from "react";
+import React, { useContext } from "react";
 import Axios from "axios";
 import * as yup from "yup";
 import "./styles.css";
 
-
-
 function Login() {
     const navigate = useNavigate();
+    const { setUser } = useContext(UserContext);
 
     const handleLogin = async (values) => {
         try {
@@ -23,7 +23,14 @@ function Login() {
 
             if (response.status === 200 && response.data) {
                 const userType = response.data.tipoUsuario;
-                if (userType) {
+                const matricula = response.data.matricula;
+                if (userType && matricula) {
+                    // Atualize o contexto do usuário com os dados recebidos
+                    setUser({
+                        tipoUsuario: userType,
+                        matricula: matricula
+                    });
+
                     switch (userType) {
                         case 'administrador':
                             navigate('/administrador');
@@ -39,7 +46,7 @@ function Login() {
                             break;
                     }
                 } else {
-                    alert('Erro ao obter o tipo de usuário. Por favor, tente novamente.');
+                    alert('Erro ao obter o tipo de usuário ou matrícula. Por favor, tente novamente.');
                 }
             } else {
                 alert('Credenciais inválidas. Tente novamente.');
@@ -71,8 +78,10 @@ function Login() {
             >
                 <Form className="login-form">
                     <div className="login-form-group">
-                        {/*<EmailIcon /> */}
-                        <Field name="email" className="form-field" placeholder="Email" />
+                        <div className="input-with-icon">
+                            <EmailIcon className="icon" />
+                            <Field name="email" className="form-field" placeholder="Email" />
+                        </div>
                         <ErrorMessage
                             component="span"
                             name="email"
@@ -80,8 +89,10 @@ function Login() {
                         />
                     </div>
                     <div className="login-form-group">
-                        {/*<PasswordIcon /> */}
-                        <Field name="senha" className="form-field" type="password" placeholder="Senha" />
+                        <div className="input-with-icon">
+                            <PasswordIcon className="icon" />
+                            <Field name="senha" className="form-field" type="password" placeholder="Senha" />
+                        </div>
                         <ErrorMessage
                             component="span"
                             name="senha"
@@ -91,10 +102,7 @@ function Login() {
                     <button className="button" type="submit">Login</button>
                 </Form>
             </Formik>
-            <div className='botao'>
-                <Link to={'/cadastro'}>
-                    <button className='button'>Cadastrar</button>
-                </Link>
+            <div className='botaocon'>
                 <Link to={'/'}>
                     <button className='button'>Voltar</button>
                 </Link>

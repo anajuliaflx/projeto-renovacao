@@ -10,12 +10,13 @@ import './styles.css';
 import Axios from "axios";
 import * as yup from "yup";
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 function Cadastro() {
     const [userExists, setUserExists] = useState(false);
     const [errorMsg, setErrorMsg] = useState("");
-
-    const handleRegister = (values, { resetForm }) => {
-        Axios.post("https://projeto-renovacao.web.app/cadastro", {
+    const handleRegister = (values, { resetForm }) => {    
+        Axios.post(`https://projeto-renovacao.web.app/cadastro`, {
             nome: values.nome,
             email: values.email,
             senha: values.senha,
@@ -64,38 +65,50 @@ function Cadastro() {
             >
                 <Form className='login-form'>
                     <div className='login-form-group'>
-                        {/*<PersonIcon /> */}
-                        <Field name="nome" className="form-field" placeholder="Nome Completo" />
+                        <div className="input-with-icon">
+                            <PersonIcon className="icon"/>
+                            <Field name="nome" className="form-field" placeholder="Nome Completo" />
+                        </div>
                         <ErrorMessage component="span" name="nome" className='form-error' />
                     </div>
                     <div className='login-form-group'>
-                        {/*<EmailIcon /> */}
-                        <Field name="email" className="form-field" placeholder="Email" />
+                        <div className="input-with-icon">
+                            <EmailIcon className="icon"/>
+                            <Field name="email" className="form-field" placeholder="Email" />
+                        </div>
                         <ErrorMessage component="span" name="email" className='form-error' />
                     </div>
                     <div className='login-form-group'>
-                        {/*<PasswordIcon /> */}
-                        <Field name="senha" className="form-field" type="password" placeholder="Senha" />
+                        <div className="input-with-icon">
+                            <PasswordIcon className="icon"/>
+                            <Field name="senha" className="form-field" type="password" placeholder="Senha" />
+                        </div>
                         <ErrorMessage component="span" name="senha" className='form-error' />
                     </div>
                     <div className='login-form-group'>
-                        {/*<PasswordIcon /> */}
-                        <Field name="confirmsenha" className="form-field" type="password" placeholder="Confirme sua Senha" />
+                        <div className="input-with-icon">
+                            <PasswordIcon className="icon"/>
+                            <Field name="confirmsenha" className="form-field" type="password" placeholder="Confirme sua senha" />
+                        </div>
                         <ErrorMessage component="span" name="confirmsenha" className='form-error' />
                     </div>
                     <div className='login-form-group'>
-                        {/*<AssignmentIndIcon /> */}
-                        <Field name="matricula" className="form-field" placeholder="Matrícula" maxLength="8" />
+                        <div className="input-with-icon">
+                            <AssignmentIndIcon className="icon"/>
+                            <Field name="matricula" className="form-field" placeholder="Matrícula" maxLength="8" />
+                        </div>
                         <ErrorMessage component="span" name="matricula" className='form-error' />
                     </div>
                     <div className='login-form-group'>
-                        {/* <PeopleIcon /> */}
-                        <Field as="select" name="tipoUsuario" className="form-field">
+                        <div className="input-with-icon">
+                            <PeopleIcon className="icon"/>
+                            <Field as="select" name="tipoUsuario" className="form-field">
                             <option value="">Escolha o tipo de usuário</option>
                             <option value="aluno">Aluno</option>
                             <option value="administrador">Administrador</option>
                             <option value="psicologo">Psicologo</option>
                         </Field>
+                        </div>
                         <ErrorMessage component="span" name="tipoUsuario" className='form-error' />
                     </div>
                     {userExists && <span className="form-error">{errorMsg}</span>}
@@ -105,7 +118,7 @@ function Cadastro() {
                 </Form>
 
             </Formik>
-            <Link to={'/login'}>
+            <Link to={'/admincadastro'}>
                 <button className='button'>
                     Cancelar
                 </button>

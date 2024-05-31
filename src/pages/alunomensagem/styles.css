@@ -1,0 +1,84 @@
+.container1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 50px;
+  }
+
+  .form {
+    align-items: center;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .label {
+    font-size: 25px;
+  }
+
+  .value {
+    font-size: 20px;
+  }
+
+  .value1 {
+    font-size: 20px;
+    border: 2px solid #ccc;
+    border-radius: 3%;
+    border-color: black;
+  }
+
+  .text1 {
+    font-size: 20px;
+    width: 500px;
+    height: 150px;
+    padding: 10px 10px 10px;
+    border: 2px solid #ccc;
+    border-radius: 3%;
+    border-color: black;
+    display: block;
+    resize: none;
+    overflow: auto;
+  }
+
+  .matricula {
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    border-color: black;
+    width: 100px;
+    height: 20px;
+  }
+
+  .buttonA {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    border-radius: 50px;
+    background-color: #0395BA;
+    border-color: #0395BA;
+    color: #ffff;
+  }
+
+  /* New CSS for responses and layout */
+  .form-section, .response-section {
+    flex: 1;
+    margin: 0 10px;
+  }
+
+  .mensagens-respostas {
+    max-height: 600px;
+    overflow-y: auto;
+  }
+
+  .mensagem-resposta {
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+  }
+
+  .mensagem-resposta p {
+    margin: 5px 0;
+  }

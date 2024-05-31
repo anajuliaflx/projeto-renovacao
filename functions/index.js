@@ -7,12 +7,14 @@ const cors = require("cors");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
-/*const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "root",
-  database: "banco",
-});*/
+app.use(express.json());
+app.use(cors());
+
+/*const dbHost = process.env.DB_HOST;
+const dbPort = process.env.DB_PORT;
+const dbUser = process.env.DB_USER;
+const dbPassword = process.env.DB_PASSWORD;
+const dbDatabase = process.env.DB_DATABASE;*/
 
 const db = mysql.createConnection({
   host: "dbrenovacao.cji8qsc8w257.us-east-1.rds.amazonaws.com",
@@ -21,9 +23,6 @@ const db = mysql.createConnection({
   password: "renovdb7na",
   database: "dbrenovacao",
 });
-
-app.use(express.json());
-app.use(cors());
 
 db.connect(err => {
   if (err) {
@@ -65,19 +64,106 @@ db.query("SHOW TABLES LIKE 'usuarios'", (err, result) => {
         }
         db.query(`
           INSERT INTO usuarios (nome, email, senha, matricula, tipoUsuario)
-          VALUES ("Fulano", "teste@teste.com", ?, "01010101", "administrador");
+          VALUES ("Administrador", "teste@gmail.com", ?, "11111111", "administrador");
         `, [hash], (err, result) => {
           if (err) {
             console.error("Erro ao inserir o usuário:", err);
             return;
           }
-          console.log("Usuário de teste inserido com sucesso");
+          console.log("Usuário inserido com sucesso");
         });
       });
     });
   } else {
     // A tabela já existe, então não fazemos nada
     console.log("A tabela 'usuarios' já existe");
+  }
+});
+
+// Verificar se a tabela de mensagens já existe
+db.query("SHOW TABLES LIKE 'mensagens'", (err, result) => {
+  if (err) {
+    console.error("Erro ao verificar se a tabela existe:", err);
+    return;
+  }
+  if (result.length === 0) {
+    // A tabela não existe, então criamos
+    db.query(`
+      CREATE TABLE mensagens (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        remetente_id INT NOT NULL,
+        destinatario_tipo ENUM('administrador', 'psicologo') NOT NULL,
+        mensagem TEXT NOT NULL,
+        data_envio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (remetente_id) REFERENCES usuarios(id)
+      );`, (err, result) => {
+      if (err) {
+        console.error("Erro ao criar a tabela:", err);
+        return;
+      }
+      console.log("Tabela 'mensagens' criada com sucesso");
+    });
+  } else {
+    console.log("A tabela 'mensagens' já existe");
+  }
+});
+
+// Verificar se a tabela de mensagens já existe
+db.query("SHOW TABLES LIKE 'respostas'", (err, result) => {
+  if (err) {
+    console.error("Erro ao verificar se a tabela existe:", err);
+    return;
+  }
+  if (result.length === 0) {
+    // A tabela não existe, então criamos
+    // Criação da tabela 'respostas'
+    db.query(`
+  CREATE TABLE IF NOT EXISTS respostas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    mensagem_id INT NOT NULL,
+    resposta TEXT NOT NULL,
+    data_resposta TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (mensagem_id) REFERENCES mensagens(id)
+  );
+`, (err, result) => {
+      if (err) {
+        console.error("Erro ao criar a tabela 'respostas':", err);
+        return;
+      }
+      console.log("Tabela 'respostas' criada com sucesso");
+    });
+  } else {
+    console.log("A tabela 'respostas' já existe");
+  }
+});
+
+// Verificar se a tabela de eventos já existe
+db.query("SHOW TABLES LIKE 'eventos'", (err, result) => {
+  if (err) {
+    console.error("Erro ao verificar se a tabela existe:", err);
+    return;
+  }
+
+  if (result.length === 0) {
+    // A tabela não existe, então criamos
+    db.query(`
+      CREATE TABLE eventos (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        data_evento DATE NOT NULL,
+        matricula_aluno VARCHAR(8) NOT NULL,
+        matricula_psicologo VARCHAR(8) NOT NULL,
+        descricao TEXT NOT NULL,
+        FOREIGN KEY (matricula_aluno) REFERENCES usuarios(matricula),
+        FOREIGN KEY (matricula_psicologo) REFERENCES usuarios(matricula)
+      );`, (err, result) => {
+      if (err) {
+        console.error("Erro ao criar a tabela 'eventos':", err);
+        return;
+      }
+      console.log("Tabela 'eventos' criada com sucesso");
+    });
+  } else {
+    console.log("A tabela 'eventos' já existe");
   }
 });
 
@@ -124,12 +210,18 @@ app.post("/login", (req, res) => {
   db.query("SELECT * FROM usuarios WHERE email = ?", [email], (err, result) => {
     if (err) {
       res.send(err);
+      return;
     } else if (result.length > 0) {
       bcrypt.compare(senha, result[0].senha, (error, response) => {
         if (error) {
           res.send(error);
+          return;
         } else if (response) {
-          res.send({ msg: "Usuário logado", tipoUsuario: result[0].tipoUsuario });
+          res.send({
+            msg: "Usuário logado",
+            tipoUsuario: result[0].tipoUsuario,
+            matricula: result[0].matricula, // Inclua a matrícula na resposta
+          });
         } else {
           res.send({ msg: "Senha incorreta" });
         }
@@ -138,6 +230,255 @@ app.post("/login", (req, res) => {
       res.send({ msg: "Usuário não registrado!" });
     }
   });
+});
+
+// Rota para listar usuários com paginação
+app.get("/admincadastro", (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const offset = (page - 1) * limit;
+
+  db.query("SELECT COUNT(*) AS count FROM usuarios", (err, result) => {
+    if (err) {
+      res.status(500).send(err);
+      return;
+    }
+
+    const totalUsers = result[0].count;
+    const totalPages = Math.ceil(totalUsers / limit);
+
+    db.query("SELECT * FROM usuarios LIMIT ? OFFSET ?", [limit, offset], (err, users) => {
+      if (err) {
+        res.status(500).send(err);
+        return;
+      }
+
+      res.send({
+        users,
+        totalPages,
+      });
+    });
+  });
+});
+
+// Rota para excluir um usuário
+app.delete("/admincadastro/:id", (req, res) => {
+  const userId = req.params.id;
+
+  db.query("DELETE FROM usuarios WHERE id = ?", [userId], (err, result) => {
+    if (err) {
+      res.status(500).send(err);
+      return;
+    }
+
+    res.send({ msg: "Usuário excluído com sucesso" });
+  });
+});
+
+app.post("/mensagem", (req, res) => {
+  const remetente_id = req.body.remetente_id;
+  const destinatario_tipo = req.body.destinatario_tipo;
+  const mensagem = req.body.mensagem;
+
+  if (mensagem.length > 400) {
+    res.status(400).send({ msg: "A mensagem não pode ter mais de 400 caracteres" });
+    return;
+  }
+
+  db.query(
+    "INSERT INTO mensagens (remetente_id, destinatario_tipo, mensagem) VALUES (?, ?, ?)",
+    [remetente_id, destinatario_tipo, mensagem],
+    (err, result) => {
+      if (err) {
+        res.status(500).send(err);
+        return;
+      }
+      res.send({ msg: "Mensagem enviada com sucesso" });
+    }
+  );
+});
+
+app.get("/usuario/:matricula", (req, res) => {
+  const matricula = req.params.matricula;
+
+  db.query("SELECT id FROM usuarios WHERE matricula = ?", [matricula], (err, result) => {
+    if (err) {
+      res.status(500).send(err);
+      return;
+    }
+    if (result.length > 0) {
+      res.send(result[0]);
+    } else {
+      res.status(404).send({ msg: "Usuário não encontrado" });
+    }
+  });
+});
+
+// Rota para recuperar mensagens
+app.get("/mensagens/:tipoUsuario", (req, res) => {
+  const tipoUsuario = req.params.tipoUsuario;
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const offset = (page - 1) * limit;
+
+  if (!['administrador', 'psicologo'].includes(tipoUsuario)) {
+    res.status(400).send({ msg: "Tipo de usuário inválido" });
+    return;
+  }
+
+  db.query(
+    "SELECT COUNT(*) AS count FROM mensagens WHERE destinatario_tipo = ?",
+    [tipoUsuario],
+    (err, countResult) => {
+      if (err) {
+        res.status(500).send(err);
+        return;
+      }
+
+      const totalMessages = countResult[0].count;
+      const totalPages = Math.ceil(totalMessages / limit);
+
+      db.query(
+        "SELECT m.id, m.mensagem, m.data_envio, r.resposta, r.data_resposta, u.nome AS remetente_nome " +
+        "FROM mensagens m " +
+        "LEFT JOIN respostas r ON m.id = r.mensagem_id " +
+        "JOIN usuarios u ON m.remetente_id = u.id " +
+        "WHERE m.destinatario_tipo = ? " +
+        "LIMIT ? OFFSET ?",
+        [tipoUsuario, limit, offset],
+        (err, result) => {
+          if (err) {
+            res.status(500).send(err);
+            return;
+          }
+          res.send({ messages: result, totalPages });
+        }
+      );
+    }
+  );
+});
+
+// Rota para enviar uma resposta
+app.post("/resposta", (req, res) => {
+  const { mensagem_id, resposta } = req.body;
+
+  db.query(
+    "INSERT INTO respostas (mensagem_id, resposta) VALUES (?, ?)",
+    [mensagem_id, resposta],
+    (err, result) => {
+      if (err) {
+        res.status(500).send(err);
+        return;
+      }
+      db.query(
+        "SELECT data_resposta FROM respostas WHERE id = ?",
+        [result.insertId],
+        (err, data) => {
+          if (err) {
+            res.status(500).send(err);
+            return;
+          }
+          res.send({
+            msg: "Resposta enviada com sucesso",
+            data_resposta: data[0].data_resposta,
+            resposta: resposta
+          });
+        }
+      );
+    }
+  );
+});
+
+// Rota para obter respostas para as mensagens do aluno
+app.get("/mensagens-respostas/:matricula", (req, res) => {
+  const matricula = req.params.matricula;
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const offset = (page - 1) * limit;
+
+  db.query(
+    "SELECT COUNT(*) AS count FROM mensagens m JOIN usuarios u ON m.remetente_id = u.id WHERE u.matricula = ?",
+    [matricula],
+    (err, countResult) => {
+      if (err) {
+        res.status(500).send(err);
+        return;
+      }
+
+      const totalMessages = countResult[0].count;
+      const totalPages = Math.ceil(totalMessages / limit);
+
+      db.query(
+        "SELECT m.id AS mensagem_id, m.mensagem, m.data_envio, r.resposta, r.data_resposta, u.nome AS remetente_nome " +
+        "FROM mensagens m " +
+        "LEFT JOIN respostas r ON m.id = r.mensagem_id " +
+        "JOIN usuarios u ON m.remetente_id = u.id " +
+        "WHERE u.matricula = ? " +
+        "LIMIT ? OFFSET ?",
+        [matricula, limit, offset],
+        (err, result) => {
+          if (err) {
+            res.status(500).send(err);
+            return;
+          }
+          res.send({ messages: result, totalPages });
+        }
+      );
+    }
+  );
+});
+
+// Adicionar um evento
+app.post("/adicionar-evento", (req, res) => {
+  const { data_evento, matricula_aluno, matricula_psicologo, descricao } = req.body;
+
+  if (matricula_aluno.length !== 8 || matricula_psicologo.length !== 8) {
+    return res.status(400).send({ msg: "Matrícula do aluno e do psicólogo deve ter exatamente 8 caracteres" });
+  }
+
+  db.query(
+    "INSERT INTO eventos (data_evento, matricula_aluno, matricula_psicologo, descricao) VALUES (?, ?, ?, ?)",
+    [data_evento, matricula_aluno, matricula_psicologo, descricao],
+    (err, result) => {
+      if (err) {
+        res.status(500).send(err);
+        return;
+      }
+      res.send({ msg: "Evento adicionado com sucesso" });
+    }
+  );
+});
+
+
+// Listar eventos por aluno
+app.get("/eventos/:matricula_aluno", (req, res) => {
+  const matricula_aluno = req.params.matricula_aluno;
+  db.query(
+    "SELECT * FROM eventos WHERE matricula_aluno = ?",
+    [matricula_aluno],
+    (err, result) => {
+      if (err) {
+        res.status(500).send(err);
+        return;
+      }
+      res.send(result);
+    }
+  );
+});
+// Listar eventos por psicólogo
+app.get("/eventos-psicologo/:matricula_psicologo", (req, res) => {
+  const matricula_psicologo = req.params.matricula_psicologo;
+  db.query(
+    "SELECT * FROM eventos WHERE matricula_psicologo = ?",
+    [matricula_psicologo],
+    (err, result) => {
+      if (err) {
+        res.status(500).send(err);
+        return;
+      }
+      res.send(result);
+    }
+  );
 });
 
 /*app.listen(3001, () => {

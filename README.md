@@ -1,10 +1,9 @@
 
-## Etiquetas
+# <h1 align="center">RenovAção</h1>
 
-
-# RenovAção
-
-![Logo](src/img/logoreadme.png)
+<p align="center">
+  <img src="src/img/logoreadme.png" alt="Descrição da Imagem">
+</p>
 
 O projeto RenovAção tem como público-alvo os agressores de ciberbullying e as Instituições de Ensino Superior (IES). É uma plataforma que visa oferecer suporte tanto aos agressores quanto às instituições, fornecendo ferramentas para conscientização, prevenção e reabilitação do comportamento agressivo, além de oferecer suporte psicológico e recursos educativos.
 

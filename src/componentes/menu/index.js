@@ -24,14 +24,14 @@ function Menu({ userRole }) {
       case 'administrador':
         return (
           <>
-            <Link to={'/login'}>
+            <Link to={'/admincronograma'}>
               <button className='button'>
                 <AppRegistrationIcon /> Cronograma
               </button>
             </Link>
-            <Link to={'/login'}>
+            <Link to={'/admincadastro'}>
               <button className='button'>
-                <PeopleIcon /> Cadastrar usuário
+                <PeopleIcon /> Usuários
               </button>
             </Link>
             <Link to={'/login'}>
@@ -39,7 +39,7 @@ function Menu({ userRole }) {
                 <AssessmentIcon /> Relatórios
               </button>
             </Link>
-            <Link to={'/login'}>
+            <Link to={'/adminmensagem'}>
               <button className='button'>
                 <MessageIcon /> Mensagens
               </button>
@@ -54,12 +54,12 @@ function Menu({ userRole }) {
                 <TheatersIcon /> Trilha educativa
               </button>
             </Link>
-            <Link to={'/login'}>
+            <Link to={'/alunoagenda'}>
               <button className='button'>
                 <CalendarMonthIcon /> Agenda
               </button>
             </Link>
-            <Link to={'/login'}>
+            <Link to={'/alunomensagem'}>
               <button className='button'>
                 <MessageIcon /> Mensagens
               </button>
@@ -69,7 +69,7 @@ function Menu({ userRole }) {
       case 'psicologo':
         return (
           <>
-            <Link to={'/login'}>
+            <Link to={'/psicologoagenda'}>
               <button className='button'>
                 <CalendarMonthIcon /> Agenda
               </button>
@@ -79,7 +79,7 @@ function Menu({ userRole }) {
                 <TimelineIcon /> Acompanhamento
               </button>
             </Link>
-            <Link to={'/login'}>
+            <Link to={'/psicologomensagem'}>
               <button className='button'>
                 <MessageIcon /> Mensagens
               </button>
@@ -94,7 +94,7 @@ function Menu({ userRole }) {
   return (
     <div className={`hamburger-menu ${isOpen ? 'open' : ''}`}>
       <div className="menu-icon" onClick={toggleMenu}>
-        {isOpen ? <CloseIcon className='close-icon'/> : <MenuIcon />}
+        {isOpen ? <CloseIcon className='close-icon' /> : <MenuIcon />}
       </div>
       {isOpen && (
         <div className="menu-items">

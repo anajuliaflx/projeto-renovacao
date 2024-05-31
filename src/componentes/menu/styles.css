@@ -2,12 +2,13 @@
   position: absolute;
   top: 60px; /* Ajuste conforme a altura do seu header */
   left: 0;
+  z-index: 1000; /* Garante que o menu está acima do calendário */
 }
 
 .menu-icon {
   cursor: pointer;
   font-size: 2rem;
-  padding: 10px;
+  padding: 10px 10px;
 }
 
 .menu-items {
@@ -21,6 +22,7 @@
   width: auto; /* Largura automática para ajustar ao conteúdo */
   max-width: 500px; /* Largura máxima */
   box-sizing: border-box;
+  z-index: 1001; /* Garante que o menu está acima do calendário */
 }
 
 .menu-items a {
@@ -61,13 +63,17 @@
 .close-icon {
   font-size: 2.5rem;
   position: absolute;
-  top: 10px;
-  right: 10px;
   cursor: pointer;
   color: black; /* Cor preta para o ícone de fechar */
-  z-index: 2; /* Alterado para um valor maior para que fique acima dos botões */
+  z-index: 1002; /* Garante que o ícone de fechar está acima de tudo no menu */
+  padding: 10px;
 }
 
 .open .menu-items {
   display: block;
+}
+
+.calendar-container {
+  position: relative;
+  z-index: 1; /* Garante que o calendário está abaixo do menu */
 }
