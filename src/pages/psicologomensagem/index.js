@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import Menu from '../../componentes/menu';
+import { UserContext } from "../../contexts/UserContext";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const PsicologoMensagem = () => {
+    const { user } = useContext(UserContext);
     const [mensagens, setMensagens] = useState([]);
     const [respostas, setRespostas] = useState({});
     const [feedback, setFeedback] = useState('');
@@ -15,6 +17,11 @@ const PsicologoMensagem = () => {
 
     useEffect(() => {
         const fetchMensagens = async () => {
+            if (!user || !user.matricula) {
+                setError('Usuário não autenticado.');
+                return;
+            }
+
             try {
                 const response = await axios.get(`https://projeto-renovacao.web.app/mensagens/psicologo?page=${page}&limit=${limit}`);
                 setMensagens(response.data.messages);
@@ -25,13 +32,19 @@ const PsicologoMensagem = () => {
         };
 
         fetchMensagens();
-    }, [page]);
+    }, [page, user]);
 
     const handleResponder = async (mensagem_id) => {
+        if (!user || !user.matricula) {
+            setError('Usuário não autenticado.');
+            return;
+        }
+
         try {
-            const response = await axios.post(`https://projeto-renovacao.web.app/resposta`, {
+            const response = await axios.post(`https://projeto-renovacao.web.app/resposta/${user.tipoUsuario}`, {
                 mensagem_id,
                 resposta: respostas[mensagem_id] || '',
+                matricula: user.matricula
             });
             setFeedback(response.data.msg);
 
@@ -61,7 +74,7 @@ const PsicologoMensagem = () => {
 
     return (
         <div>
-            <Menu userRole="psicologo" />
+            <Menu userRole={user ? user.tipoUsuario : 'visitante'} />
             <h1>Mensagens para Psicólogo</h1>
             {error && <p>{error}</p>}
             {mensagens.length > 0 ? (

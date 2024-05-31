@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import axios from "axios";
+import { UserContext } from "../../contexts/UserContext";
+import React, { useState, useContext } from "react";
 import Menu from '../../componentes/menu';
-
-const apiUrl = process.env.REACT_APP_API_URL;
+import axios from "axios";
 
 const AdministradorCronograma = () => {
+  const { user } = useContext(UserContext);
   const [dataEvento, setDataEvento] = useState('');
   const [matriculaAluno, setMatriculaAluno] = useState('');
   const [matriculaPsicologo, setMatriculaPsicologo] = useState('');
@@ -32,13 +32,14 @@ const AdministradorCronograma = () => {
       setMatriculaPsicologo('');
       setDescricao('');
     } catch (error) {
+      console.error("Erro ao adicionar o evento:", error);
       setFeedback('Erro ao adicionar o evento.');
     }
   };
 
   return (
     <div>
-      <Menu userRole="administrador" />
+      <Menu userRole={user ? user.tipoUsuario : 'visitante'} />
       <h1>Adicionar Evento</h1>
       <form onSubmit={handleSubmit}>
         <div>

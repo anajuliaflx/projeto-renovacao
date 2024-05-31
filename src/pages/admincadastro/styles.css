@@ -1,127 +1,102 @@
-/* Estilos para a tabela de usuários */
-.table-container {
-    display: flex;
-    justify-content: center;
+body {
+  margin: 0;
+  display: block;
+}
+
+.container {
+  align-items: center;
+  text-align: center;
+  overflow-x: hidden;
+}
+
+h1 {
+  margin: 0;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.login-form {
+  padding: 5px 50px;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.icon {
+  color: #0395BA; /* Define a cor do ícone */
+  position: absolute;
+  left: 10px; /* Ajuste conforme necessário */
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.input-with-icon {
+  position: relative;
+  display: inline-block;
+}
+
+.form-field {
+  display: inline-block;
+  padding: 15px 50px;
+  margin-top: 20px;
+  border-radius: 15px;
+  position: relative;
+  padding-left: 35px; /* Ajusta o espaço à esquerda para acomodar o ícone */
+  border-color:#0395BA; /* Adiciona uma borda ao input */
+  border-radius: 5px; /* Arredonda as bordas do input */
+}
+
+.form-error {
+  display: block;
+  color: rgb(237, 67, 55);
+  font-size: 0.9em;
+  font-weight: 600;
+  border-radius: 5px;
+}
+
+.button {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  border-radius: 50px;
+  background-color: #0395BA;
+  border-color: #0395BA;
+  color: #ffff;
+}
+
+/* Tamanhos pequenos (telefones pequenos e alguns tablets em modo retrato) */
+@media only screen and (max-width: 576px) {
+  .form-field {
+    width: 90%; /* Reduz a largura do campo em telas menores */
   }
-  .user-table {
-    width: 75%;
-    border-collapse: collapse;
-    padding-left: 20px;
-    margin-bottom: 100px;/* Adiciona margem inferior para separar da paginação */
+}
+
+/* Tamanhos médios (tablets em modo paisagem e alguns laptops) */
+@media only screen and (min-width: 577px) and (max-width: 768px) {
+  .form-field {
+    width: 70%; /* Reduz a largura do campo em telas médias */
   }
-  
-  .user-table th,
-  .user-table td {
-    border: 1px solid #ddd;
-    padding: 8px ;
-    padding-left: 10px; /* Adiciona espaçamento à esquerda */
-    white-space: nowrap; /* Impede que o texto seja quebrado */
-    overflow: hidden; /* Oculta qualquer conteúdo extra que não caiba */
-    text-overflow: ellipsis; /* Adiciona reticências ao final do texto que não couber */
+}
+
+/* Tamanhos grandes (desktops e laptops maiores) */
+@media only screen and (min-width: 769px) and (max-width: 992px) {
+  .form-field {
+    width: 60%; /* Reduz a largura do campo em telas grandes */
   }
-  .user-table button {
-    /* Estilos para o botão "Excluir" */
-    background-color: #ff6347; /* Cor de fundo vermelha */
-    color: white; /* Cor do texto branca */
-    border: none; /* Remove a borda do botão */
-    padding: 5px 10px; /* Preenchimento interno do botão */
-    cursor: pointer; /* Altera o cursor ao passar por cima para indicar que é clicável */
-    margin: 0 auto; /* Centraliza o botão horizontalmente */
-    display: block; /* Transforma o botão em um bloco para aplicar margem automática */
+}
+
+/* Tamanhos extra grandes (telas maiores, como monitores widescreen) */
+@media only screen and (min-width: 993px) and (max-width: 1200px) {
+  .form-field {
+    width: 50%; /* Reduz a largura do campo em telas extra grandes */
   }
-  
-  .user-table button:hover {
-    background-color: #cc4125; /* Altera a cor de fundo quando o mouse passa por cima */
+}
+
+/* Tamanhos extra extra grandes (telas muito grandes, como monitores ultrawide) */
+@media only screen and (min-width: 1201px) {
+  .form-field {
+    width: 40%; /* Reduz a largura do campo em telas extra extra grandes */
   }
-  
-  h2{
-    padding: 20px;
-  }
-  
-  .user-table th {
-    background-color: #f2f2f2;
-    text-align: left;
-  }
-  
-  .user-table tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
-  .user-table tr:hover {
-    background-color: #ddd;
-  }
-  
-  /* Responsividade para a tabela de usuários */
-  @media only screen and (max-width: 1200px) {
-    .user-table th,
-    .user-table td {
-      padding: 5px; /* Reduz o preenchimento das células em telas menores */
-      font-size: 12px; /* Reduz o tamanho da fonte em telas menores */
-    }
-  }
-  
-  @media only screen and (max-width: 992px) {
-    .user-table th,
-    .user-table td {
-      padding: 4px; /* Reduz ainda mais o preenchimento das células em telas menores */
-      font-size: 11px; /* Reduz ainda mais o tamanho da fonte em telas menores */
-    }
-  }
-  
-  @media only screen and (max-width: 768px) {
-    .user-table th,
-    .user-table td {
-      padding: 3px; /* Reduz ainda mais o preenchimento das células em telas menores */
-      font-size: 10px; /* Reduz ainda mais o tamanho da fonte em telas menores */
-    }
-  }
-  
-  @media only screen and (max-width: 576px) {
-    .user-table th,
-    .user-table td {
-      padding: 2px; /* Reduz ainda mais o preenchimento das células em telas menores */
-      font-size: 9px; /* Reduz ainda mais o tamanho da fonte em telas menores */
-    }
-  }
-  
-  @media only screen and (max-width: 360px) {
-    .user-table th,
-    .user-table td {
-      padding: 1px; /* Reduz ainda mais o preenchimento das células em telas muito pequenas */
-      font-size: 8px; /* Reduz ainda mais o tamanho da fonte em telas muito pequenas */
-    }
-  }
-  
-  /* Estilos para a paginação */
-  .pagination {
-    margin-top: 20px;
-    text-align: center;
-  }
-  
-  .pagination button {
-    margin: 0 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-  }
-  
-  .pagination button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-  .botao-container {
-    position: relative;
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 20px;
-    margin-right: 20px;
-  }
-  
-  .botao {
-    padding: 10px 20px;
-    border-radius: 50px;
-    background-color: #0395BA;
-    border-color: #0395BA;
-    color: #ffffff;
-    cursor: pointer;
-    text-decoration: none;
-  }
+}
+
+
+

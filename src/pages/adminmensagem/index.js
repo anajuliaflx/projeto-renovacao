@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useEffect, useState, useContext } from "react";
+import { UserContext } from "../../contexts/UserContext";
 import Menu from '../../componentes/menu';
+import axios from "axios";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const AdministradorMensagem = () => {
+    const { user } = useContext(UserContext); // Acessa o contexto do usuário
     const [mensagens, setMensagens] = useState([]);
     const [respostas, setRespostas] = useState({});
     const [feedback, setFeedback] = useState('');
@@ -15,6 +17,11 @@ const AdministradorMensagem = () => {
 
     useEffect(() => {
         const fetchMensagens = async () => {
+            if (!user) {
+                setError('Usuário não autenticado.');
+                return;
+            }
+
             try {
                 const response = await axios.get(`https://projeto-renovacao.web.app/mensagens/administrador?page=${page}&limit=${limit}`);
                 setMensagens(response.data.messages);
@@ -25,13 +32,19 @@ const AdministradorMensagem = () => {
         };
 
         fetchMensagens();
-    }, [page]);
+    }, [page, user]);
 
     const handleResponder = async (mensagem_id) => {
+        if (!user) {
+            setError('Usuário não autenticado.');
+            return;
+        }
+
         try {
-            const response = await axios.post(`https://projeto-renovacao.web.app/resposta`, {
+            const response = await axios.post(`https://projeto-renovacao.web.app/resposta/${user.tipoUsuario}`, {
                 mensagem_id,
                 resposta: respostas[mensagem_id] || '',
+                matricula: user.matricula // Inclui a matrícula do administrador na requisição
             });
             setFeedback(response.data.msg);
 
@@ -61,7 +74,7 @@ const AdministradorMensagem = () => {
 
     return (
         <div>
-            <Menu userRole="administrador" />
+            <Menu userRole={user ? user.tipoUsuario : 'visitante'} />
             <h1>Mensagens para Administrador</h1>
             {error && <p>{error}</p>}
             {mensagens.length > 0 ? (

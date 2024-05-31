@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import Menu from '../../componentes/menu';
+import { UserContext } from "../../contexts/UserContext";
 import './styles.css';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const AlunoMensagem = () => {
+  const { user } = useContext(UserContext); // Acessa o contexto do usuário
   const [destinatarioTipo, setDestinatarioTipo] = useState('administrador');
   const [mensagem, setMensagem] = useState('');
   const [feedback, setFeedback] = useState('');
@@ -13,12 +15,11 @@ const AlunoMensagem = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const limit = 3;
-  const matricula = localStorage.getItem('matricula'); // Obtém a matrícula do local storage
 
   useEffect(() => {
     const fetchMensagensRespostas = async () => {
       try {
-        const response = await axios.get(`https://projeto-renovacao.web.app/mensagens-respostas/${matricula}?page=${page}&limit=${limit}`);
+        const response = await axios.get(`https://projeto-renovacao.web.app/mensagens-respostas/${user.matricula}?page=${page}&limit=${limit}`);
         setMensagensRespostas(response.data.messages);
         setTotalPages(response.data.totalPages);
       } catch (error) {
@@ -26,10 +27,10 @@ const AlunoMensagem = () => {
       }
     };
 
-    if (matricula) {
+    if (user && user.matricula) {
       fetchMensagensRespostas();
     }
-  }, [matricula, page]);
+  }, [user, page]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,7 +40,7 @@ const AlunoMensagem = () => {
     }
 
     try {
-      const userResponse = await axios.get(`https://projeto-renovacao.web.app/usuario/${matricula}`);
+      const userResponse = await axios.get(`https://projeto-renovacao.web.app/usuario/${user.matricula}`);
       if (userResponse.data && userResponse.data.id) {
         const remetente_id = userResponse.data.id;
         const response = await axios.post(`https://projeto-renovacao.web.app/mensagem`, {
@@ -51,7 +52,7 @@ const AlunoMensagem = () => {
         setMensagem('');
 
         // Atualiza a lista de mensagens e respostas
-        const updatedMensagensRespostas = await axios.get(`https://projeto-renovacao.web.app/mensagens-respostas/${matricula}?page=${page}&limit=${limit}`);
+        const updatedMensagensRespostas = await axios.get(`https://projeto-renovacao.web.app/mensagens-respostas/${user.matricula}?page=${page}&limit=${limit}`);
         setMensagensRespostas(updatedMensagensRespostas.data.messages);
         setTotalPages(updatedMensagensRespostas.data.totalPages);
       } else {
@@ -70,7 +71,7 @@ const AlunoMensagem = () => {
 
   return (
     <div className="container1">
-      <Menu userRole="aluno" />
+      <Menu userRole={user ? user.tipoUsuario : 'visitante'} />
       <div className="form-section">
         <h1>Enviar Mensagem</h1>
         <form onSubmit={handleSubmit} className="form">
@@ -78,7 +79,7 @@ const AlunoMensagem = () => {
             <label className="label">Sua Matrícula:</label>
             <input
               type="text"
-              value={matricula}
+              value={user ? user.matricula : ''}
               maxLength="8"
               readOnly
               className="matricula"

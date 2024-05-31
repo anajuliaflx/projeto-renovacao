@@ -29,7 +29,7 @@ function Menu({ userRole }) {
                 <AppRegistrationIcon /> Cronograma
               </button>
             </Link>
-            <Link to={'/admincadastro'}>
+            <Link to={'/adminusuario'}>
               <button className='button'>
                 <PeopleIcon /> Usuários
               </button>

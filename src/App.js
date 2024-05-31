@@ -8,7 +8,7 @@ import Home from './pages/home';
 import Login from './pages/login';
 import Administrador from './pages/admin';
 import AdministradorCronograma from './pages/admincronograma';
-import Cadastro from './pages/cadastro';
+import AdministradorUsuario from './pages/adminusuario';
 import AdministradorCadastro from './pages/admincadastro';
 import AdministradorRelatorio from './pages/adminrelatorio';
 import AdministradorMensagem from './pages/adminmensagem';
@@ -33,8 +33,8 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/administrador" element={<Administrador />} />
             <Route path="/admincronograma" element={<AdministradorCronograma />} />
+            <Route path="/adminusuario" element={<AdministradorUsuario />} />
             <Route path="/admincadastro" element={<AdministradorCadastro />} />
-            <Route path="/cadastro" element={<Cadastro />} />
             <Route path="/adminrelatorio" element={<AdministradorRelatorio />} />
             <Route path="/adminmensagem" element={<AdministradorMensagem />} />
             <Route path="/aluno" element={<Aluno />} />

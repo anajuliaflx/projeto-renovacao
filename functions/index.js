@@ -6,23 +6,28 @@ const mysql = require("mysql2");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 app.use(express.json());
 app.use(cors());
-
-/*const dbHost = process.env.DB_HOST;
-const dbPort = process.env.DB_PORT;
-const dbUser = process.env.DB_USER;
-const dbPassword = process.env.DB_PASSWORD;
-const dbDatabase = process.env.DB_DATABASE;*/
 
 const db = mysql.createConnection({
   host: "dbrenovacao.cji8qsc8w257.us-east-1.rds.amazonaws.com",
   port: "3306",
   user: "admin",
-  password: "renovdb7na",
+  password: "renovacaodb7na",
   database: "dbrenovacao",
 });
+
+/*const db = mysql.createConnection({
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+});*/
 
 db.connect(err => {
   if (err) {
@@ -167,7 +172,7 @@ db.query("SHOW TABLES LIKE 'eventos'", (err, result) => {
   }
 });
 
-app.post("/cadastro", (req, res) => {
+app.post("/admincadastro", (req, res) => {
   const nome = req.body.nome;
   const email = req.body.email;
   const senha = req.body.senha;
@@ -233,7 +238,7 @@ app.post("/login", (req, res) => {
 });
 
 // Rota para listar usuários com paginação
-app.get("/admincadastro", (req, res) => {
+app.get("/adminusuario", (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
   const offset = (page - 1) * limit;
@@ -262,7 +267,7 @@ app.get("/admincadastro", (req, res) => {
 });
 
 // Rota para excluir um usuário
-app.delete("/admincadastro/:id", (req, res) => {
+app.delete("/adminusuario/:id", (req, res) => {
   const userId = req.params.id;
 
   db.query("DELETE FROM usuarios WHERE id = ?", [userId], (err, result) => {
@@ -314,7 +319,51 @@ app.get("/usuario/:matricula", (req, res) => {
   });
 });
 
-// Rota para recuperar mensagens
+// Rota para enviar uma resposta
+app.post("/resposta/:tipoUsuario", (req, res) => {
+  const { tipoUsuario } = req.params;
+  const { mensagem_id, resposta, matricula } = req.body;
+
+  if (!mensagem_id || !resposta || !matricula) {
+    return res.status(400).send({ msg: "Todos os campos são obrigatórios" });
+  }
+
+  let query;
+  if (tipoUsuario === 'psicologo') {
+    query = "INSERT INTO respostas (mensagem_id, resposta, matricula_psicologo) VALUES (?, ?, ?)";
+  } else if (tipoUsuario === 'administrador') {
+    query = "INSERT INTO respostas (mensagem_id, resposta, matricula_administrador) VALUES (?, ?, ?)";
+  } else {
+    return res.status(400).send({ msg: "Tipo de usuário inválido" });
+  }
+
+  db.query(
+    query,
+    [mensagem_id, resposta, matricula],
+    (err, result) => {
+      if (err) {
+        console.error("Erro ao enviar resposta:", err);
+        return res.status(500).send({ msg: "Erro ao enviar resposta" });
+      }
+      db.query(
+        "SELECT data_resposta FROM respostas WHERE id = ?",
+        [result.insertId],
+        (err, data) => {
+          if (err) {
+            console.error("Erro ao recuperar data da resposta:", err);
+            return res.status(500).send({ msg: "Erro ao recuperar data da resposta" });
+          }
+          res.send({
+            msg: "Resposta enviada com sucesso",
+            data_resposta: data[0].data_resposta,
+            resposta: resposta
+          });
+        }
+      );
+    }
+  );
+});
+
 app.get("/mensagens/:tipoUsuario", (req, res) => {
   const tipoUsuario = req.params.tipoUsuario;
   const page = parseInt(req.query.page) || 1;
@@ -322,8 +371,7 @@ app.get("/mensagens/:tipoUsuario", (req, res) => {
   const offset = (page - 1) * limit;
 
   if (!['administrador', 'psicologo'].includes(tipoUsuario)) {
-    res.status(400).send({ msg: "Tipo de usuário inválido" });
-    return;
+    return res.status(400).send({ msg: "Tipo de usuário inválido" });
   }
 
   db.query(
@@ -331,8 +379,8 @@ app.get("/mensagens/:tipoUsuario", (req, res) => {
     [tipoUsuario],
     (err, countResult) => {
       if (err) {
-        res.status(500).send(err);
-        return;
+        console.error("Erro ao contar mensagens:", err);
+        return res.status(500).send({ msg: "Erro ao contar mensagens" });
       }
 
       const totalMessages = countResult[0].count;
@@ -348,41 +396,10 @@ app.get("/mensagens/:tipoUsuario", (req, res) => {
         [tipoUsuario, limit, offset],
         (err, result) => {
           if (err) {
-            res.status(500).send(err);
-            return;
+            console.error("Erro ao buscar mensagens:", err);
+            return res.status(500).send({ msg: "Erro ao buscar mensagens" });
           }
           res.send({ messages: result, totalPages });
-        }
-      );
-    }
-  );
-});
-
-// Rota para enviar uma resposta
-app.post("/resposta", (req, res) => {
-  const { mensagem_id, resposta } = req.body;
-
-  db.query(
-    "INSERT INTO respostas (mensagem_id, resposta) VALUES (?, ?)",
-    [mensagem_id, resposta],
-    (err, result) => {
-      if (err) {
-        res.status(500).send(err);
-        return;
-      }
-      db.query(
-        "SELECT data_resposta FROM respostas WHERE id = ?",
-        [result.insertId],
-        (err, data) => {
-          if (err) {
-            res.status(500).send(err);
-            return;
-          }
-          res.send({
-            msg: "Resposta enviada com sucesso",
-            data_resposta: data[0].data_resposta,
-            resposta: resposta
-          });
         }
       );
     }
@@ -428,9 +445,12 @@ app.get("/mensagens-respostas/:matricula", (req, res) => {
   );
 });
 
-// Adicionar um evento
 app.post("/adicionar-evento", (req, res) => {
   const { data_evento, matricula_aluno, matricula_psicologo, descricao } = req.body;
+
+  if (!data_evento || !matricula_aluno || !matricula_psicologo || !descricao) {
+    return res.status(400).send({ msg: "Todos os campos são obrigatórios" });
+  }
 
   if (matricula_aluno.length !== 8 || matricula_psicologo.length !== 8) {
     return res.status(400).send({ msg: "Matrícula do aluno e do psicólogo deve ter exatamente 8 caracteres" });
@@ -441,14 +461,14 @@ app.post("/adicionar-evento", (req, res) => {
     [data_evento, matricula_aluno, matricula_psicologo, descricao],
     (err, result) => {
       if (err) {
-        res.status(500).send(err);
+        console.error("Erro ao adicionar evento:", err);
+        res.status(500).send({ msg: "Erro ao adicionar evento" });
         return;
       }
       res.send({ msg: "Evento adicionado com sucesso" });
     }
   );
 });
-
 
 // Listar eventos por aluno
 app.get("/eventos/:matricula_aluno", (req, res) => {

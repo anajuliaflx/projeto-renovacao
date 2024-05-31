@@ -44,7 +44,7 @@ Mensagens: Fornece um meio de comunicação seguro e privado entre os alunos e o
 
 Cronograma: Permite ao administrador criar e gerenciar um calendário de eventos, incluindo consultas, workshops e outras atividades relacionadas à prevenção do ciberbullying.
 
-Cadastro de Usuários: Permite ao administrador cadastrar novos usuários no sistema, incluindo alunos, psicólogos e outros administradores, atribuindo-lhes os papéis apropriados e configurando suas permissões de acesso.
+Usuários: Permite ao administrador visualizar os usuários existentes no sistema e cadastrar novos usuários, incluindo alunos, psicólogos e outros administradores, atribuindo-lhes os papéis apropriados e configurando suas permissões de acesso.
 
 Relatórios: Oferece acesso a relatórios detalhados sobre o acompanhamento de casos de ciberbullying, avaliação dos atribuída pelos psicólogos e outras métricas relevantes.
 
@@ -102,10 +102,21 @@ Realize a instalação das dependências descritas abaixo no diretório principa
   npm install @mui/icons-material @mui/material @emotion/styled @emotion/react
 ```
 
+```bash
+  npm install react-big-calendar
+```
+
+```bash
+  npm install moment
+```
+
 Instale as dependências no diretório functions
 
 ```bash
   npm install bcrypt express mysql2 nodemon cors
+```
+```bash
+  npm install dotenv
 ```
 
 ### Configure o Banco de Dados
@@ -164,23 +175,62 @@ A URL base para todos os endpoints é
 ```https
     https://projeto-renovacao.web.app/
 ```
-#### Login de usuário
+
+### Cadastro de usuário
+```https
+  POST /admincadastro
+```
+Cria um novo usuário no banco de dados.
+
+#### Corpo da requisição
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `nome` | `string` | **Obrigatório**. O nome do usuário. |
+| `email` | `string` | **Obrigatório**. O email do usuário. |
+| `senha` | `string` | **Obrigatório**. A senha do usuário. |
+| `matricula` | `string` | **Obrigatório**. A matrícula do usuário. |
+| `tipoUsuario` | `string` | **Obrigatório**. O tipo do usuário. |
+|
+
+#### Respostas
+- `200 OK`: Usuário cadastrado com sucesso.
+  ```json
+  {
+  "msg": "Usuário cadastrado com sucesso"
+  }
+
+- `400 Bad Request`: Email ou matrícula já cadastrados.
+  ```json
+  {
+    "msg": "Email ou matrícula já cadastrados"
+  }
+
+- `500 Internal Server Error`: Ocorreu um erro.
+  ```json
+  {
+    "error": "Mensagem de erro"
+  }
+
+### Login de usuário
 ```https
   POST /login
 ```
 Autentica um usuário.
 
+#### Corpo da requisição
 | Parâmetro   | Tipo       | Descrição                           |
 | :---------- | :--------- | :---------------------------------- |
 | `email` | `string` | **Obrigatório**. O email do usuário. |
 | `senha` | `string` | **Obrigatório**. A senha do usuário. |
+|
 
 #### Respostas
 - `200 OK`: Usuário logado com sucesso.
   ```json
   {
     "msg": "Usuário logado",
-    "tipoUsuario": "administrador"
+    "tipoUsuario": "userType",
+    "matricula": "matricula"
   }
 
 - `401 Unauthorized`: Senha incorreta.
@@ -201,32 +251,233 @@ Autentica um usuário.
     "error": "Mensagem de erro"
   }
 
-### Cadastro de usuários
+### Listar usuários
 ```https
-  POST /cadastro
+  GET /adminusuario
 ```
-Cria um novo usuário no banco de dados.
+Lista os usuários com paginação.
+
+#### Parâmetros da query
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `page` | `number` | **Opcional**. Número da página (default 1). |
+| `limit` | `number` | **Opcional**. Limite de usuários por página (default 10). |
+|
+
+#### Respostas
+- `200 OK`: Lista de usuários com paginação.
+  ```json
+  {
+    "users": [/* lista de usuários */],
+    "totalPages": 5
+  }
+
+- `500 Internal Server Error`: Ocorreu um erro.
+  ```json
+  {
+    "error": "Mensagem de erro"
+  }
+
+### Excluir usuário por ID
+```https
+  DELETE /adminusuario/:id
+```
+Exclui um usuário pelo ID.
+
+#### Parâmetros da URL
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `id` | `number` | **Obrigatório**. O ID do usuário a ser excluído. |
+| 
+
+#### Respostas
+- `200 OK`: Usuário excluído com sucesso.
+  ```json
+  {
+  "msg": "Usuário excluído com sucesso"
+  }
+
+- `500 Internal Server Error`: Ocorreu um erro.
+  ```json
+  {
+    "error": "Mensagem de erro"
+  }
+
+### Enviar mensagem
+```https
+  POST /mensagem
+```
+Envia uma mensagem.
 
 #### Corpo da requisição
 | Parâmetro   | Tipo       | Descrição                           |
 | :---------- | :--------- | :---------------------------------- |
-| `nome` | `string` | **Obrigatório**. O nome do usuário. |
-| `email` | `string` | **Obrigatório**. O email do usuário. |
-| `senha` | `string` | **Obrigatório**. A senha do usuário. |
-| `matricula` | `string` | **Obrigatório**. A senha do usuário. |
-| `tipoUsuario` | `string` | **Obrigatório**. O tipo do usuário. |
+| `remetente_id` | `number` | **Obrigatório**. O ID do remetente. |
+| `destinatario_tipo` | `string` | **Obrigatório**. O tipo de destinatário ('administrador' ou 'psicologo'). |
+| `mensagem` | `string` | **Obrigatório**. O conteúdo da mensagem. |
+| 
 
 #### Respostas
-- `200 OK`: Usuário cadastrado com sucesso.
+- `200 OK`: Mensagem enviada com sucesso.
   ```json
   {
-  "msg": "Usuário cadastrado com sucesso"
+  "msg": "Mensagem enviada com sucesso"
   }
 
-- `400 Bad Request`: Email ou matrícula já cadastrados.
+- `400 Bad Request`: A mensagem não pode ter mais de 400 caracteres.
   ```json
   {
-    "msg": "Email ou matrícula já cadastrados"
+    "msg": "A mensagem não pode ter mais de 400 caracteres"
+  }
+
+- `500 Internal Server Error`: Ocorreu um erro.
+  ```json
+  {
+    "error": "Mensagem de erro"
+  }
+
+### Obter usuário por matrícula
+```https
+  GET /usuario/:matricula
+```
+Cria um novo usuário no banco de dados.
+
+#### Parâmetros da URL
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `matricula` | `string` | **Obrigatório**. A matrícula do usuário. |
+|
+
+#### Respostas
+- `200 OK`: Retorna o ID do usuário.
+  ```json
+  {
+    "id": 1
+  }
+
+- `404 Not Found`: Usuário não encontrado.
+  ```json
+  {
+    "msg": "Usuário não encontrado"
+  }
+
+- `500 Internal Server Error`: Ocorreu um erro.
+  ```json
+  {
+    "error": "Mensagem de erro"
+  }
+
+### Enviar resposta
+```https
+  POST /resposta/:tipoUsuario
+```
+Envia uma resposta a uma mensagem.
+
+#### Parâmetro da URL
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `tipoUsuario` | `string` | **Obrigatório**. O tipo de usuário ('administrador' ou 'psicologo'). |
+|
+
+#### Corpo da requisição
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `mensagem_id` | `number` | **Obrigatório**. O ID da mensagem. |
+| `resposta` | `string` | **Obrigatório**. O conteúdo da resposta. |
+| `matricula` | `string` | **Obrigatório**. A matrícula do respondente. |
+|
+
+#### Respostas
+- `200 OK`: Resposta enviada com sucesso.
+  ```json
+  {
+  "msg": "Resposta enviada com sucesso",
+  "data_resposta": "2023-05-15T13:45:30.000Z",
+  "resposta": "Conteúdo da resposta"
+  }
+
+- `400 Bad Request`: Tipo de usuário inválido ou campos obrigatórios ausentes.
+  ```json
+  {
+    "msg": "Tipo de usuário inválido"
+  }
+
+- `500 Internal Server Error`: Ocorreu um erro.
+  ```json
+  {
+    "error": "Mensagem de erro"
+  }
+
+### Listar mensagens
+```https
+  GET /mensagens/:tipoUsuario
+```
+Lista as mensagens recebidas pelo tipo de usuário com paginação.
+
+#### Parâmetro da URL
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `tipoUsuario` | `string` | **Obrigatório**. O tipo de usuário ('administrador' ou 'psicologo'). |
+|
+
+#### Corpo da requisição
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `page` | `number` | **Opcional**. Número da página (default 1). |
+| `limit` | `number` | **Opcional**. Limite de mensagens por página (default 10). |
+|
+
+#### Respostas
+- `200 OK`: Lista de mensagens com paginação.
+  ```json
+  {
+  "messages": [/* lista de mensagens */],
+  "totalPages": 5
+  }
+
+- `400 Bad Request`: Tipo de usuário inválido.
+  ```json
+  {
+    "msg": "Tipo de usuário inválido"
+  }
+
+- `500 Internal Server Error`: Ocorreu um erro.
+  ```json
+  {
+    "error": "Mensagem de erro"
+  }
+
+### Listar mensagens e respostas por aluno
+```https
+  GET /mensagens-respostas/:matricula
+```
+Envia uma resposta a uma mensagem.
+
+#### Parâmetro da URL
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `matricula` | `string` | **Obrigatório**. A matrícula do aluno. |
+|
+
+#### Corpo da requisição
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `page` | `number` | **Opcional**. Número da página (default 1). |
+| `limit` | `number` | **Opcional**. Limite de mensagens por página (default 10). |
+|
+
+#### Respostas
+- `200 OK`: Lista de mensagens e respostas com paginação.
+  ```json
+  {
+  "messagesAndAnswers": [/* lista de mensagens e respostas */],
+  "totalPages": 5
+  }
+
+- `404 Not Found`: Usuário não encontrado.
+  ```json
+  {
+    "msg": "Usuário não encontrado"
   }
 
 - `500 Internal Server Error`: Ocorreu um erro.
