@@ -7,7 +7,7 @@ import './styles.css';
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const AlunoMensagem = () => {
-  const { user } = useContext(UserContext); // Acessa o contexto do usuário
+  const { user } = useContext(UserContext); // Usa o contexto para obter o usuário
   const [destinatarioTipo, setDestinatarioTipo] = useState('administrador');
   const [mensagem, setMensagem] = useState('');
   const [feedback, setFeedback] = useState('');
@@ -27,10 +27,10 @@ const AlunoMensagem = () => {
       }
     };
 
-    if (user && user.matricula) {
+    if (user.matricula) {
       fetchMensagensRespostas();
     }
-  }, [user, page]);
+  }, [user.matricula, page]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,6 +41,11 @@ const AlunoMensagem = () => {
 
     try {
       const userResponse = await axios.get(`https://projeto-renovacao.web.app/usuario/${user.matricula}`);
+      if (userResponse.status === 404) {
+        setFeedback('Matrícula não encontrada.');
+        return;
+      }
+
       if (userResponse.data && userResponse.data.id) {
         const remetente_id = userResponse.data.id;
         const response = await axios.post(`https://projeto-renovacao.web.app/mensagem`, {
@@ -60,6 +65,7 @@ const AlunoMensagem = () => {
       }
     } catch (error) {
       setFeedback('Erro ao enviar a mensagem.');
+      console.error('Erro ao enviar a mensagem:', error);
     }
   };
 
@@ -71,7 +77,7 @@ const AlunoMensagem = () => {
 
   return (
     <div className="container1">
-      <Menu userRole={user ? user.tipoUsuario : 'visitante'} />
+      <Menu userRole="aluno" />
       <div className="form-section">
         <h1>Enviar Mensagem</h1>
         <form onSubmit={handleSubmit} className="form">
@@ -79,7 +85,7 @@ const AlunoMensagem = () => {
             <label className="label">Sua Matrícula:</label>
             <input
               type="text"
-              value={user ? user.matricula : ''}
+              value={user.matricula}
               maxLength="8"
               readOnly
               className="matricula"

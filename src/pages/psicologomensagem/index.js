@@ -3,8 +3,6 @@ import axios from "axios";
 import Menu from '../../componentes/menu';
 import { UserContext } from "../../contexts/UserContext";
 
-const apiUrl = process.env.REACT_APP_API_URL;
-
 const PsicologoMensagem = () => {
     const { user } = useContext(UserContext);
     const [mensagens, setMensagens] = useState([]);
@@ -17,11 +15,6 @@ const PsicologoMensagem = () => {
 
     useEffect(() => {
         const fetchMensagens = async () => {
-            if (!user || !user.matricula) {
-                setError('Usuário não autenticado.');
-                return;
-            }
-
             try {
                 const response = await axios.get(`https://projeto-renovacao.web.app/mensagens/psicologo?page=${page}&limit=${limit}`);
                 setMensagens(response.data.messages);
@@ -32,19 +25,15 @@ const PsicologoMensagem = () => {
         };
 
         fetchMensagens();
-    }, [page, user]);
+    }, [page]);
 
     const handleResponder = async (mensagem_id) => {
-        if (!user || !user.matricula) {
-            setError('Usuário não autenticado.');
-            return;
-        }
-
         try {
-            const response = await axios.post(`https://projeto-renovacao.web.app/resposta/${user.tipoUsuario}`, {
+            const response = await axios.post(`https://projeto-renovacao.web.app/resposta`, {
                 mensagem_id,
                 resposta: respostas[mensagem_id] || '',
-                matricula: user.matricula
+                matricula: user.matricula, // Usando a matrícula do usuário do contexto
+                tipoUsuario: 'psicologo',
             });
             setFeedback(response.data.msg);
 
@@ -74,7 +63,7 @@ const PsicologoMensagem = () => {
 
     return (
         <div>
-            <Menu userRole={user ? user.tipoUsuario : 'visitante'} />
+            <Menu userRole="psicologo" />
             <h1>Mensagens para Psicólogo</h1>
             {error && <p>{error}</p>}
             {mensagens.length > 0 ? (

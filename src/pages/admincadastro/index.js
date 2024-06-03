@@ -6,6 +6,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import PasswordIcon from '@mui/icons-material/Password';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import PeopleIcon from '@mui/icons-material/People';
+import Menu from '../../componentes/menu';
 import './styles.css';
 import Axios from "axios";
 import * as yup from "yup";
@@ -50,6 +51,7 @@ function AdministradorCadastro() {
 
     return (
         <div className="container">
+            <Menu userRole="administrador" />
             <h1>Cadastro</h1>
             <Formik
                 initialValues={{ // Definindo valores iniciais para todos os campos

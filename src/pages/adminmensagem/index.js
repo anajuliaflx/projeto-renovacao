@@ -1,12 +1,10 @@
 import React, { useEffect, useState, useContext } from "react";
-import { UserContext } from "../../contexts/UserContext";
-import Menu from '../../componentes/menu';
 import axios from "axios";
-
-const apiUrl = process.env.REACT_APP_API_URL;
+import Menu from '../../componentes/menu';
+import { UserContext } from "../../contexts/UserContext";
 
 const AdministradorMensagem = () => {
-    const { user } = useContext(UserContext); // Acessa o contexto do usuário
+    const { user } = useContext(UserContext);
     const [mensagens, setMensagens] = useState([]);
     const [respostas, setRespostas] = useState({});
     const [feedback, setFeedback] = useState('');
@@ -17,11 +15,6 @@ const AdministradorMensagem = () => {
 
     useEffect(() => {
         const fetchMensagens = async () => {
-            if (!user) {
-                setError('Usuário não autenticado.');
-                return;
-            }
-
             try {
                 const response = await axios.get(`https://projeto-renovacao.web.app/mensagens/administrador?page=${page}&limit=${limit}`);
                 setMensagens(response.data.messages);
@@ -32,19 +25,15 @@ const AdministradorMensagem = () => {
         };
 
         fetchMensagens();
-    }, [page, user]);
+    }, [page]);
 
     const handleResponder = async (mensagem_id) => {
-        if (!user) {
-            setError('Usuário não autenticado.');
-            return;
-        }
-
         try {
-            const response = await axios.post(`https://projeto-renovacao.web.app/resposta/${user.tipoUsuario}`, {
+            const response = await axios.post(`https://projeto-renovacao.web.app/resposta`, {
                 mensagem_id,
                 resposta: respostas[mensagem_id] || '',
-                matricula: user.matricula // Inclui a matrícula do administrador na requisição
+                matricula: user.matricula, // Utilizando a matrícula do contexto
+                tipoUsuario: user.tipoUsuario, // Utilizando o tipoUsuario do contexto
             });
             setFeedback(response.data.msg);
 
@@ -74,7 +63,7 @@ const AdministradorMensagem = () => {
 
     return (
         <div>
-            <Menu userRole={user ? user.tipoUsuario : 'visitante'} />
+            <Menu userRole="administrador" />
             <h1>Mensagens para Administrador</h1>
             {error && <p>{error}</p>}
             {mensagens.length > 0 ? (

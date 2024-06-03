@@ -37,7 +37,7 @@ const AlunoAgenda = () => {
   return (
     <div>
       <div className="menu">
-        <Menu userRole={user ? user.tipoUsuario : 'visitante'} />
+      <Menu userRole="aluno" />
       </div>
       <h1>Minha Agenda</h1>
       <div className="calendar-container">

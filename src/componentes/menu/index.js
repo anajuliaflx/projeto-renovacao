@@ -49,7 +49,7 @@ function Menu({ userRole }) {
       case 'aluno':
         return (
           <>
-            <Link to={'/login'}>
+            <Link to={'/alunotrilha'}>
               <button className='button'>
                 <TheatersIcon /> Trilha educativa
               </button>
@@ -74,7 +74,7 @@ function Menu({ userRole }) {
                 <CalendarMonthIcon /> Agenda
               </button>
             </Link>
-            <Link to={'/login'}>
+            <Link to={'/psicologoacompanhamento'}>
               <button className='button'>
                 <TimelineIcon /> Acompanhamento
               </button>

@@ -95,7 +95,7 @@ Realize a instalação das dependências descritas abaixo no diretório principa
 ```
 
 ```bash
-  npm install formik yup axios
+  npm install formik yup axios dotenv moment
 ```
 
 ```bash
@@ -103,11 +103,7 @@ Realize a instalação das dependências descritas abaixo no diretório principa
 ```
 
 ```bash
-  npm install react-big-calendar
-```
-
-```bash
-  npm install moment
+  npm install react-big-calendar react-modal
 ```
 
 Instale as dependências no diretório functions
@@ -338,7 +334,7 @@ Envia uma mensagem.
 
 ### Obter usuário por matrícula
 ```https
-  GET /usuario/:matricula
+  GET /adminusuario/:matricula
 ```
 Cria um novo usuário no banco de dados.
 

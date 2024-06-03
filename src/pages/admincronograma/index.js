@@ -1,21 +1,44 @@
-import { UserContext } from "../../contexts/UserContext";
-import React, { useState, useContext } from "react";
-import Menu from '../../componentes/menu';
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import Menu from '../../componentes/menu';
+import { UserContext } from "../../contexts/UserContext";
+
+const apiUrl = process.env.REACT_APP_API_URL;
 
 const AdministradorCronograma = () => {
   const { user } = useContext(UserContext);
   const [dataEvento, setDataEvento] = useState('');
   const [matriculaAluno, setMatriculaAluno] = useState('');
   const [matriculaPsicologo, setMatriculaPsicologo] = useState('');
-  const [descricao, setDescricao] = useState('');
-  const [feedback, setFeedback] = useState('');
+  const [descricaoEvento, setDescricaoEvento] = useState('');
+  const [feedbackEvento, setFeedbackEvento] = useState('');
 
-  const handleSubmit = async (e) => {
+  const [tituloTrilha, setTituloTrilha] = useState('');
+  const [descricaoTrilha, setDescricaoTrilha] = useState('');
+  const [links, setLinks] = useState([{ url: '', titulo: '', descricao: '' }]);
+  const [trilhaId, setTrilhaId] = useState(null);
+  const [feedbackTrilha, setFeedbackTrilha] = useState('');
+
+  const [notificacoes, setNotificacoes] = useState([]);
+
+  useEffect(() => {
+    fetchNotificacoes();
+  }, []);
+
+  const fetchNotificacoes = async () => {
+    try {
+      const response = await axios.get(`https://projeto-renovacao.web.app/notificacoes`);
+      setNotificacoes(response.data);
+    } catch (error) {
+      console.error('Erro ao buscar notificações:', error);
+    }
+  };
+
+  const handleSubmitEvento = async (e) => {
     e.preventDefault();
 
     if (matriculaAluno.length !== 8 || matriculaPsicologo.length !== 8) {
-      setFeedback('A matrícula do aluno e do psicólogo deve ter exatamente 8 caracteres.');
+      setFeedbackEvento('A matrícula do aluno e do psicólogo deve ter exatamente 8 caracteres.');
       return;
     }
 
@@ -24,24 +47,82 @@ const AdministradorCronograma = () => {
         data_evento: dataEvento,
         matricula_aluno: matriculaAluno,
         matricula_psicologo: matriculaPsicologo,
-        descricao: descricao,
+        descricao: descricaoEvento,
       });
-      setFeedback(response.data.msg);
+      setFeedbackEvento(response.data.msg);
       setDataEvento('');
       setMatriculaAluno('');
       setMatriculaPsicologo('');
-      setDescricao('');
+      setDescricaoEvento('');
     } catch (error) {
-      console.error("Erro ao adicionar o evento:", error);
-      setFeedback('Erro ao adicionar o evento.');
+      setFeedbackEvento('Erro ao adicionar o evento.');
     }
+  };
+
+  const handleSubmitTrilha = async (e) => {
+    e.preventDefault();
+
+    if (matriculaAluno.length !== 8) {
+      setFeedbackTrilha('A matrícula do aluno deve ter exatamente 8 caracteres.');
+      return;
+    }
+
+    try {
+      const response = await axios.post(`https://projeto-renovacao.web.app/adicionar-trilha`, {
+        titulo: tituloTrilha,
+        descricao: descricaoTrilha,
+        matricula_aluno: matriculaAluno,
+      });
+      setFeedbackTrilha(response.data.msg);
+      setTrilhaId(response.data.trilhaId);
+      setTituloTrilha('');
+      setDescricaoTrilha('');
+    } catch (error) {
+      setFeedbackTrilha('Erro ao adicionar a trilha.');
+    }
+  };
+
+  const handleSubmitLink = async (e) => {
+    e.preventDefault();
+
+    if (!trilhaId) {
+      setFeedbackTrilha('Primeiro adicione uma trilha.');
+      return;
+    }
+
+    try {
+      await Promise.all(links.map(link => 
+        axios.post(`https://projeto-renovacao.web.app/adicionar-link`, {
+          url: link.url,
+          titulo: link.titulo,
+          descricao: link.descricao,
+          trilha_id: trilhaId,
+        })
+      ));
+      setFeedbackTrilha('Links adicionados com sucesso');
+      setLinks([{ url: '', titulo: '', descricao: '' }]);
+    } catch (error) {
+      setFeedbackTrilha('Erro ao adicionar os links.');
+    }
+  };
+
+  const handleLinkChange = (index, e) => {
+    const { name, value } = e.target;
+    const newLinks = [...links];
+    newLinks[index][name] = value;
+    setLinks(newLinks);
+  };
+
+  const handleAddLink = () => {
+    setLinks([...links, { url: '', titulo: '', descricao: '' }]);
   };
 
   return (
     <div>
-      <Menu userRole={user ? user.tipoUsuario : 'visitante'} />
+      <Menu userRole="administrador" />
+      {/* Formulário para adicionar eventos */}
       <h1>Adicionar Evento</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmitEvento}>
         <div>
           <label>Data do Evento:</label>
           <input
@@ -74,14 +155,101 @@ const AdministradorCronograma = () => {
         <div>
           <label>Descrição do Evento:</label>
           <textarea
-            value={descricao}
-            onChange={(e) => setDescricao(e.target.value)}
+            value={descricaoEvento}
+            onChange={(e) => setDescricaoEvento(e.target.value)}
             required
           />
         </div>
         <button type="submit">Adicionar Evento</button>
       </form>
-      {feedback && <p>{feedback}</p>}
+      {feedbackEvento && <p>{feedbackEvento}</p>}
+
+      {/* Formulário para adicionar trilhas */}
+      <h1>Adicionar Trilha</h1>
+      <form onSubmit={handleSubmitTrilha}>
+        <div>
+          <label>Título:</label>
+          <input
+            type="text"
+            value={tituloTrilha}
+            onChange={(e) => setTituloTrilha(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>Descrição:</label>
+          <textarea
+            value={descricaoTrilha}
+            onChange={(e) => setDescricaoTrilha(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>Matrícula do Aluno:</label>
+          <input
+            type="text"
+            value={matriculaAluno}
+            onChange={(e) => setMatriculaAluno(e.target.value)}
+            maxLength="8"
+            required
+          />
+        </div>
+        <button type="submit">Adicionar Trilha</button>
+      </form>
+      {feedbackTrilha && <p>{feedbackTrilha}</p>}
+
+      {/* Formulário para adicionar links */}
+      {trilhaId && (
+        <div>
+          <h2>Adicionar Links</h2>
+          <form onSubmit={handleSubmitLink}>
+            {links.map((link, index) => (
+              <div key={index}>
+                <label>URL:</label>
+                <input
+                  type="text"
+                  name="url"
+                  value={link.url}
+                  onChange={(e) => handleLinkChange(index, e)}
+                  required
+                />
+                <label>Título:</label>
+                <input
+                  type="text"
+                  name="titulo"
+                  value={link.titulo}
+                  onChange={(e) => handleLinkChange(index, e)}
+                  required
+                />
+                <label>Descrição:</label>
+                <textarea
+                  name="descricao"
+                  value={link.descricao}
+                  onChange={(e) => handleLinkChange(index, e)}
+                  required
+                />
+              </div>
+            ))}
+            <button type="button" onClick={handleAddLink}>Adicionar Link</button>
+            <button type="submit">Salvar Links</button>
+          </form>
+        </div>
+      )}
+
+      {/* Seção de notificações */}
+      <h1>Notificações</h1>
+      {notificacoes.length > 0 ? (
+        <ul>
+          {notificacoes.map((notificacao) => (
+            <li key={notificacao.id}>
+              <p>{notificacao.mensagem}</p>
+              <p><em>{new Date(notificacao.data_notificacao).toLocaleString()}</em></p>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>Nenhuma notificação encontrada.</p>
+      )}
     </div>
   );
 };

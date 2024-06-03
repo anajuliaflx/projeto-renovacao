@@ -2,7 +2,6 @@ import Menu from '../../componentes/menu';
 import './styles.css';
 
 function Psicologo() {
-
   return (
     <div className='container'>
       <Menu userRole="psicologo" />
@@ -14,7 +13,6 @@ function Psicologo() {
         </p>
       </div>
     </div>
-
   );
 }
 

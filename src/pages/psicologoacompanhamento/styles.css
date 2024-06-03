@@ -1,0 +1,85 @@
+.acompanhamento-psico {
+  padding: 20px;
+}
+
+.lista-aluno {
+  margin-bottom: 20px;
+}
+
+.student-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.student-table th, .student-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.student-table th {
+  background-color: #f2f2f2;
+  text-align: left;
+}
+
+.forms {
+  margin-top: 20px;
+}
+
+.forms label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.forms input[type="text"], .forms textarea, .forms select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.forms textarea {
+  resize: vertical;
+}
+
+.forms .button-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.forms button {
+  padding: 10px 15px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.forms button:hover {
+  background-color: #45a049;
+}
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 80%;
+  max-height: 80%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  overflow-y: auto;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+}
