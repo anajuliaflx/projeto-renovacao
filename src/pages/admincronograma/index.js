@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import Modal from 'react-modal';
 import Menu from '../../componentes/menu';
 import { UserContext } from "../../contexts/UserContext";
 
@@ -8,7 +9,7 @@ const apiUrl = process.env.REACT_APP_API_URL;
 const AdministradorCronograma = () => {
   const { user } = useContext(UserContext);
   const [dataEvento, setDataEvento] = useState('');
-  const [matriculaAluno, setMatriculaAluno] = useState('');
+  const [matriculaAlunoEvento, setMatriculaAlunoEvento] = useState('');
   const [matriculaPsicologo, setMatriculaPsicologo] = useState('');
   const [descricaoEvento, setDescricaoEvento] = useState('');
   const [feedbackEvento, setFeedbackEvento] = useState('');
@@ -18,7 +19,8 @@ const AdministradorCronograma = () => {
   const [links, setLinks] = useState([{ url: '', titulo: '', descricao: '' }]);
   const [trilhaId, setTrilhaId] = useState(null);
   const [feedbackTrilha, setFeedbackTrilha] = useState('');
-
+  const [matriculaAlunoTrilha, setMatriculaAlunoTrilha] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [notificacoes, setNotificacoes] = useState([]);
 
   useEffect(() => {
@@ -37,7 +39,7 @@ const AdministradorCronograma = () => {
   const handleSubmitEvento = async (e) => {
     e.preventDefault();
 
-    if (matriculaAluno.length !== 8 || matriculaPsicologo.length !== 8) {
+    if (matriculaAlunoEvento.length !== 8 || matriculaPsicologo.length !== 8) {
       setFeedbackEvento('A matrícula do aluno e do psicólogo deve ter exatamente 8 caracteres.');
       return;
     }
@@ -45,13 +47,13 @@ const AdministradorCronograma = () => {
     try {
       const response = await axios.post(`https://projeto-renovacao.web.app/adicionar-evento`, {
         data_evento: dataEvento,
-        matricula_aluno: matriculaAluno,
+        matricula_aluno: matriculaAlunoEvento,
         matricula_psicologo: matriculaPsicologo,
         descricao: descricaoEvento,
       });
       setFeedbackEvento(response.data.msg);
       setDataEvento('');
-      setMatriculaAluno('');
+      setMatriculaAlunoEvento('');
       setMatriculaPsicologo('');
       setDescricaoEvento('');
     } catch (error) {
@@ -62,7 +64,7 @@ const AdministradorCronograma = () => {
   const handleSubmitTrilha = async (e) => {
     e.preventDefault();
 
-    if (matriculaAluno.length !== 8) {
+    if (matriculaAlunoTrilha.length !== 8) {
       setFeedbackTrilha('A matrícula do aluno deve ter exatamente 8 caracteres.');
       return;
     }
@@ -71,12 +73,13 @@ const AdministradorCronograma = () => {
       const response = await axios.post(`https://projeto-renovacao.web.app/adicionar-trilha`, {
         titulo: tituloTrilha,
         descricao: descricaoTrilha,
-        matricula_aluno: matriculaAluno,
+        matricula_aluno: matriculaAlunoTrilha,
       });
       setFeedbackTrilha(response.data.msg);
       setTrilhaId(response.data.trilhaId);
       setTituloTrilha('');
       setDescricaoTrilha('');
+      setIsModalOpen(true);
     } catch (error) {
       setFeedbackTrilha('Erro ao adicionar a trilha.');
     }
@@ -101,6 +104,7 @@ const AdministradorCronograma = () => {
       ));
       setFeedbackTrilha('Links adicionados com sucesso');
       setLinks([{ url: '', titulo: '', descricao: '' }]);
+      setIsModalOpen(false); 
     } catch (error) {
       setFeedbackTrilha('Erro ao adicionar os links.');
     }
@@ -136,8 +140,8 @@ const AdministradorCronograma = () => {
           <label>Matrícula do Aluno:</label>
           <input
             type="text"
-            value={matriculaAluno}
-            onChange={(e) => setMatriculaAluno(e.target.value)}
+            value={matriculaAlunoEvento}
+            onChange={(e) => setMatriculaAlunoEvento(e.target.value)}
             maxLength="8"
             required
           />
@@ -188,8 +192,8 @@ const AdministradorCronograma = () => {
           <label>Matrícula do Aluno:</label>
           <input
             type="text"
-            value={matriculaAluno}
-            onChange={(e) => setMatriculaAluno(e.target.value)}
+            value={matriculaAlunoTrilha}
+            onChange={(e) => setMatriculaAlunoTrilha(e.target.value)}
             maxLength="8"
             required
           />
@@ -198,43 +202,47 @@ const AdministradorCronograma = () => {
       </form>
       {feedbackTrilha && <p>{feedbackTrilha}</p>}
 
-      {/* Formulário para adicionar links */}
-      {trilhaId && (
-        <div>
-          <h2>Adicionar Links</h2>
-          <form onSubmit={handleSubmitLink}>
-            {links.map((link, index) => (
-              <div key={index}>
-                <label>URL:</label>
-                <input
-                  type="text"
-                  name="url"
-                  value={link.url}
-                  onChange={(e) => handleLinkChange(index, e)}
-                  required
-                />
-                <label>Título:</label>
-                <input
-                  type="text"
-                  name="titulo"
-                  value={link.titulo}
-                  onChange={(e) => handleLinkChange(index, e)}
-                  required
-                />
-                <label>Descrição:</label>
-                <textarea
-                  name="descricao"
-                  value={link.descricao}
-                  onChange={(e) => handleLinkChange(index, e)}
-                  required
-                />
-              </div>
-            ))}
-            <button type="button" onClick={handleAddLink}>Adicionar Link</button>
-            <button type="submit">Salvar Links</button>
-          </form>
-        </div>
-      )}
+      {/* Modal para adicionar links */}
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={() => setIsModalOpen(false)}
+        contentLabel="Adicionar Links"
+        className="modal"
+        overlayClassName="overlay"
+      >
+        <h2>Adicionar Links</h2>
+        <form onSubmit={handleSubmitLink}>
+          {links.map((link, index) => (
+            <div key={index}>
+              <label>URL:</label>
+              <input
+                type="text"
+                name="url"
+                value={link.url}
+                onChange={(e) => handleLinkChange(index, e)}
+                required
+              />
+              <label>Título:</label>
+              <input
+                type="text"
+                name="titulo"
+                value={link.titulo}
+                onChange={(e) => handleLinkChange(index, e)}
+                required
+              />
+              <label>Descrição:</label>
+              <textarea
+                name="descricao"
+                value={link.descricao}
+                onChange={(e) => handleLinkChange(index, e)}
+                required
+              />
+            </div>
+          ))}
+          <button type="button" onClick={handleAddLink}>Adicionar Link</button>
+          <button type="submit">Salvar Links</button>
+        </form>
+      </Modal>
 
       {/* Seção de notificações */}
       <h1>Notificações</h1>

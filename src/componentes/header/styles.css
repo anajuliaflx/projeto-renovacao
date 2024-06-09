@@ -1,5 +1,5 @@
 .header {
-    background-color: #8390C8;
+    background-color: #4C5682;
     width: 100%;
     height: 80px; /* Altura padrão para o cabeçalho */
     display: flex;
@@ -10,7 +10,7 @@
 }
 
 .logo {
-    height: 80px; /* Ajuste da altura da logo */
+    height: 50px; /* Ajuste da altura da logo */
     margin-right: 20px;
 }
 /* Responsividade */

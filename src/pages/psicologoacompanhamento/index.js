@@ -15,9 +15,6 @@ const PsicologoAcompanhamento = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [formData, setFormData] = useState({
         data_consulta: '',
-        estado_emocional: '',
-        sinais_ansiedade: '',
-        descricao_ansiedade: '',
         comportamento: '',
         expressao_sentimentos: '',
         dificuldades_expressao: '',
@@ -29,12 +26,10 @@ const PsicologoAcompanhamento = () => {
         explicacao_motivo: '',
         estrategias: '',
         descricao_estrategias: '',
-        disposto_a_implementar: '',
         metas: '',
         descricao_metas: '',
         progresso_metas: '',
         detalhes_progresso: '',
-        observacoes: '',
         avaliacao_geral: '',
         comentarios: ''
     });
@@ -58,7 +53,11 @@ const PsicologoAcompanhamento = () => {
             const fetchAppointments = async () => {
                 try {
                     const response = await axios.get(`https://projeto-renovacao.web.app/eventos?matricula_psicologo=${user.matricula}&matricula_aluno=${selectedStudent}`);
-                    setAppointments(response.data);
+                    const formattedAppointments = response.data.map(appointment => ({
+                        ...appointment,
+                        data_evento: formatDate(appointment.data_evento)
+                    }));
+                    setAppointments(formattedAppointments);
                 } catch (error) {
                     console.error('Erro ao buscar consultas do aluno:', error);
                 }
@@ -67,6 +66,19 @@ const PsicologoAcompanhamento = () => {
             fetchAppointments();
         }
     }, [selectedStudent, user.matricula]);
+
+    const formatDate = (date) => {
+        const d = new Date(date);
+        const day = String(d.getDate()).padStart(2, '0');
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const year = d.getFullYear();
+        return `${day}/${month}/${year}`;
+    };
+
+    const parseDate = (date) => {
+        const [day, month, year] = date.split('/');
+        return new Date(`${year}-${month}-${day}`);
+    };
 
     const handleFormChange = useCallback((e) => {
         const { name, value, type, checked } = e.target;
@@ -80,7 +92,7 @@ const PsicologoAcompanhamento = () => {
         e.preventDefault();
         try {
             // Converter a data para o formato YYYY-MM-DD
-            const data_consulta = new Date(formData.data_consulta).toISOString().split('T')[0];
+            const data_consulta = parseDate(formData.data_consulta).toISOString().split('T')[0];
 
             const response = await axios.post('https://projeto-renovacao.web.app/avaliacao', {
                 ...formData,
@@ -144,35 +156,8 @@ const PsicologoAcompanhamento = () => {
                 <label>Nome do Aluno:</label>
                 <input type="text" name="nome_aluno" value={studentName} readOnly />
             </div>
-
-            <h2>Seção 2: Estado Emocional</h2>
-            <div>
-                <label>Como o aluno se sentiu durante a consulta?</label>
-                <select name="estado_emocional" value={formData.estado_emocional} onChange={handleFormChange} required>
-                    <option value="">Selecione uma opção</option>
-                    <option value="Muito Triste">Muito Triste</option>
-                    <option value="Triste">Triste</option>
-                    <option value="Neutro">Neutro</option>
-                    <option value="Feliz">Feliz</option>
-                    <option value="Muito Feliz">Muito Feliz</option>
-                </select>
-            </div>
-            <div>
-                <label>O aluno demonstrou sinais de ansiedade ou estresse?</label>
-                <select name="sinais_ansiedade" value={formData.sinais_ansiedade} onChange={handleFormChange} required>
-                    <option value="">Selecione uma opção</option>
-                    <option value="Sim">Sim</option>
-                    <option value="Não">Não</option>
-                </select>
-            </div>
-            {formData.sinais_ansiedade === 'Sim' && (
-                <div>
-                    <label>Por favor, descreva com detalhes quais foram os sinais de ansiedade:</label>
-                    <textarea name="descricao_ansiedade" value={formData.descricao_ansiedade} onChange={handleFormChange} maxLength={50} required></textarea>
-                </div>
-            )}
-
-            <h2>Seção 3: Comportamento e Interação</h2>
+            
+            <h2>Seção 2: Comportamento e Interação</h2>
             <div>
                 <label>Como o aluno se comportou durante a sessão?</label>
                 <select name="comportamento" value={formData.comportamento} onChange={handleFormChange} required>
@@ -213,7 +198,7 @@ const PsicologoAcompanhamento = () => {
                 </div>
             )}
 
-            <h2>Seção 4: Reflexão e Arrependimento</h2>
+            <h2>Seção 3: Reflexão e Arrependimento</h2>
             <div>
                 <label>O aluno mostrou arrependimento por suas ações?</label>
                 <select name="arrependimento" value={formData.arrependimento} onChange={handleFormChange} required>
@@ -243,7 +228,7 @@ const PsicologoAcompanhamento = () => {
                 </div>
             )}
 
-            <h2>Seção 5: Estratégias de Mudança</h2>
+            <h2>Seção 4: Estratégias de Mudança</h2>
             <div>
                 <label>Quais estratégias foram discutidas para prevenir futuros incidentes de ciberbullying?</label>
                 <select name="estrategias" value={formData.estrategias} onChange={handleFormChange} required>
@@ -260,16 +245,8 @@ const PsicologoAcompanhamento = () => {
                     <textarea name="descricao_estrategias" value={formData.descricao_estrategias} onChange={handleFormChange} maxLength={50} required></textarea>
                 </div>
             )}
-            <div>
-                <label>O aluno parece disposto a implementar essas estratégias?</label>
-                <select name="disposto_a_implementar" value={formData.disposto_a_implementar} onChange={handleFormChange} required>
-                    <option value="">Selecione uma opção</option>
-                    <option value="Sim">Sim</option>
-                    <option value="Não">Não</option>
-                </select>
-            </div>
 
-            <h2>Seção 6: Metas e Progresso</h2>
+            <h2>Seção 5: Metas e Progresso</h2>
             <div>
                 <label>Quais metas foram estabelecidas para o aluno até a próxima consulta?</label>
                 <select name="metas" value={formData.metas} onChange={handleFormChange} required>
@@ -301,13 +278,7 @@ const PsicologoAcompanhamento = () => {
                 <textarea name="detalhes_progresso" value={formData.detalhes_progresso} onChange={handleFormChange} maxLength={50} required></textarea>
             </div>
 
-            <h2>Seção 7: Observações Adicionais</h2>
-            <div>
-                <label>Observações adicionais do psicólogo:</label>
-                <textarea name="observacoes" value={formData.observacoes} onChange={handleFormChange} maxLength={50}></textarea>
-            </div>
-
-            <h2>Seção 8: Avaliação Geral</h2>
+            <h2>Seção 6: Avaliação Geral</h2>
             <div>
                 <label>Avaliação Geral do Comportamento e Progresso do Aluno:</label>
                 <select name="avaliacao_geral" value={formData.avaliacao_geral} onChange={handleFormChange} required>

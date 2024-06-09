@@ -34,7 +34,7 @@ function Menu({ userRole }) {
                 <PeopleIcon /> Usuários
               </button>
             </Link>
-            <Link to={'/login'}>
+            <Link to={'/adminrelatorio'}>
               <button className='button'>
                 <AssessmentIcon /> Relatórios
               </button>

@@ -11,7 +11,7 @@ function AdministradorUsuario() {
     const [users, setUsers] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const usersPerPage = 2; //total de elementos por pagina
+    const usersPerPage = 10; //total de elementos por pagina
 
     useEffect(() => {
       fetchUsers(currentPage);
@@ -44,9 +44,11 @@ function AdministradorUsuario() {
     return (
       <div >
         <Menu userRole="administrador" />
-        <Link to={'/admincadastro'} className="botao-container">
-                    <button className='botao'>Cadastrar Usuário</button>
-                </Link>
+        <div className="botao-container">
+          <Link to={'/admincadastro'} className="botao-link">
+            <button className='botao'>Cadastrar Usuário</button>
+          </Link>
+        </div>
         <h2>Lista de Usuários</h2>
         {users.length > 0 ? (
           <div className="table-container">

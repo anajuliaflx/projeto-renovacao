@@ -175,9 +175,6 @@ verifyAndCreateTable('avaliacoes', `
     matricula_aluno VARCHAR(8) NOT NULL,
     matricula_psicologo VARCHAR(8) NOT NULL,
     data_consulta DATE NOT NULL,
-    estado_emocional ENUM('Muito Triste', 'Triste', 'Neutro', 'Feliz', 'Muito Feliz') NOT NULL,
-    sinais_ansiedade BOOLEAN NOT NULL,
-    descricao_ansiedade TEXT,
     comportamento ENUM('Muito Cooperativo', 'Cooperativo', 'Neutro', 'Não Cooperativo', 'Muito Não Cooperativo') NOT NULL,
     expressao_sentimentos BOOLEAN NOT NULL,
     dificuldades_expressao TEXT,
@@ -189,12 +186,10 @@ verifyAndCreateTable('avaliacoes', `
     explicacao_motivo TEXT,
     estrategias ENUM('Aumentar a comunicação', 'Monitorar o comportamento online', 'Educação sobre ciberbullying', 'Outras') NOT NULL,
     descricao_estrategias TEXT,
-    disposto_a_implementar BOOLEAN NOT NULL,
     metas ENUM('Melhorar a comunicação', 'Reduzir o uso de redes sociais', 'Participar de sessões de aconselhamento', 'Outras') NOT NULL,
     descricao_metas TEXT,
     progresso_metas ENUM('Não começou', 'Em progresso', 'Quase concluído', 'Concluído') NOT NULL,
     detalhes_progresso TEXT,
-    observacoes TEXT,
     avaliacao_geral ENUM('Muito Insatisfatório', 'Insatisfatório', 'Neutro', 'Satisfatório', 'Muito Satisfatório') NOT NULL,
     comentarios TEXT,
     FOREIGN KEY (matricula_aluno) REFERENCES usuarios(matricula),
@@ -763,12 +758,10 @@ app.post("/avaliacao", (req, res) => {
   }
 
   // Converter valores booleanos
-  data.sinais_ansiedade = data.sinais_ansiedade === 'Sim' ? 1 : 0;
   data.expressao_sentimentos = data.expressao_sentimentos === 'Sim' ? 1 : 0;
   data.reconhecimento_impacto = data.reconhecimento_impacto === 'Sim' ? 1 : 0;
   data.arrependimento = data.arrependimento === 'Sim' ? 1 : 0;
   data.identificacao_motivo = data.identificacao_motivo === 'Sim' ? 1 : 0;
-  data.disposto_a_implementar = data.disposto_a_implementar === 'Sim' ? 1 : 0;
 
   db.query("INSERT INTO avaliacoes SET ?", data, (err, result) => {
     if (err) {
@@ -778,6 +771,62 @@ app.post("/avaliacao", (req, res) => {
       res.send({ msg: "Avaliação salva com sucesso" });
     }
   });
+});
+
+// Rota para obter avaliações por aluno
+app.get("/avaliacoes/:matricula_aluno", (req, res) => {
+  const matricula_aluno = req.params.matricula_aluno;
+  db.query(
+    "SELECT a.*, u.nome AS aluno_nome FROM avaliacoes a JOIN usuarios u ON a.matricula_aluno = u.matricula WHERE a.matricula_aluno = ?",
+    [matricula_aluno],
+    (err, result) => {
+      if (err) {
+        res.status(500).send(err);
+        return;
+      }
+      res.send(result);
+    }
+  );
+});
+// Rota para buscar avaliações por aluno e data
+app.get("/avaliacoes/:matricula", (req, res) => {
+  const { matricula } = req.params;
+  const { data } = req.query;
+  let query = "SELECT * FROM avaliacoes WHERE matricula_aluno = ?";
+  const queryParams = [matricula];
+
+  if (data) {
+    query += " AND data_consulta = ?";
+    queryParams.push(data);
+  }
+
+  db.query(query, queryParams, (err, result) => {
+    if (err) {
+      console.error("Erro ao buscar avaliações:", err);
+      res.status(500).send(err);
+      return;
+    }
+    res.send(result);
+  });
+});
+
+// Rota para buscar datas de eventos para um aluno
+app.get("/eventos-datas/:matricula_aluno", (req, res) => {
+  const { matricula_aluno } = req.params;
+
+  db.query(
+    "SELECT DISTINCT data_evento FROM eventos WHERE matricula_aluno = ?",
+    [matricula_aluno],
+    (err, result) => {
+      if (err) {
+        console.error("Erro ao buscar datas de eventos:", err);
+        res.status(500).send(err);
+        return;
+      }
+      const dates = result.map(row => row.data_evento);
+      res.send(dates);
+    }
+  );
 });
 
 /*app.listen(3001, () => {

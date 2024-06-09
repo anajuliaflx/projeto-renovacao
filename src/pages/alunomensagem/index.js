@@ -14,7 +14,7 @@ const AlunoMensagem = () => {
   const [mensagensRespostas, setMensagensRespostas] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const limit = 3;
+  const limit = 10;
 
   useEffect(() => {
     const fetchMensagensRespostas = async () => {
