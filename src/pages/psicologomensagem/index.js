@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import Menu from '../../componentes/menu';
 import { UserContext } from "../../contexts/UserContext";
+import styles from './mensagemp.module.css'; 
 
 const PsicologoMensagem = () => {
     const { user } = useContext(UserContext);
@@ -62,14 +63,14 @@ const PsicologoMensagem = () => {
     };
 
     return (
-        <div>
+        <div className={styles.container}>
             <Menu userRole="psicologo" />
             <h1>Mensagens para Psicólogo</h1>
-            {error && <p>{error}</p>}
+            {error && <p className={styles.error}>{error}</p>}
             {mensagens.length > 0 ? (
-                <ul>
+                <ul className={styles.messageList}>
                     {mensagens.map((msg, index) => (
-                        <li key={`${msg.id}-${index}`}>
+                        <li key={`${msg.id}-${index}`} className={styles.messageItem}>
                             <p><strong>De:</strong> {msg.remetente_nome}</p>
                             <p>{msg.mensagem}</p>
                             <p><em>{new Date(msg.data_envio).toLocaleString()}</em></p>
@@ -84,17 +85,18 @@ const PsicologoMensagem = () => {
                                         value={respostas[msg.id] || ''}
                                         onChange={(e) => handleRespostaChange(msg.id, e.target.value)}
                                         placeholder="Escreva sua resposta aqui"
+                                        className={styles.textarea}
                                     />
-                                    <button onClick={() => handleResponder(msg.id)}>Responder</button>
+                                    <button onClick={() => handleResponder(msg.id)} className={styles.button}>Responder</button>
                                 </>
                             )}
                         </li>
                     ))}
                 </ul>
             ) : (
-                <p>Nenhuma mensagem encontrada.</p>
+                <p className={styles.noMessage}>Nenhuma mensagem encontrada.</p>
             )}
-            <div>
+            <div className={styles.pagination}>
                 <button onClick={() => handlePageChange(page - 1)} disabled={page === 1}>Anterior</button>
                 <span>Página {page} de {totalPages}</span>
                 <button onClick={() => handlePageChange(page + 1)} disabled={page === totalPages}>Próxima</button>

@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import { ErrorMessage, Formik, Form, Field } from "formik";
 import PersonIcon from '@mui/icons-material/Person';
 import EmailIcon from '@mui/icons-material/Email';
-import PasswordIcon from '@mui/icons-material/Password';
+import LockIcon from '@mui/icons-material/Lock';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import PeopleIcon from '@mui/icons-material/People';
 import Menu from '../../componentes/menu';
+import styles from './cadastro.module.css';
 import './styles.css';
 import Axios from "axios";
 import * as yup from "yup";
@@ -16,7 +17,7 @@ const apiUrl = process.env.REACT_APP_API_URL;
 function AdministradorCadastro() {
     const [userExists, setUserExists] = useState(false);
     const [errorMsg, setErrorMsg] = useState("");
-    const handleRegister = (values, { resetForm }) => {    
+    const handleRegister = (values, { resetForm }) => {
         Axios.post(`https://projeto-renovacao.web.app/admincadastro`, {
             nome: values.nome,
             email: values.email,
@@ -50,11 +51,11 @@ function AdministradorCadastro() {
     });
 
     return (
-        <div className="container">
+        <div className={styles.container}>
             <Menu userRole="administrador" />
             <h1>Cadastro</h1>
             <Formik
-                initialValues={{ // Definindo valores iniciais para todos os campos
+                initialValues={{
                     nome: '',
                     email: '',
                     senha: '',
@@ -65,63 +66,63 @@ function AdministradorCadastro() {
                 onSubmit={handleRegister}
                 validationSchema={validationsRegister}
             >
-                <Form className='login-form'>
-                    <div className='login-form-group'>
-                        <div className="input-with-icon">
-                            <PersonIcon className="icon"/>
-                            <Field name="nome" className="form-field" placeholder="Nome Completo" />
+                <Form className={styles.loginForm}>
+                    <div className={styles.loginFormGroup}>
+                        <div className={styles.inputWithIcon}>
+                            <PersonIcon className={styles.icon} />
+                            <Field name="nome" className={styles.formField} placeholder="Nome Completo" />
                         </div>
-                        <ErrorMessage component="span" name="nome" className='form-error' />
+                        <ErrorMessage component="span" name="nome" className={styles.formError} />
                     </div>
-                    <div className='login-form-group'>
-                        <div className="input-with-icon">
-                            <EmailIcon className="icon"/>
-                            <Field name="email" className="form-field" placeholder="Email" />
+                    <div className={styles.loginFormGroup}>
+                        <div className={styles.inputWithIcon}>
+                            <EmailIcon className={styles.icon} />
+                            <Field name="email" className={styles.formField} placeholder="Email" />
                         </div>
-                        <ErrorMessage component="span" name="email" className='form-error' />
+                        <ErrorMessage component="span" name="email" className={styles.formError} />
                     </div>
-                    <div className='login-form-group'>
-                        <div className="input-with-icon">
-                            <PasswordIcon className="icon"/>
-                            <Field name="senha" className="form-field" type="password" placeholder="Senha" />
+                    <div className={styles.loginFormGroup}>
+                        <div className={styles.inputWithIcon}>
+                            <LockIcon className={styles.icon} />
+                            <Field name="senha" className={styles.formField} type="password" placeholder="Senha" />
                         </div>
-                        <ErrorMessage component="span" name="senha" className='form-error' />
+                        <ErrorMessage component="span" name="senha" className={styles.formError} />
                     </div>
-                    <div className='login-form-group'>
-                        <div className="input-with-icon">
-                            <PasswordIcon className="icon"/>
-                            <Field name="confirmsenha" className="form-field" type="password" placeholder="Confirme sua senha" />
+                    <div className={styles.loginFormGroup}>
+                        <div className={styles.inputWithIcon}>
+                            <LockIcon className={styles.icon} />
+                            <Field name="confirmsenha" className={styles.formField} type="password" placeholder="Confirme sua senha" />
                         </div>
-                        <ErrorMessage component="span" name="confirmsenha" className='form-error' />
+                        <ErrorMessage component="span" name="confirmsenha" className={styles.formError} />
                     </div>
-                    <div className='login-form-group'>
-                        <div className="input-with-icon">
-                            <AssignmentIndIcon className="icon"/>
-                            <Field name="matricula" className="form-field" placeholder="Matrícula" maxLength="8" />
+                    <div className={styles.loginFormGroup}>
+                        <div className={styles.inputWithIcon}>
+                            <AssignmentIndIcon className={styles.icon} />
+                            <Field name="matricula" className={styles.formField} placeholder="Matrícula" maxLength="8" />
                         </div>
-                        <ErrorMessage component="span" name="matricula" className='form-error' />
+                        <ErrorMessage component="span" name="matricula" className={styles.formError} />
                     </div>
-                    <div className='login-form-group'>
-                        <div className="input-with-icon">
-                            <PeopleIcon className="icon"/>
-                            <Field as="select" name="tipoUsuario" className="form-field">
-                            <option value="">Escolha o tipo de usuário</option>
-                            <option value="aluno">Aluno</option>
-                            <option value="administrador">Administrador</option>
-                            <option value="psicologo">Psicologo</option>
-                        </Field>
+                    <div className={styles.loginFormGroup}>
+                        <div className={styles.inputWithIcon}>
+                            <PeopleIcon className={styles.icon} />
+                            <Field as="select" name="tipoUsuario" className={styles.formField}>
+                                <option value="">Escolha o tipo de usuário</option>
+                                <option value="aluno">Aluno</option>
+                                <option value="administrador">Administrador</option>
+                                <option value="psicologo">Psicologo</option>
+                            </Field>
                         </div>
-                        <ErrorMessage component="span" name="tipoUsuario" className='form-error' />
+                        <ErrorMessage component="span" name="tipoUsuario" className={styles.formError} />
                     </div>
-                    {userExists && <span className="form-error">{errorMsg}</span>}
-                    <button className="button" type="submit">
+                    {userExists && <span className={styles.formError}>{errorMsg}</span>}
+                    <button className={styles.button} type="submit">
                         Cadastrar
                     </button>
                 </Form>
 
             </Formik>
             <Link to={'/adminusuario'}>
-                <button className='button'>
+                <button className={styles.buttonCancel}>
                     Cancelar
                 </button>
             </Link>

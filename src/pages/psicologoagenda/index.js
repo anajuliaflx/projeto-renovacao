@@ -6,6 +6,7 @@ import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import './styles.css';
+import styles from './agendap.module.css';
 
 const localizer = momentLocalizer(moment);
 const apiUrl = process.env.REACT_APP_API_URL;
@@ -35,10 +36,10 @@ const PsicologoAgenda = () => {
   }, [user]);
 
   return (
-    <div>
-      <Menu userRole={user ? user.tipoUsuario : 'visitante'} />
-      <h1>Minha Agenda</h1>
-      <div className="calendar-container">
+    <div className={styles.container}>
+      <Menu userRole="psicologo" />
+      <h1 className={styles.header}>Minha Agenda</h1>
+      <div className={styles.calendarContainer}>
         <Calendar
           localizer={localizer}
           events={eventos}

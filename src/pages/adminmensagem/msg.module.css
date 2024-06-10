@@ -1,0 +1,140 @@
+.body {
+    font-family: Arial, sans-serif;
+    margin: 100;
+    padding: 100;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.header {
+    color: black;
+    padding: 1em;
+    text-align: center;
+}
+
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.error {
+    color: red;
+}
+
+.ul {
+    list-style-type: none;
+    padding: 100;
+    width: 60%;
+}
+
+.ul li {
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin: 10px 0;
+    padding: 20px;
+    width: 100%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #3b5998;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 5px;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+    background-color: #333;
+}
+
+.feedback {
+    color: black;
+}
+
+/*.footer {
+    color: #fff;
+    padding: 1em;
+    width: 100%;
+    text-align: center;
+    background-color: #3b5998;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}*/
+
+.noMessagesContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.noMessagesText {
+    margin-bottom: 20px;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+ /* Tamanhos pequenos (telefones pequenos e alguns tablets em modo retrato) */
+ @media only screen and (max-width: 576px) {
+    .form-field {
+      width: 90%; /* Reduz a largura do campo em telas menores */
+    }
+  }
+
+  /* Tamanhos médios (tablets em modo paisagem e alguns laptops) */
+  @media only screen and (min-width: 577px) and (max-width: 768px) {
+    .form-field {
+      width: 70%; /* Reduz a largura do campo em telas médias */
+    }
+  }
+
+  /* Tamanhos grandes (desktops e laptops maiores) */
+  @media only screen and (min-width: 769px) and (max-width: 992px) {
+    .form-field {
+      width: 60%; /* Reduz a largura do campo em telas grandes */
+    }
+  }
+
+  /* Tamanhos extra grandes (telas maiores, como monitores widescreen) */
+  @media only screen and (min-width: 993px) and (max-width: 1200px) {
+    .form-field {
+      width: 50%; /* Reduz a largura do campo em telas extra grandes */
+    }
+  }
+
+  /* Tamanhos extra extra grandes (telas muito grandes, como monitores ultrawide) */
+  @media only screen and (min-width: 1201px) {
+    .form-field {
+      width: 40%; /* Reduz a largura do campo em telas extra extra grandes */
+    }
+  }

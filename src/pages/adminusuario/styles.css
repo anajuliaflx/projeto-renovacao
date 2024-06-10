@@ -117,8 +117,8 @@ h2{
 
 .botao {
   padding: 10px 20px;
-  border-radius: 25px; /* Ajusta a borda arredondada */
-  background-color: #0395BA;
+  border-radius: 5px; /* Ajusta a borda arredondada */
+  background-color: #3B5998;
   border: none;
   color: #ffffff;
   cursor: pointer;

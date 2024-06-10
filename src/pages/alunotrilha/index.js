@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
+import styles from './trilha.module.css';
 import Menu from '../../componentes/menu';
 import { UserContext } from '../../contexts/UserContext';
 
@@ -51,46 +52,46 @@ const AlunoTrilha = () => {
   };
 
   return (
-    <div>
+    <div className={styles.body}>
       <Menu userRole="aluno" />
-      <h1>Trilhas de Aprendizagem</h1>
+      <h1 className={styles.headerLarge}>Trilhas de Aprendizagem</h1>
       {currentTrilhaId ? (
         <div>
-          <button onClick={() => setCurrentTrilhaId(null)}>Voltar</button>
+          <button onClick={() => setCurrentTrilhaId(null)} className={styles.buttonBack}>Voltar</button>
           {links.length > 0 ? (
             <div>
               {links.map((link) => (
-                <div key={link.id} className="link-bloco">
+                <div key={link.id} className={styles.linkBloco}>
                   <h3>{link.titulo}</h3>
                   <p>{link.descricao}</p>
                   <a href={link.url} target="_blank" rel="noopener noreferrer">Acessar Conteúdo</a>
                   {link.assistido ? (
                     <p>Já assistido</p>
                   ) : (
-                    <button onClick={() => handleMarcarAssistido(link.id)}>Marcar como assistido</button>
+                    <button onClick={() => handleMarcarAssistido(link.id)} className={styles.buttonMark}>Marcar como assistido</button>
                   )}
                 </div>
               ))}
             </div>
           ) : (
-            <p>Nenhum link encontrado.</p>
+            <p className={styles.noData}>Nenhum link encontrado.</p>
           )}
-          {feedback && <p>{feedback}</p>}
+          {feedback && <p className={styles.feedback}>{feedback}</p>}
         </div>
       ) : (
         <div>
           {trilhas.length > 0 ? (
             <div>
               {trilhas.map((trilha) => (
-                <div key={trilha.id} className="trilha-bloco">
+                <div key={trilha.id} className={styles.trilhaBloco}>
                   <h2>{trilha.titulo}</h2>
                   <p>{trilha.descricao}</p>
-                  <button onClick={() => fetchLinks(trilha.id)}>Entrar</button>
+                  <button onClick={() => fetchLinks(trilha.id)} className={styles.button}>Entrar</button>
                 </div>
               ))}
             </div>
           ) : (
-            <p>Nenhuma trilha encontrada.</p>
+            <p className={styles.noData}>Nenhuma trilha encontrada.</p>
           )}
         </div>
       )}

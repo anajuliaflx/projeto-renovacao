@@ -3,6 +3,7 @@ import { UserContext } from "../../contexts/UserContext";
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import Menu from '../../componentes/menu';
+import styles from './agenda.module.css';
 import moment from 'moment';
 import axios from "axios";
 import './styles.css';
@@ -35,12 +36,10 @@ const AlunoAgenda = () => {
   }, [user]);
 
   return (
-    <div>
-      <div className="menu">
+    <div className={styles.container}>
       <Menu userRole="aluno" />
-      </div>
-      <h1>Minha Agenda</h1>
-      <div className="calendar-container">
+      <h1 className={styles.header}>Minha Agenda</h1>
+      <div className={styles.calendarContainer}>
         <Calendar
           localizer={localizer}
           events={eventos}

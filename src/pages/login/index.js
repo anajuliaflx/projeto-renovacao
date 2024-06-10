@@ -6,6 +6,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import React, { useContext } from "react";
 import Axios from "axios";
 import * as yup from "yup";
+import styles from './login.module.css';
 import "./styles.css";
 
 function Login() {
@@ -57,30 +58,30 @@ function Login() {
     });
 
     return (
-        <div className="container">
-            <h1>Login</h1>
+        <div className={styles.container}>
+            <h1 className={styles.title}>Login</h1>
             <Formik initialValues={{ email: '', senha: '' }} onSubmit={handleLogin} validationSchema={validationsLogin}>
-                <Form className="login-form">
-                    <div className="login-form-group">
-                        <div className="input-icon">
-                            <EmailIcon />
-                            <Field name="email" className="form-field" placeholder="Email" />
+                <Form className={styles.loginForm}>
+                    <div className={styles.loginFormGroup}>
+                        <div className={styles.inputWithIcon}>
+                            <EmailIcon className={styles.icon} />
+                            <Field name="email" className={styles.formField} placeholder="Email" />
                         </div>
-                        <ErrorMessage component="span" name="email" className="form-error" />
+                        <ErrorMessage component="span" name="email" className={styles.formError} />
                     </div>
-                    <div className="login-form-group">
-                        <div className="input-icon">
-                            <LockIcon />
-                            <Field name="senha" className="form-field" type="password" placeholder="Senha" />
+                    <div className={styles.loginFormGroup}>
+                        <div className={styles.inputWithIcon}>
+                            <LockIcon className={styles.icon} />
+                            <Field name="senha" className={styles.formField} type="password" placeholder="Senha" />
                         </div>
-                        <ErrorMessage component="span" name="senha" className="form-error" />
+                        <ErrorMessage component="span" name="senha" className={styles.formError} />
                     </div>
-                    <button className="button" type="submit">Login</button>
+                    <button className={styles.button} type="submit">Login</button>
                 </Form>
             </Formik>
             <div className='botaocon'>
                 <Link to={'/'}>
-                    <button className='button'>Voltar</button>
+                    <button className={styles.button}>Voltar</button>
                 </Link>
             </div>
         </div>

@@ -736,6 +736,47 @@ app.get("/notificacoes", (req, res) => {
   );
 });
 
+// Rota para adicionar uma notificação
+app.post("/adicionar-notificacao", (req, res) => {
+  const { mensagem, matricula_aluno, titulo_trilha } = req.body;
+
+  db.query(
+    "INSERT INTO notificacoes (mensagem, matricula_aluno, titulo_trilha) VALUES (?, ?, ?)",
+    [mensagem, matricula_aluno, titulo_trilha],
+    (err, result) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.send({ msg: "Notificação adicionada com sucesso" });
+      }
+    }
+  );
+});
+
+// Exemplo de função para adicionar notificação ao concluir uma trilha
+const adicionarNotificacaoTrilhaConcluida = (matricula_aluno, titulo_trilha) => {
+  const mensagem = `O aluno ${matricula_aluno} concluiu a trilha "${titulo_trilha}".`;
+
+  db.query(
+    "INSERT INTO notificacoes (mensagem, matricula_aluno, titulo_trilha) VALUES (?, ?, ?)",
+    [mensagem, matricula_aluno, titulo_trilha],
+    (err, result) => {
+      if (err) {
+        console.error("Erro ao adicionar notificação:", err);
+      } else {
+        console.log("Notificação adicionada com sucesso");
+      }
+    }
+  );
+};
+
+// Chamar a função de adicionar notificação ao concluir uma trilha
+app.post("/marcar-trilha-concluida", (req, res) => {
+  const { matricula_aluno, titulo_trilha } = req.body;
+  adicionarNotificacaoTrilhaConcluida(matricula_aluno, titulo_trilha);
+  res.send({ msg: "Trilha marcada como concluída e notificação enviada" });
+});
+
 // Filtrando apenas alunos
 app.get("/filtrar-alunos", (req, res) => {
   db.query("SELECT * FROM usuarios WHERE tipoUsuario = 'aluno'", (err, result) => {
@@ -788,21 +829,19 @@ app.get("/avaliacoes/:matricula_aluno", (req, res) => {
     }
   );
 });
-// Rota para buscar avaliações por aluno e data
-app.get("/avaliacoes/:matricula", (req, res) => {
+
+// Rota para buscar avaliações por data e aluno
+app.get("/avaliacoes-datas/:matricula", (req, res) => {
   const { matricula } = req.params;
-  const { data } = req.query;
-  let query = "SELECT * FROM avaliacoes WHERE matricula_aluno = ?";
-  const queryParams = [matricula];
+  const query = `
+    SELECT DISTINCT data_consulta
+    FROM avaliacoes
+    WHERE matricula_aluno = ?
+    ORDER BY data_consulta ASC
+  `;
 
-  if (data) {
-    query += " AND data_consulta = ?";
-    queryParams.push(data);
-  }
-
-  db.query(query, queryParams, (err, result) => {
+  db.query(query, [matricula], (err, result) => {
     if (err) {
-      console.error("Erro ao buscar avaliações:", err);
       res.status(500).send(err);
       return;
     }
@@ -810,23 +849,39 @@ app.get("/avaliacoes/:matricula", (req, res) => {
   });
 });
 
-// Rota para buscar datas de eventos para um aluno
-app.get("/eventos-datas/:matricula_aluno", (req, res) => {
-  const { matricula_aluno } = req.params;
+app.get("/avaliacoes/:matricula", (req, res) => {
+  const { matricula } = req.params;
+  const { data } = req.query;
+  let query = `
+    SELECT *
+    FROM avaliacoes
+    WHERE matricula_aluno = ?
+  `;
+  const params = [matricula];
 
-  db.query(
-    "SELECT DISTINCT data_evento FROM eventos WHERE matricula_aluno = ?",
-    [matricula_aluno],
-    (err, result) => {
-      if (err) {
-        console.error("Erro ao buscar datas de eventos:", err);
-        res.status(500).send(err);
-        return;
-      }
-      const dates = result.map(row => row.data_evento);
-      res.send(dates);
+  if (data) {
+    query += " AND data_consulta = ?";
+    params.push(data);
+  }
+
+  db.query(query, params, (err, result) => {
+    if (err) {
+      res.status(500).send(err);
+      return;
     }
-  );
+    res.send(result);
+  });
+});
+
+app.get("/eventos-datas/:matricula", (req, res) => {
+  const { matricula } = req.params;
+  db.query("SELECT DISTINCT data_consulta FROM avaliacoes WHERE matricula_aluno = ?", [matricula], (err, result) => {
+    if (err) {
+      res.status(500).send(err);
+      return;
+    }
+    res.send(result.map(r => r.data_consulta));
+  });
 });
 
 /*app.listen(3001, () => {

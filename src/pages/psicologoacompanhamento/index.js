@@ -3,6 +3,7 @@ import axios from 'axios';
 import { UserContext } from '../../contexts/UserContext';
 import Modal from 'react-modal';
 import './styles.css';
+import styles from './acompanhamento.module.css'; 
 import Menu from '../../componentes/menu';
 
 Modal.setAppElement('#root');
@@ -303,10 +304,10 @@ const PsicologoAcompanhamento = () => {
     );
 
     return (
-        <div className="acompanhamento-psico">
+        <div className={styles.acompanhamentoPsico}>
             <Menu userRole="psicologo" />
             <h1>Acompanhamento do Psicólogo</h1>
-            <div className="lista-aluno">
+            <div className={styles.listaAluno}>
                 {renderStudentList()}
             </div>
             <Modal
@@ -314,7 +315,7 @@ const PsicologoAcompanhamento = () => {
                 onRequestClose={() => setIsModalOpen(false)}
                 contentLabel="Avaliar Aluno"
                 className="modal"
-                overlayClassName="overlay"
+                overlayClassName={styles.overlay}
             >
                 {selectedStudent && renderEvaluationForm()}
             </Modal>

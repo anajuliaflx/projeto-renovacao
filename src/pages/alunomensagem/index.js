@@ -18,19 +18,19 @@ const AlunoMensagem = () => {
 
   useEffect(() => {
     const fetchMensagensRespostas = async () => {
-      try {
-        const response = await axios.get(`https://projeto-renovacao.web.app/mensagens-respostas/${user.matricula}?page=${page}&limit=${limit}`);
-        setMensagensRespostas(response.data.messages);
-        setTotalPages(response.data.totalPages);
-      } catch (error) {
-        console.error("Erro ao buscar mensagens e respostas:", error);
+      if (user && user.matricula) {
+        try {
+          const response = await axios.get(`https://projeto-renovacao.web.app/mensagens-respostas/${user.matricula}?page=${page}&limit=${limit}`);
+          setMensagensRespostas(response.data.messages);
+          setTotalPages(response.data.totalPages);
+        } catch (error) {
+          console.error("Erro ao buscar mensagens e respostas:", error);
+        }
       }
     };
 
-    if (user.matricula) {
-      fetchMensagensRespostas();
-    }
-  }, [user.matricula, page]);
+    fetchMensagensRespostas();
+  }, [user, page]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -74,6 +74,10 @@ const AlunoMensagem = () => {
       setPage(newPage);
     }
   };
+
+  if (!user) {
+    return <div>Carregando...</div>; // Ou algum outro indicador de carregamento
+  }
 
   return (
     <div className="container1">

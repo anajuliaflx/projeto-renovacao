@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import Menu from '../../componentes/menu';
 import { UserContext } from "../../contexts/UserContext";
+import styles from './msg.module.css';
 
 const AdministradorMensagem = () => {
     const { user } = useContext(UserContext);
@@ -62,12 +63,14 @@ const AdministradorMensagem = () => {
     };
 
     return (
-        <div>
+        <div className={styles.body}>
             <Menu userRole="administrador" />
-            <h1>Mensagens para Administrador</h1>
-            {error && <p>{error}</p>}
+            <header className={styles.header}>
+                <h1>Mensagens para o Administrador</h1>
+            </header>
+            {error && <p className={styles.error}>{error}</p>}
             {mensagens.length > 0 ? (
-                <ul>
+                 <ul className={styles.ul}>
                     {mensagens.map((msg, index) => (
                         <li key={`${msg.id}-${index}`}>
                             <p><strong>De:</strong> {msg.remetente_nome}</p>
@@ -92,14 +95,14 @@ const AdministradorMensagem = () => {
                     ))}
                 </ul>
             ) : (
-                <p>Nenhuma mensagem encontrada.</p>
+                <p className={styles.noMessagesText}>Nenhuma mensagem encontrada.</p>
             )}
-            <div>
+            <div className={styles.pagination}>
                 <button onClick={() => handlePageChange(page - 1)} disabled={page === 1}>Anterior</button>
                 <span>Página {page} de {totalPages}</span>
                 <button onClick={() => handlePageChange(page + 1)} disabled={page === totalPages}>Próxima</button>
             </div>
-            {feedback && <p>{feedback}</p>}
+            {feedback && <p className={styles.feedback}>{feedback}</p>}
         </div>
     );
 };

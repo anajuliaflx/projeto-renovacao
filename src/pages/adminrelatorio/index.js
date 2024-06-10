@@ -43,7 +43,9 @@ const AdministradorRelatorio = () => {
 
   const handleFetchAvaliacoes = async () => {
     try {
-      const response = await axios.get(`https://projeto-renovacao.web.app/avaliacoes/${selectedStudent}?data=${selectedDate}`);
+      const response = await axios.get(`https://projeto-renovacao.web.app/avaliacoes/${selectedStudent}`, {
+        params: { data: selectedDate }
+      });
       setAvaliacoes(response.data);
     } catch (error) {
       console.error('Erro ao buscar avaliações:', error);
@@ -55,6 +57,11 @@ const AdministradorRelatorio = () => {
     setAvaliacoes([]);
     setSelectedDate('');
     setAvailableDates([]);
+  };
+
+  const filterAvaliacoesByDate = () => {
+    if (!selectedDate) return avaliacoes;
+    return avaliacoes.filter(avaliacao => avaliacao.data_consulta === selectedDate);
   };
 
   return (
@@ -109,7 +116,7 @@ const AdministradorRelatorio = () => {
           </select>
           <button onClick={handleFetchAvaliacoes}>Buscar Avaliações</button>
         </div>
-        {avaliacoes.length > 0 ? (
+        {filterAvaliacoesByDate().length > 0 ? (
           <table className="avaliacoes-table">
             <thead>
               <tr>
@@ -134,7 +141,7 @@ const AdministradorRelatorio = () => {
               </tr>
             </thead>
             <tbody>
-              {avaliacoes.map((avaliacao) => (
+            {filterAvaliacoesByDate().map((avaliacao) => (
                 <tr key={avaliacao.id}>
                   <td>{new Date(avaliacao.data_consulta).toLocaleDateString()}</td>
                   <td>{avaliacao.comportamento}</td>

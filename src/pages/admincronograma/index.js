@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import Modal from 'react-modal';
 import Menu from '../../componentes/menu';
+import styles from './cronograma.module.css';
 import { UserContext } from "../../contexts/UserContext";
 
 const apiUrl = process.env.REACT_APP_API_URL;
@@ -21,20 +22,6 @@ const AdministradorCronograma = () => {
   const [feedbackTrilha, setFeedbackTrilha] = useState('');
   const [matriculaAlunoTrilha, setMatriculaAlunoTrilha] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [notificacoes, setNotificacoes] = useState([]);
-
-  useEffect(() => {
-    fetchNotificacoes();
-  }, []);
-
-  const fetchNotificacoes = async () => {
-    try {
-      const response = await axios.get(`https://projeto-renovacao.web.app/notificacoes`);
-      setNotificacoes(response.data);
-    } catch (error) {
-      console.error('Erro ao buscar notificações:', error);
-    }
-  };
 
   const handleSubmitEvento = async (e) => {
     e.preventDefault();
@@ -94,7 +81,7 @@ const AdministradorCronograma = () => {
     }
 
     try {
-      await Promise.all(links.map(link => 
+      await Promise.all(links.map(link =>
         axios.post(`https://projeto-renovacao.web.app/adicionar-link`, {
           url: link.url,
           titulo: link.titulo,
@@ -122,85 +109,99 @@ const AdministradorCronograma = () => {
   };
 
   return (
-    <div>
+    <div className={styles.body}>
       <Menu userRole="administrador" />
+      <header className={styles.header}>
+        <h1>Administrador Cronograma</h1>
+      </header>
       {/* Formulário para adicionar eventos */}
-      <h1>Adicionar Evento</h1>
-      <form onSubmit={handleSubmitEvento}>
-        <div>
-          <label>Data do Evento:</label>
-          <input
-            type="date"
-            value={dataEvento}
-            onChange={(e) => setDataEvento(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Matrícula do Aluno:</label>
-          <input
-            type="text"
-            value={matriculaAlunoEvento}
-            onChange={(e) => setMatriculaAlunoEvento(e.target.value)}
-            maxLength="8"
-            required
-          />
-        </div>
-        <div>
-          <label>Matrícula do Psicólogo:</label>
-          <input
-            type="text"
-            value={matriculaPsicologo}
-            onChange={(e) => setMatriculaPsicologo(e.target.value)}
-            maxLength="8"
-            required
-          />
-        </div>
-        <div>
-          <label>Descrição do Evento:</label>
-          <textarea
-            value={descricaoEvento}
-            onChange={(e) => setDescricaoEvento(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Adicionar Evento</button>
-      </form>
-      {feedbackEvento && <p>{feedbackEvento}</p>}
+      <div className={styles.formContainer}>
+        <h2>Adicionar Evento</h2>
+        <form onSubmit={handleSubmitEvento} className={styles.form}>
+          <div>
+            <label>Data do Evento:</label>
+            <input
+              type="date"
+              value={dataEvento}
+              onChange={(e) => setDataEvento(e.target.value)}
+              required
+              className={styles.inputDate}
+            />
+          </div>
+          <div>
+            <label>Matrícula do Aluno:</label>
+            <input
+              type="text"
+              value={matriculaAlunoEvento}
+              onChange={(e) => setMatriculaAlunoEvento(e.target.value)}
+              maxLength="8"
+              required
+              className={styles.inputText}
+            />
+          </div>
+          <div>
+            <label>Matrícula do Psicólogo:</label>
+            <input
+              type="text"
+              value={matriculaPsicologo}
+              onChange={(e) => setMatriculaPsicologo(e.target.value)}
+              maxLength="8"
+              required
+              className={styles.inputText}
+            />
+          </div>
+          <div>
+            <label>Descrição do Evento:</label>
+            <textarea
+              value={descricaoEvento}
+              onChange={(e) => setDescricaoEvento(e.target.value)}
+              required
+              className={styles.textarea}
+            />
+          </div>
+          <button type="submit" className={styles.submitButton}>Adicionar Evento</button>
+        </form>
+        {feedbackEvento && <p>{feedbackEvento}</p>}
+      </div>
 
       {/* Formulário para adicionar trilhas */}
-      <h1>Adicionar Trilha</h1>
-      <form onSubmit={handleSubmitTrilha}>
-        <div>
-          <label>Título:</label>
-          <input
-            type="text"
-            value={tituloTrilha}
-            onChange={(e) => setTituloTrilha(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Descrição:</label>
-          <textarea
-            value={descricaoTrilha}
-            onChange={(e) => setDescricaoTrilha(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Matrícula do Aluno:</label>
-          <input
-            type="text"
-            value={matriculaAlunoTrilha}
-            onChange={(e) => setMatriculaAlunoTrilha(e.target.value)}
-            maxLength="8"
-            required
-          />
-        </div>
-        <button type="submit">Adicionar Trilha</button>
-      </form>
-      {feedbackTrilha && <p>{feedbackTrilha}</p>}
+      <div className={styles.formContainer}>
+        <h2>Adicionar Trilha</h2>
+        <form onSubmit={handleSubmitTrilha} className={styles.form}>
+          <div>
+            <label>Título:</label>
+            <input
+              type="text"
+              value={tituloTrilha}
+              onChange={(e) => setTituloTrilha(e.target.value)}
+              required
+              className={styles.inputText}
+            />
+          </div>
+          <div>
+            <label>Descrição:</label>
+            <textarea
+              value={descricaoTrilha}
+              onChange={(e) => setDescricaoTrilha(e.target.value)}
+              required
+              className={styles.textarea}
+            />
+          </div>
+          <div>
+            <label>Matrícula do Aluno:</label>
+            <input
+              type="text"
+              value={matriculaAlunoTrilha}
+              onChange={(e) => setMatriculaAlunoTrilha(e.target.value)}
+              maxLength="8"
+              required
+              className={styles.inputText}
+            />
+          </div>
+          <button type="submit" className={styles.submitButton}>Adicionar Trilha</button>
+        </form>
+        {feedbackTrilha && <p>{feedbackTrilha}</p>}
+      </div>
 
       {/* Modal para adicionar links */}
       <Modal
@@ -221,6 +222,7 @@ const AdministradorCronograma = () => {
                 value={link.url}
                 onChange={(e) => handleLinkChange(index, e)}
                 required
+                className={styles.inputText}
               />
               <label>Título:</label>
               <input
@@ -229,6 +231,7 @@ const AdministradorCronograma = () => {
                 value={link.titulo}
                 onChange={(e) => handleLinkChange(index, e)}
                 required
+                className={styles.inputText}
               />
               <label>Descrição:</label>
               <textarea
@@ -236,28 +239,14 @@ const AdministradorCronograma = () => {
                 value={link.descricao}
                 onChange={(e) => handleLinkChange(index, e)}
                 required
+                className={styles.textarea}
               />
             </div>
           ))}
-          <button type="button" onClick={handleAddLink}>Adicionar Link</button>
-          <button type="submit">Salvar Links</button>
+          <button type="button" onClick={handleAddLink} className={styles.submitButton}>Adicionar Link</button>
+          <button type="submit" className={styles.submitButton}>Salvar Links</button>
         </form>
       </Modal>
-
-      {/* Seção de notificações */}
-      <h1>Notificações</h1>
-      {notificacoes.length > 0 ? (
-        <ul>
-          {notificacoes.map((notificacao) => (
-            <li key={notificacao.id}>
-              <p>{notificacao.mensagem}</p>
-              <p><em>{new Date(notificacao.data_notificacao).toLocaleString()}</em></p>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>Nenhuma notificação encontrada.</p>
-      )}
     </div>
   );
 };
