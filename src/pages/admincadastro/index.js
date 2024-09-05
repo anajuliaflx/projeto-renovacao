@@ -53,7 +53,7 @@ function AdministradorCadastro() {
     return (
         <div className={styles.container}>
             <Menu userRole="administrador" />
-            <h1>Cadastro</h1>
+            <h1>Cadastrar usuário</h1>
             <Formik
                 initialValues={{
                     nome: '',
@@ -116,7 +116,7 @@ function AdministradorCadastro() {
                     </div>
                     {userExists && <span className={styles.formError}>{errorMsg}</span>}
                     <button className={styles.button} type="submit">
-                        Cadastrar
+                        Realizar cadastro
                     </button>
                 </Form>
 

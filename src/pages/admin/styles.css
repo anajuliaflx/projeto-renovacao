@@ -1,57 +1,63 @@
-body{
-    margin: 0;
-    display: block;
-  
-  }
-  .container{
-    align-items: center;
-    text-align: center;
-    overflow-x: hidden
-  }
-  
-  .text p{
-    text-align: justify;
-    padding: 10px 50px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+body {
+  margin: 0;
+  display: block;
 
-  }
+}
 
-  .text_logo{
-    padding: 10px 50px;
-    height: 250px;
-  }
+.container {
+  align-items: center;
+  text-align: center;
+  overflow-x: hidden
+}
 
-  /* Tamanhos pequenos (telefones pequenos e alguns tablets em modo retrato) */
+.text p {
+  text-align: justify;
+  padding: 10px 50px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+}
+
+.text_logo {
+  padding: 10px 50px;
+  height: 250px;
+}
+
+/* Tamanhos pequenos (telefones pequenos e alguns tablets em modo retrato) */
 @media only screen and (max-width: 576px) {
   .form-field {
-    width: 90%; /* Reduz a largura do campo em telas menores */
+    width: 90%;
+    /* Reduz a largura do campo em telas menores */
   }
 }
 
 /* Tamanhos médios (tablets em modo paisagem e alguns laptops) */
 @media only screen and (min-width: 577px) and (max-width: 768px) {
   .form-field {
-    width: 70%; /* Reduz a largura do campo em telas médias */
+    width: 70%;
+    /* Reduz a largura do campo em telas médias */
   }
 }
 
 /* Tamanhos grandes (desktops e laptops maiores) */
 @media only screen and (min-width: 769px) and (max-width: 992px) {
   .form-field {
-    width: 60%; /* Reduz a largura do campo em telas grandes */
+    width: 60%;
+    /* Reduz a largura do campo em telas grandes */
   }
 }
 
 /* Tamanhos extra grandes (telas maiores, como monitores widescreen) */
 @media only screen and (min-width: 993px) and (max-width: 1200px) {
   .form-field {
-    width: 50%; /* Reduz a largura do campo em telas extra grandes */
+    width: 50%;
+    /* Reduz a largura do campo em telas extra grandes */
   }
 }
 
 /* Tamanhos extra extra grandes (telas muito grandes, como monitores ultrawide) */
 @media only screen and (min-width: 1201px) {
   .form-field {
-    width: 40%; /* Reduz a largura do campo em telas extra extra grandes */
+    width: 40%;
+    /* Reduz a largura do campo em telas extra extra grandes */
   }
 }

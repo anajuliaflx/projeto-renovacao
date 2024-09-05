@@ -186,7 +186,6 @@ Cria um novo usuário no banco de dados.
 | `senha` | `string` | **Obrigatório**. A senha do usuário. |
 | `matricula` | `string` | **Obrigatório**. A matrícula do usuário. |
 | `tipoUsuario` | `string` | **Obrigatório**. O tipo do usuário. |
-|
 
 #### Respostas
 - `200 OK`: Usuário cadastrado com sucesso.
@@ -218,7 +217,6 @@ Autentica um usuário.
 | :---------- | :--------- | :---------------------------------- |
 | `email` | `string` | **Obrigatório**. O email do usuário. |
 | `senha` | `string` | **Obrigatório**. A senha do usuário. |
-|
 
 #### Respostas
 - `200 OK`: Usuário logado com sucesso.
@@ -258,7 +256,6 @@ Lista os usuários com paginação.
 | :---------- | :--------- | :---------------------------------- |
 | `page` | `number` | **Opcional**. Número da página (default 1). |
 | `limit` | `number` | **Opcional**. Limite de usuários por página (default 10). |
-|
 
 #### Respostas
 - `200 OK`: Lista de usuários com paginação.
@@ -283,8 +280,7 @@ Exclui um usuário pelo ID.
 #### Parâmetros da URL
 | Parâmetro   | Tipo       | Descrição                           |
 | :---------- | :--------- | :---------------------------------- |
-| `id` | `number` | **Obrigatório**. O ID do usuário a ser excluído. |
-| 
+| `id` | `number` | **Obrigatório**. O ID do usuário a ser excluído. | 
 
 #### Respostas
 - `200 OK`: Usuário excluído com sucesso.
@@ -311,7 +307,6 @@ Envia uma mensagem.
 | `remetente_id` | `number` | **Obrigatório**. O ID do remetente. |
 | `destinatario_tipo` | `string` | **Obrigatório**. O tipo de destinatário ('administrador' ou 'psicologo'). |
 | `mensagem` | `string` | **Obrigatório**. O conteúdo da mensagem. |
-| 
 
 #### Respostas
 - `200 OK`: Mensagem enviada com sucesso.
@@ -342,7 +337,6 @@ Cria um novo usuário no banco de dados.
 | Parâmetro   | Tipo       | Descrição                           |
 | :---------- | :--------- | :---------------------------------- |
 | `matricula` | `string` | **Obrigatório**. A matrícula do usuário. |
-|
 
 #### Respostas
 - `200 OK`: Retorna o ID do usuário.
@@ -373,7 +367,6 @@ Envia uma resposta a uma mensagem.
 | Parâmetro   | Tipo       | Descrição                           |
 | :---------- | :--------- | :---------------------------------- |
 | `tipoUsuario` | `string` | **Obrigatório**. O tipo de usuário ('administrador' ou 'psicologo'). |
-|
 
 #### Corpo da requisição
 | Parâmetro   | Tipo       | Descrição                           |
@@ -381,7 +374,6 @@ Envia uma resposta a uma mensagem.
 | `mensagem_id` | `number` | **Obrigatório**. O ID da mensagem. |
 | `resposta` | `string` | **Obrigatório**. O conteúdo da resposta. |
 | `matricula` | `string` | **Obrigatório**. A matrícula do respondente. |
-|
 
 #### Respostas
 - `200 OK`: Resposta enviada com sucesso.
@@ -414,14 +406,12 @@ Lista as mensagens recebidas pelo tipo de usuário com paginação.
 | Parâmetro   | Tipo       | Descrição                           |
 | :---------- | :--------- | :---------------------------------- |
 | `tipoUsuario` | `string` | **Obrigatório**. O tipo de usuário ('administrador' ou 'psicologo'). |
-|
 
 #### Corpo da requisição
 | Parâmetro   | Tipo       | Descrição                           |
 | :---------- | :--------- | :---------------------------------- |
 | `page` | `number` | **Opcional**. Número da página (default 1). |
 | `limit` | `number` | **Opcional**. Limite de mensagens por página (default 10). |
-|
 
 #### Respostas
 - `200 OK`: Lista de mensagens com paginação.
@@ -453,14 +443,12 @@ Envia uma resposta a uma mensagem.
 | Parâmetro   | Tipo       | Descrição                           |
 | :---------- | :--------- | :---------------------------------- |
 | `matricula` | `string` | **Obrigatório**. A matrícula do aluno. |
-|
 
 #### Corpo da requisição
 | Parâmetro   | Tipo       | Descrição                           |
 | :---------- | :--------- | :---------------------------------- |
 | `page` | `number` | **Opcional**. Número da página (default 1). |
 | `limit` | `number` | **Opcional**. Limite de mensagens por página (default 10). |
-|
 
 #### Respostas
 - `200 OK`: Lista de mensagens e respostas com paginação.
@@ -480,6 +468,464 @@ Envia uma resposta a uma mensagem.
   ```json
   {
     "error": "Mensagem de erro"
+  }
+
+### Adicionar evento
+```https
+  POST /adicionar-evento
+```
+Adiciona um novo evento ao sistema.
+
+#### Corpo da requisição
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `data_evento` | `string` | **Obrigatório**. A data do evento. |
+| `matricula_aluno` | `string` | **Obrigatório**. A matrícula do aluno. |
+| `matricula_psicologo` | `string` | **Obrigatório**. A matrícula do psicólogo. |
+| `descricao` | `string` | **Obrigatório**. A descrição do evento. |
+
+#### Respostas
+- `200 OK`: Evento adicionado com sucesso.
+  ```json
+  {
+  "msg": "Evento adicionado com sucesso"
+  }
+
+- `400 Bad Request`: Matrícula inválida ou campos obrigatórios ausentes.
+  ```json
+  {
+    "msg": "Matrícula do aluno e do psicólogo deve ter exatamente 8 caracteres"
+  }
+
+- `500 Internal Server Error`: Ocorreu um erro ao adicionar o evento.
+  ```json
+  {
+    "msg": "Erro ao adicionar evento"
+  }
+
+### Listar eventos
+```https
+  GET /eventos
+```
+Lista todos os eventos.
+
+#### Parâmetro da URL
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `matricula_psicologo` | `string` | **Opcional**. A matrícula do psicólogo. |
+| `matricula_aluno` | `string` | **Opcional**. A matrícula do aluno. |
+
+#### Respostas
+- `200 OK`: Lista de eventos.
+  ```json
+  {
+    [
+      {
+      "id": 1,
+      "data_evento": "2023-05-15",
+      "matricula_aluno": "12345678",
+      "matricula_psicologo": "87654321",
+      "descricao": "Consulta psicológica"
+      }
+    ]
+  }
+
+- `500 Internal Server Error`: Ocorreu um erro ao buscar os eventos.
+  ```json
+  {
+    "msg": "Erro ao buscar eventos"
+  }
+
+### Listar eventos por aluno
+```https
+  GET /eventos/:matricula_aluno
+```
+Lista eventos associados a um aluno específico.
+
+#### Parâmetro da URL
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `matricula_aluno` | `string` | **Obrigatório**. A matrícula do aluno. |
+
+#### Respostas
+- `200 OK`: Lista de eventos do aluno.
+  ```json
+  {
+    [
+      {
+      "id": 1,
+      "data_evento": "2023-05-15",
+      "matricula_aluno": "12345678",
+      "matricula_psicologo": "87654321",
+      "descricao": "Consulta psicológica"
+      }
+    ]
+  }
+
+- `500 Internal Server Error`: Ocorreu um erro ao buscar os eventos.
+  ```json
+  {
+    "msg": "Erro ao buscar eventos"
+  }
+
+### Listar eventos por psicólogo
+```https
+  GET /eventos-psicologo/:matricula_psicologo
+```
+Lista eventos associados a um psicólogo específico.
+
+#### Parâmetro da URL
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `matricula_psicologo` | `string` | **Obrigatório**. A matrícula do psicólogo. |
+
+#### Respostas
+- `200 OK`: Lista de eventos do aluno.
+  ```json
+  {
+    [
+      {
+      "id": 1,
+      "data_evento": "2023-05-15",
+      "matricula_aluno": "12345678",
+      "matricula_psicologo": "87654321",
+      "descricao": "Consulta psicológica"
+      }
+    ]
+  }
+
+- `500 Internal Server Error`: Ocorreu um erro ao buscar os eventos.
+  ```json
+  {
+    "msg": "Erro ao buscar eventos"
+  }
+
+### Adicionar trilha
+```https
+  POST /adicionar-trilha
+```
+Adiciona uma nova trilha ao sistema.
+
+#### Corpo da requisição
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `titulo` | `string` | **Obrigatório**. O título da trilha. |
+| `descricao` | `string` | **Opcional**. A descrição da trilha. |
+| `matricula_aluno` | `string` | **Obrigatório**. A matrícula do aluno. |
+
+#### Respostas
+- `200 OK`: Trilha adicionada com sucesso.
+  ```json
+  {
+  "msg": "Trilha adicionada com sucesso",
+  "trilhaId": 1
+  }
+
+- `400 Bad Request`: Matrícula inválida.
+  ```json
+  {
+    "msg": "A matrícula do aluno deve ter exatamente 8 caracteres"
+  }
+
+- `500 Internal Server Error`: Ocorreu um erro ao adicionar a trilha.
+  ```json
+  {
+    "error": "Erro ao adicionar trilha"
+  }
+
+### Adicionar link a uma trilha
+```https
+  POST /adicionar-link
+```
+Adiciona um novo link a uma trilha existente.
+
+#### Corpo da requisição
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `url` | `string` | **Obrigatório**. A URL do link. |
+| `titulo` | `string` | **Obrigatório**. O título do link. |
+| `descricao` | `string` | **Opcional**. A descrição do link. |
+| `trilha_id` | `number` | **Obrigatório**. O ID da trilha. |
+
+#### Respostas
+- `200 OK`: Link adicionado com sucesso.
+  ```json
+  {
+  "msg": "Link adicionado com sucesso"
+  }
+
+- `500 Internal Server Error`: Ocorreu um erro ao adicionar o link.
+  ```json
+  {
+    "msg": "Erro ao adicionar link"
+  }
+
+### Marcar link como assistido
+```https
+  POST /marcar-assistido
+```
+Marca um link como assistido por um aluno.
+
+#### Corpo da requisição
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `link_id` | `number` | **Obrigatório**. O ID do link. |
+| `matricula_aluno` | `string` | **Obrigatório**. A matrícula do aluno. |
+
+#### Respostas
+- `200 OK`: Link marcado como assistido.
+  ```json
+  {
+   "msg": "Link marcado como assistido"
+  }
+
+- `400 Bad Request`: Matrícula inválida.
+  ```json
+  {
+    "msg": "A matrícula do aluno deve ter exatamente 8 caracteres"
+  }
+
+- `500 Internal Server Error`: Ocorreu um erro ao marcar o link como assistido.
+  ```json
+  {
+    "msg": "Erro ao marcar link como assistido"
+  }
+
+### Listar trilhas por aluno
+```https
+  GET /trilhas/:matricula_aluno
+```
+Lista todas as trilhas associadas a um aluno específico.
+
+#### Parâmetro da URL
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `matricula_aluno` | `string` | **Obrigatório**. A matrícula do aluno. |
+
+#### Respostas
+- `200 OK`: Lista de eventos do aluno.
+  ```json
+  [
+    {
+      "id": 1,
+      "titulo": "Trilha de Ciberbullying",
+      "descricao": "Trilha para conscientização sobre ciberbullying",
+      "matricula_aluno": "12345678"
+    }
+  ]
+
+- `400 Bad Request`: Matrícula inválida.
+  ```json
+  {
+    "msg": "A matrícula do aluno deve ter exatamente 8 caracteres"
+  }
+
+- `500 Internal Server Error`: Ocorreu um erro ao buscar as trilhas.
+  ```json
+  {
+    "msg": "Erro ao buscar trilhas"
+  }
+
+### Listar links de uma trilha
+```https
+  GET /links/:trilha_id
+```
+Lista todos os links associados a uma trilha específica.
+
+#### Parâmetro da URL
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `trilha_id` | `number` | **Obrigatório**. O ID da trilha. |
+
+#### Corpo da requisição
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `matricula_aluno` | `string` | **Opcional**. A matrícula do aluno. |
+
+#### Respostas
+- `200 OK`: Lista de links da trilha.
+  ```json
+  [
+    {
+      "id": 1,
+      "url": "https://example.com",
+      "titulo": "Vídeo sobre Ciberbullying",
+      "descricao": "Descrição do vídeo",
+      "trilha_id": 1,
+      "assistido": true
+    }
+  ]
+
+- `500 Internal Server Error`: Ocorreu um erro ao buscar os links.
+  ```json
+  {
+    "msg": "Erro ao buscar links"
+  }
+
+### Listar notificações
+```https
+  GET /notificacoes
+```
+Lista todas as notificações do sistema.
+
+#### Respostas
+- `200 OK`: Lista de notificações.
+  ```json
+  [
+    {
+      "id": 1,
+      "mensagem": "O aluno concluiu a trilha.",
+      "matricula_aluno": "12345678",
+      "titulo_trilha": "Trilha de Ciberbullying",
+      "data_notificacao": "2023-05-15T13:45:30.000Z"
+    }
+  ]
+
+- `500 Internal Server Error`: Ocorreu um erro ao buscar as notificações.
+  ```json
+  {
+    "msg": "Erro ao buscar notificações"
+  }
+
+### Adicionar uma notificação
+```https
+  POST /adicionar-notificacao
+```
+Adiciona uma nova notificação ao sistema.
+
+#### Corpo da requisição
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `mensagem` | `string` | **Obrigatório**. A mensagem da notificação. |
+| `matricula_aluno` | `string` | **Obrigatório**. A matrícula do aluno. |
+| `titulo_trilha` | `string` | **Obrigatório**. O título da trilha. |
+
+#### Respostas
+- `200 OK`: Notificação adicionada com sucesso.
+  ```json
+  {
+  "msg": "Notificação adicionada com sucesso"
+  }
+
+- `500 Internal Server Error`: Ocorreu um erro ao adicionar a notificação.
+  ```json
+  {
+     "msg": "Erro ao adicionar notificação"
+  }
+
+### Salvar avaliação
+```https
+  POST /avaliacao
+```
+Salva uma nova avaliação para um aluno.
+
+#### Corpo da requisição
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `matricula_aluno` | `string` | **Obrigatório**. A matrícula do aluno. |
+| `matricula_psicologo` | `string` | **Obrigatório**. A matrícula do psicólogo. |
+| `data_consulta` | `string` | **Obrigatório**. A data da consulta. |
+| `comportamento` | `string` | **Obrigatório**. O comportamento do aluno. |
+| `expressao_sentimentos` | `boolean` | **Obrigatório**. Expressão de sentimentos. |
+| `dificuldades_expressao` | `string` | **Opcional**. Dificuldades de expressão. |
+| `reconhecimento_impacto` | `boolean` | **Obrigatório**. Reconhecimento do impacto. |
+| `explicacao_impacto` | `string` | **Opcional**. Explicação do impacto. |
+| `arrependimento` | `boolean` | **Obrigatório**. Arrependimento. |
+| `forma_arrependimento` | `string` | **Opcional**. Forma de arrependimento |
+| `identificacao_motivo` | `boolean` | **Obrigatório**. Identificação do motivo. |
+| `explicacao_motivo` | `string` | **Opcional**. Explicação do motivo. |
+| `estrategias` | `string` | **Obrigatório**. Estratégias adotadas. |
+| `descricao_estrategias` | `string` | **Opcional**. Descrição das estratégias. |
+| `metas` | `string` | **Obrigatório**. Metas estabelecidas. |
+| `descricao_metas` | `string` | **Opcional**. Descrição das metas. |
+| `progresso_metas` | `string` | **Obrigatório**. Progresso das metas. |
+| `detalhes_progresso` | `string` | **Opcional**. Detalhes do progresso. |
+| `avaliacao_geral` | `string` | **Obrigatório**. Avaliação geral. |
+| `comentarios` | `string` | **Opcional**. Comentários adicionais. |
+
+
+#### Respostas
+- `200 OK`: Avaliação salva com sucesso.
+  ```json
+  {
+  "msg": "Avaliação salva com sucesso"
+  }
+
+- `500 Internal Server Error`: Ocorreu um erro ao salvar a avaliação.
+  ```json
+  {
+    "msg": "Erro ao salvar avaliação"
+  }
+
+### Obter avaliações por aluno
+```https
+   GET /avaliacoes/:matricula_aluno
+```
+Lista todas as avaliações associadas a um aluno específico.
+
+#### Parâmetro da URL
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `matricula_aluno` | `string` | **Obrigatório**. A matrícula do aluno. |
+
+#### Respostas
+- `200 OK`: Lista de avaliações do aluno.
+  ```json
+  [
+    {
+    "id": 1,
+    "matricula_aluno": "12345678",
+    "matricula_psicologo": "87654321",
+    "data_consulta": "2023-05-15",
+    "comportamento": "Cooperativo",
+    "expressao_sentimentos": true,
+    "dificuldades_expressao": "Nenhuma",
+    "reconhecimento_impacto": true,
+    "explicacao_impacto": "Compreendeu o impacto",
+    "arrependimento": true,
+    "forma_arrependimento": "Pediu desculpas",
+    "identificacao_motivo": true,
+    "explicacao_motivo": "Entendeu os motivos",
+    "estrategias": "Aumentar a comunicação",
+    "descricao_estrategias": "Participar de sessões de grupo",
+    "metas": "Melhorar a comunicação",
+    "descricao_metas": "Participar de workshops",
+    "progresso_metas": "Em progresso",
+    "detalhes_progresso": "Está se esforçando",
+    "avaliacao_geral": "Satisfatório",
+    "comentarios": "Está mostrando progresso"
+    }
+  ]
+
+- `500 Internal Server Error`: Ocorreu um erro ao buscar as avaliações
+  ```json
+  {
+    "msg": "Erro ao buscar avaliações"
+  }
+
+### Buscar avaliações por data e aluno
+```https
+   GET /avaliacoes-datas/:matricula
+```
+Lista todas as datas de avaliações associadas a um aluno específico.
+
+#### Parâmetro da URL
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `matricula_aluno` | `string` | **Obrigatório**. A matrícula do aluno. |
+
+#### Respostas
+- `200 OK`: Lista de datas de avaliações do aluno.
+  ```json
+  [
+    "2023-05-15",
+    "2023-06-20"
+  ]
+
+- `500 Internal Server Error`: Ocorreu um erro ao buscar as datas de avaliações.
+  ```json
+  {
+    "msg": "Erro ao buscar datas de avaliações"
   }
 
 ## Melhorias

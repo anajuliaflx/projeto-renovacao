@@ -42,14 +42,14 @@ function AdministradorUsuario() {
     };
 
     return (
-      <div >
+      <div>
         <Menu userRole="administrador" />
         <div className="botao-container">
           <Link to={'/admincadastro'} className="botao-link">
             <button className='botao'>Cadastrar Usuário</button>
           </Link>
         </div>
-        <h2>Lista de Usuários</h2>
+        <h2>Lista de usuários</h2>
         {users.length > 0 ? (
           <div className="table-container">
             <table className="user-table">

@@ -67,7 +67,7 @@ const AdministradorRelatorio = () => {
   return (
     <div>
       <Menu userRole="administrador" />
-      <h1>Relatórios de Avaliações</h1>
+      <h1>Relatórios de avaliações</h1>
       <div className="student-list">
         {students.length > 0 ? (
           <table className="student-table">
@@ -85,7 +85,7 @@ const AdministradorRelatorio = () => {
                   <td>{student.matricula}</td>
                   <td>
                     <button onClick={() => handleViewAvaliacoes(student.matricula, student.nome)}>
-                      Ver Avaliações
+                      Visualizar avaliações
                     </button>
                   </td>
                 </tr>
@@ -99,7 +99,7 @@ const AdministradorRelatorio = () => {
       <Modal
         isOpen={isModalOpen}
         onRequestClose={closeModal}
-        contentLabel="Relatórios de Avaliações"
+        contentLabel="Relatórios de avaliações"
         className="modal"
         overlayClassName="overlay"
       >

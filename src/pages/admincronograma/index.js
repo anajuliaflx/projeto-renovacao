@@ -112,11 +112,11 @@ const AdministradorCronograma = () => {
     <div className={styles.body}>
       <Menu userRole="administrador" />
       <header className={styles.header}>
-        <h1>Administrador Cronograma</h1>
+        <h1>Cronograma</h1>
       </header>
       {/* Formulário para adicionar eventos */}
       <div className={styles.formContainer}>
-        <h2>Adicionar Evento</h2>
+        <h2>Cadastrar evento</h2>
         <form onSubmit={handleSubmitEvento} className={styles.form}>
           <div>
             <label>Data do Evento:</label>
@@ -129,7 +129,7 @@ const AdministradorCronograma = () => {
             />
           </div>
           <div>
-            <label>Matrícula do Aluno:</label>
+            <label>Matrícula do aluno:</label>
             <input
               type="text"
               value={matriculaAlunoEvento}
@@ -140,7 +140,7 @@ const AdministradorCronograma = () => {
             />
           </div>
           <div>
-            <label>Matrícula do Psicólogo:</label>
+            <label>Matrícula do psicólogo:</label>
             <input
               type="text"
               value={matriculaPsicologo}
@@ -159,14 +159,14 @@ const AdministradorCronograma = () => {
               className={styles.textarea}
             />
           </div>
-          <button type="submit" className={styles.submitButton}>Adicionar Evento</button>
+          <button type="submit" className={styles.submitButton}>Cadastrar evento</button>
         </form>
         {feedbackEvento && <p>{feedbackEvento}</p>}
       </div>
 
       {/* Formulário para adicionar trilhas */}
       <div className={styles.formContainer}>
-        <h2>Adicionar Trilha</h2>
+        <h2>Cadastrar trilha educativa</h2>
         <form onSubmit={handleSubmitTrilha} className={styles.form}>
           <div>
             <label>Título:</label>
@@ -188,7 +188,7 @@ const AdministradorCronograma = () => {
             />
           </div>
           <div>
-            <label>Matrícula do Aluno:</label>
+            <label>Matrícula do aluno:</label>
             <input
               type="text"
               value={matriculaAlunoTrilha}
@@ -198,7 +198,7 @@ const AdministradorCronograma = () => {
               className={styles.inputText}
             />
           </div>
-          <button type="submit" className={styles.submitButton}>Adicionar Trilha</button>
+          <button type="submit" className={styles.submitButton}>Cadastrar trilha</button>
         </form>
         {feedbackTrilha && <p>{feedbackTrilha}</p>}
       </div>
@@ -243,8 +243,8 @@ const AdministradorCronograma = () => {
               />
             </div>
           ))}
-          <button type="button" onClick={handleAddLink} className={styles.submitButton}>Adicionar Link</button>
-          <button type="submit" className={styles.submitButton}>Salvar Links</button>
+          <button type="button" onClick={handleAddLink} className={styles.submitButton}>Adicionar mais link</button>
+          <button type="submit" className={styles.submitButton}>Salvar links</button>
         </form>
       </Modal>
     </div>

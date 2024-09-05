@@ -112,17 +112,6 @@
     border-bottom: 1px solid #ddd;
 }
 
-/*.footer {
-    color: #fff;
-    padding: 1em;
-    width: 100%;
-    text-align: center;
-    background-color: #3b5998;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-}*/
-
  /* Tamanhos pequenos (telefones pequenos e alguns tablets em modo retrato) */
  @media only screen and (max-width: 576px) {
     .form-field {

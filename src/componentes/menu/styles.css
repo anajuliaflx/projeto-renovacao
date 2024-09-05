@@ -45,11 +45,11 @@
   border-radius: 5px;
   text-align: left;
   cursor: pointer;
-  color: #0395BA; /* Cor do texto */
+  color: #4C5682; /* Cor do texto */
 }
 
 .menu-items .button svg {
-  color: #0395BA; /* Cor dos ícones */
+  color: #4C5682; /* Cor dos ícones */
   margin-right: 10px; /* Espaço entre ícone e texto */
 }
 
@@ -65,7 +65,7 @@
   font-size: 2.5rem;
   position: absolute;
   cursor: pointer;
-  color: black; /* Cor preta para o ícone de fechar */
+  color: #4C5682; /* Cor para o ícone de fechar */
   z-index: 1002; /* Garante que o ícone de fechar está acima de tudo no menu */
   padding: 10px;
 }

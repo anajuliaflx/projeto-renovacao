@@ -38,7 +38,7 @@ const AlunoAgenda = () => {
   return (
     <div className={styles.container}>
       <Menu userRole="aluno" />
-      <h1 className={styles.header}>Minha Agenda</h1>
+      <h1 className={styles.header}>Agenda de eventos</h1>
       <div className={styles.calendarContainer}>
         <Calendar
           localizer={localizer}

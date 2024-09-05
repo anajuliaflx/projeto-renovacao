@@ -499,7 +499,6 @@ app.post("/resposta", (req, res) => {
   });
 });
 
-
 // Rota para adicionar evento
 app.post("/adicionar-evento", (req, res) => {
   const { data_evento, matricula_aluno, matricula_psicologo, descricao } = req.body;

@@ -3,6 +3,7 @@ import axios from "axios";
 import Menu from '../../componentes/menu';
 import { UserContext } from "../../contexts/UserContext";
 import './styles.css';
+import styles from '../home/home.module.css';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -83,10 +84,10 @@ const AlunoMensagem = () => {
     <div className="container1">
       <Menu userRole="aluno" />
       <div className="form-section">
-        <h1>Enviar Mensagem</h1>
+        <h1>Mensagens privadas</h1>
         <form onSubmit={handleSubmit} className="form">
           <div>
-            <label className="label">Sua Matrícula:</label>
+            <label className="label">Matrícula:</label>
             <input
               type="text"
               value={user.matricula}
@@ -116,7 +117,7 @@ const AlunoMensagem = () => {
               className="text1"
             />
           </div>
-          <button type="submit" className="buttonA">Enviar</button>
+          <button type="submit" className={styles.submitButton}>Enviar mensagem</button>
         </form>
         {feedback && <p>{feedback}</p>}
       </div>

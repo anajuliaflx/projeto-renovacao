@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import Menu from '../../componentes/menu';
 import { UserContext } from "../../contexts/UserContext";
-import styles from './mensagemp.module.css'; 
+import styles from './mensagemp.module.css';
 
 const PsicologoMensagem = () => {
     const { user } = useContext(UserContext);
@@ -65,15 +65,15 @@ const PsicologoMensagem = () => {
     return (
         <div className={styles.container}>
             <Menu userRole="psicologo" />
-            <h1>Mensagens para Psicólogo</h1>
+            <h1>Mensagens diretas</h1>
             {error && <p className={styles.error}>{error}</p>}
             {mensagens.length > 0 ? (
                 <ul className={styles.messageList}>
                     {mensagens.map((msg, index) => (
                         <li key={`${msg.id}-${index}`} className={styles.messageItem}>
-                            <p><strong>De:</strong> {msg.remetente_nome}</p>
-                            <p>{msg.mensagem}</p>
-                            <p><em>{new Date(msg.data_envio).toLocaleString()}</em></p>
+                            <p><strong>Remetente:</strong> {msg.remetente_nome}</p>
+                            <p><strong>Conteúdo:</strong> {msg.mensagem}</p>
+                            <p><strong>Data de Envio:</strong><em>{new Date(msg.data_envio).toLocaleString()}</em></p>
                             {msg.resposta ? (
                                 <>
                                     <p><strong>Resposta:</strong> {msg.resposta}</p>

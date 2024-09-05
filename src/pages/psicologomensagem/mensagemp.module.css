@@ -40,6 +40,8 @@ textarea {
     border-radius: 5px;
     font-size: 16px;
     resize: vertical;
+    box-sizing: border-box; /* inclui o padding e a borda no cálculo da largura total */
+    max-width: calc(100% - 22px); /* largura máxima considerando padding e borda */
 }
 
 .button {

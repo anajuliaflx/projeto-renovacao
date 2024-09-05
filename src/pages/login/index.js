@@ -59,7 +59,8 @@ function Login() {
 
     return (
         <div className={styles.container}>
-            <h1 className={styles.title}>Login</h1>
+            <h1 className={styles.title}>Acessar</h1>
+            <p>Insira seus dados para acesso</p>
             <Formik initialValues={{ email: '', senha: '' }} onSubmit={handleLogin} validationSchema={validationsLogin}>
                 <Form className={styles.loginForm}>
                     <div className={styles.loginFormGroup}>
@@ -76,12 +77,12 @@ function Login() {
                         </div>
                         <ErrorMessage component="span" name="senha" className={styles.formError} />
                     </div>
-                    <button className={styles.button} type="submit">Login</button>
+                    <button type="submit" className={styles.submitButton}>Login</button>
                 </Form>
             </Formik>
             <div className='botaocon'>
                 <Link to={'/'}>
-                    <button className={styles.button}>Voltar</button>
+                    <button type="submit" className={styles.submitButton}>Voltar</button>
                 </Link>
             </div>
         </div>

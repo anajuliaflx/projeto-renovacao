@@ -63,19 +63,17 @@ const AdministradorMensagem = () => {
     };
 
     return (
-        <div className={styles.body}>
+        <div className={styles.container}>
             <Menu userRole="administrador" />
-            <header className={styles.header}>
-                <h1>Mensagens para o Administrador</h1>
-            </header>
+            <h1>Mensagens diretas</h1>
             {error && <p className={styles.error}>{error}</p>}
             {mensagens.length > 0 ? (
-                 <ul className={styles.ul}>
+                <ul className={styles.ul}>
                     {mensagens.map((msg, index) => (
                         <li key={`${msg.id}-${index}`}>
-                            <p><strong>De:</strong> {msg.remetente_nome}</p>
-                            <p>{msg.mensagem}</p>
-                            <p><em>{new Date(msg.data_envio).toLocaleString()}</em></p>
+                            <p><strong>Remetente:</strong> {msg.remetente_nome}</p>
+                            <p><strong>Conteúdo:</strong> {msg.mensagem}</p>
+                            <p><strong>Data de Envio:</strong><em>{new Date(msg.data_envio).toLocaleString()}</em></p>
                             {msg.resposta ? (
                                 <>
                                     <p><strong>Resposta:</strong> {msg.resposta}</p>

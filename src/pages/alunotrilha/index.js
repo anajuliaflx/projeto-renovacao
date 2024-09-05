@@ -54,7 +54,7 @@ const AlunoTrilha = () => {
   return (
     <div className={styles.body}>
       <Menu userRole="aluno" />
-      <h1 className={styles.headerLarge}>Trilhas de Aprendizagem</h1>
+      <h1 className={styles.headerLarge}>Trilhas de aprendizagem</h1>
       {currentTrilhaId ? (
         <div>
           <button onClick={() => setCurrentTrilhaId(null)} className={styles.buttonBack}>Voltar</button>
