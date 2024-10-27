@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
-import axios from "axios";
+import Api from "../../services/apiConfig";
 import Menu from '../../componentes/menu';
 import { UserContext } from "../../contexts/UserContext";
 import './styles.css';
 import styles from '../home/home.module.css';
-
-const apiUrl = process.env.REACT_APP_API_URL;
 
 const AlunoMensagem = () => {
   const { user } = useContext(UserContext); // Usa o contexto para obter o usuário
@@ -21,7 +19,7 @@ const AlunoMensagem = () => {
     const fetchMensagensRespostas = async () => {
       if (user && user.matricula) {
         try {
-          const response = await axios.get(`https://projeto-renovacao.web.app/mensagens-respostas/${user.matricula}?page=${page}&limit=${limit}`);
+          const response = await Api.get(`/mensagens-respostas/${user.matricula}?page=${page}&limit=${limit}`);
           setMensagensRespostas(response.data.messages);
           setTotalPages(response.data.totalPages);
         } catch (error) {
@@ -41,7 +39,7 @@ const AlunoMensagem = () => {
     }
 
     try {
-      const userResponse = await axios.get(`https://projeto-renovacao.web.app/usuario/${user.matricula}`);
+      const userResponse = await Api.get(`/usuario/${user.matricula}`);
       if (userResponse.status === 404) {
         setFeedback('Matrícula não encontrada.');
         return;
@@ -49,7 +47,7 @@ const AlunoMensagem = () => {
 
       if (userResponse.data && userResponse.data.id) {
         const remetente_id = userResponse.data.id;
-        const response = await axios.post(`https://projeto-renovacao.web.app/mensagem`, {
+        const response = await Api.post(`/mensagem`, {
           remetente_id: remetente_id,
           destinatario_tipo: destinatarioTipo,
           mensagem: mensagem,
@@ -58,7 +56,7 @@ const AlunoMensagem = () => {
         setMensagem('');
 
         // Atualiza a lista de mensagens e respostas
-        const updatedMensagensRespostas = await axios.get(`https://projeto-renovacao.web.app/mensagens-respostas/${user.matricula}?page=${page}&limit=${limit}`);
+        const updatedMensagensRespostas = await Api.get(`/mensagens-respostas/${user.matricula}?page=${page}&limit=${limit}`);
         setMensagensRespostas(updatedMensagensRespostas.data.messages);
         setTotalPages(updatedMensagensRespostas.data.totalPages);
       } else {

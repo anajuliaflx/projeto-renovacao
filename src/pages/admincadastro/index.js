@@ -9,16 +9,14 @@ import PeopleIcon from '@mui/icons-material/People';
 import Menu from '../../componentes/menu';
 import styles from './cadastro.module.css';
 import './styles.css';
-import Axios from "axios";
+import Api from "../../services/apiConfig";
 import * as yup from "yup";
-
-const apiUrl = process.env.REACT_APP_API_URL;
 
 function AdministradorCadastro() {
     const [userExists, setUserExists] = useState(false);
     const [errorMsg, setErrorMsg] = useState("");
     const handleRegister = (values, { resetForm }) => {
-        Axios.post(`https://projeto-renovacao.web.app/admincadastro`, {
+        Api.post(`/admincadastro`, {
             nome: values.nome,
             email: values.email,
             senha: values.senha,

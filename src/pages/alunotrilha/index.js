@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import axios from "axios";
+import Api from "../../services/apiConfig";
 import styles from './trilha.module.css';
 import Menu from '../../componentes/menu';
 import { UserContext } from '../../contexts/UserContext';
@@ -19,7 +19,7 @@ const AlunoTrilha = () => {
 
   const fetchTrilhas = async (matricula) => {
     try {
-      const response = await axios.get(`https://projeto-renovacao.web.app/trilhas/${matricula}`);
+      const response = await Api.get(`/trilhas/${matricula}`);
       setTrilhas(response.data);
     } catch (error) {
       console.error("Erro ao buscar trilhas:", error);
@@ -28,7 +28,7 @@ const AlunoTrilha = () => {
 
   const fetchLinks = async (trilhaId) => {
     try {
-      const response = await axios.get(`https://projeto-renovacao.web.app/links/${trilhaId}`, {
+      const response = await Api.get(`https://projeto-renovacao.web.app/links/${trilhaId}`, {
         params: { matricula_aluno: user.matricula }
       });
       setLinks(response.data);
@@ -40,7 +40,7 @@ const AlunoTrilha = () => {
 
   const handleMarcarAssistido = async (linkId) => {
     try {
-      const response = await axios.post('https://projeto-renovacao.web.app/marcar-assistido', {
+      const response = await Api.post('https://projeto-renovacao.web.app/marcar-assistido', {
         link_id: linkId,
         matricula_aluno: user.matricula,
       });

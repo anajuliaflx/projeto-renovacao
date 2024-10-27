@@ -5,11 +5,10 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import Menu from '../../componentes/menu';
 import styles from './agenda.module.css';
 import moment from 'moment';
-import axios from "axios";
+import Api from "../../services/apiConfig";
 import './styles.css';
 
 const localizer = momentLocalizer(moment);
-const apiUrl = process.env.REACT_APP_API_URL;
 
 const AlunoAgenda = () => {
   const { user } = useContext(UserContext); // Acessa o contexto do usuário
@@ -18,7 +17,7 @@ const AlunoAgenda = () => {
   useEffect(() => {
     const fetchEventos = async () => {
       try {
-        const response = await axios.get(`https://projeto-renovacao.web.app/eventos/${user.matricula}`);
+        const response = await Api.get(`/eventos/${user.matricula}`);
         const eventosFormatados = response.data.map(evento => ({
           title: evento.descricao,
           start: new Date(evento.data_evento),

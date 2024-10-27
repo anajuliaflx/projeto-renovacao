@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useCallback } from 'react';
-import axios from 'axios';
+import Api from "../../services/apiConfig";
 import { UserContext } from '../../contexts/UserContext';
 import Modal from 'react-modal';
 import './styles.css';
@@ -39,7 +39,7 @@ const PsicologoAcompanhamento = () => {
     useEffect(() => {
         const fetchStudents = async () => {
             try {
-                const response = await axios.get('https://projeto-renovacao.web.app/filtrar-alunos');
+                const response = await Api.get(`/filtrar-alunos`);
                 setStudents(response.data);
             } catch (error) {
                 console.error('Erro ao buscar alunos:', error);
@@ -53,7 +53,7 @@ const PsicologoAcompanhamento = () => {
         if (selectedStudent) {
             const fetchAppointments = async () => {
                 try {
-                    const response = await axios.get(`https://projeto-renovacao.web.app/eventos?matricula_psicologo=${user.matricula}&matricula_aluno=${selectedStudent}`);
+                    const response = await Api.get(`/eventos?matricula_psicologo=${user.matricula}&matricula_aluno=${selectedStudent}`);
                     const formattedAppointments = response.data.map(appointment => ({
                         ...appointment,
                         data_evento: formatDate(appointment.data_evento)
@@ -95,7 +95,7 @@ const PsicologoAcompanhamento = () => {
             // Converter a data para o formato YYYY-MM-DD
             const data_consulta = parseDate(formData.data_consulta).toISOString().split('T')[0];
 
-            const response = await axios.post('https://projeto-renovacao.web.app/avaliacao', {
+            const response = await Api.post(`/avaliacao`, {
                 ...formData,
                 data_consulta,
                 matricula_aluno: selectedStudent,

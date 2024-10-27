@@ -1,11 +1,9 @@
 import React, { useState, useContext } from "react";
-import axios from "axios";
+import Api from "../../services/apiConfig";
 import Modal from 'react-modal';
 import Menu from '../../componentes/menu';
 import styles from './cronograma.module.css';
 import { UserContext } from "../../contexts/UserContext";
-
-const apiUrl = process.env.REACT_APP_API_URL;
 
 const AdministradorCronograma = () => {
   const { user } = useContext(UserContext);
@@ -32,7 +30,7 @@ const AdministradorCronograma = () => {
     }
 
     try {
-      const response = await axios.post(`https://projeto-renovacao.web.app/adicionar-evento`, {
+      const response = await Api.post(`/adicionar-evento`, {
         data_evento: dataEvento,
         matricula_aluno: matriculaAlunoEvento,
         matricula_psicologo: matriculaPsicologo,
@@ -57,7 +55,7 @@ const AdministradorCronograma = () => {
     }
 
     try {
-      const response = await axios.post(`https://projeto-renovacao.web.app/adicionar-trilha`, {
+      const response = await Api.post(`/adicionar-trilha`, {
         titulo: tituloTrilha,
         descricao: descricaoTrilha,
         matricula_aluno: matriculaAlunoTrilha,
@@ -82,7 +80,7 @@ const AdministradorCronograma = () => {
 
     try {
       await Promise.all(links.map(link =>
-        axios.post(`https://projeto-renovacao.web.app/adicionar-link`, {
+        Api.post(`/adicionar-link`, {
           url: link.url,
           titulo: link.titulo,
           descricao: link.descricao,

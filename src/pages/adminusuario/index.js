@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link} from "react-router-dom";
 import Menu from '../../componentes/menu';
-import axios from "axios";
+import Api from "../../services/apiConfig";
 import "./styles.css";
-
-const apiUrl = process.env.REACT_APP_API_URL;
 
 function AdministradorUsuario() {
   const UserList = () => {
@@ -19,8 +17,8 @@ function AdministradorUsuario() {
 
     const fetchUsers = async (page) => {
       try {
-        const response = await axios.get(
-          `https://projeto-renovacao.web.app/adminusuario?page=${page}&limit=${usersPerPage}`
+        const response = await Api.get(
+          `/adminusuario?page=${page}&limit=${usersPerPage}`
         );
         setUsers(response.data.users);
         setTotalPages(response.data.totalPages);
@@ -33,7 +31,7 @@ function AdministradorUsuario() {
       const confirmDelete = window.confirm("Tem certeza de que deseja excluir este usuário?");
       if (confirmDelete) {
         try {
-          await axios.delete(`https://projeto-renovacao.web.app/adminusuario/${userId}`);
+          await Api.delete(`/adminusuario/${userId}`);
           fetchUsers(currentPage); // Atualiza a lista de usuários após a exclusão
         } catch (error) {
           console.error("Erro ao excluir usuário:", error);

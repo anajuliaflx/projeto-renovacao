@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import axios from "axios";
+import Api from "../../services/apiConfig";
 import Menu from '../../componentes/menu';
 import { UserContext } from "../../contexts/UserContext";
 import styles from './msg.module.css';
@@ -17,7 +17,7 @@ const AdministradorMensagem = () => {
     useEffect(() => {
         const fetchMensagens = async () => {
             try {
-                const response = await axios.get(`https://projeto-renovacao.web.app/mensagens/administrador?page=${page}&limit=${limit}`);
+                const response = await Api.get(`/mensagens/administrador?page=${page}&limit=${limit}`);
                 setMensagens(response.data.messages);
                 setTotalPages(response.data.totalPages);
             } catch (error) {
@@ -30,7 +30,7 @@ const AdministradorMensagem = () => {
 
     const handleResponder = async (mensagem_id) => {
         try {
-            const response = await axios.post(`https://projeto-renovacao.web.app/resposta`, {
+            const response = await Api.post(`/resposta`, {
                 mensagem_id,
                 resposta: respostas[mensagem_id] || '',
                 matricula: user.matricula, // Utilizando a matrícula do contexto

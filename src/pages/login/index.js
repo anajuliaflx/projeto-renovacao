@@ -4,7 +4,7 @@ import { UserContext } from "../../contexts/UserContext";
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
 import React, { useContext } from "react";
-import Axios from "axios";
+import Api from "../../services/apiConfig";
 import * as yup from "yup";
 import styles from './login.module.css';
 import "./styles.css";
@@ -13,9 +13,10 @@ function Login() {
     const navigate = useNavigate();
     const { setUser } = useContext(UserContext);
 
+    // Função para realizar o login
     const handleLogin = async (values) => {
         try {
-            const response = await Axios.post("https://projeto-renovacao.web.app/login", {
+            const response = await Api.post(`/login`, {
                 email: values.email,
                 senha: values.senha,
             });
@@ -25,10 +26,12 @@ function Login() {
                 const userData = {
                     nome: response.data.nome,
                     matricula: response.data.matricula,
-                    tipoUsuario: userType
+                    tipoUsuario: userType,
+                    email: response.data.email,
                 };
-                setUser(userData);
+                setUser(userData); // Armazena o usuário no contexto
 
+                // Navega para a página adequada com base no tipo de usuário
                 switch (userType) {
                     case 'administrador':
                         navigate('/administrador');
@@ -43,12 +46,18 @@ function Login() {
                         alert('Tipo de usuário desconhecido. Por favor, entre em contato com o suporte.');
                         break;
                 }
-            } else {
-                alert('Credenciais inválidas. Tente novamente.');
             }
         } catch (error) {
-            console.error("Houve um erro na requisição de login:", error);
-            alert('Ocorreu um erro. Por favor, tente novamente.');
+            // Verifica se o status do erro é 403 (usuário já logado)
+            if (error.response && error.response.status === 403) {
+                alert("Usuário já está logado em outro dispositivo. Por favor, faça logout antes de tentar novamente.");
+            } else if (error.response && error.response.data && error.response.data.msg) {
+                // Exibe mensagens de erro retornadas pela API
+                alert(error.response.data.msg);
+            } else {
+                console.error("Houve um erro na requisição de login:", error);
+                alert('Ocorreu um erro. Por favor, tente novamente.');
+            }
         }
     };
 

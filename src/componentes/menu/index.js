@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import MenuIcon from '@mui/icons-material/Menu'; //menu
 import CloseIcon from '@mui/icons-material/Close'; //fechar
 import LogoutIcon from '@mui/icons-material/Logout'; //deslogar
@@ -9,14 +9,41 @@ import PeopleIcon from '@mui/icons-material/People'; //cadastrar
 import AssessmentIcon from '@mui/icons-material/Assessment'; //relatórios
 import TimelineIcon from '@mui/icons-material/Timeline'; //acompanhamento
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration'; //cronograma
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Api from "../../services/apiConfig";
+import { UserContext } from '../../contexts/UserContext';
 import './styles.css';
 
 function Menu({ userRole }) {
   const [isOpen, setIsOpen] = useState(false);
+  const { user, setUser } = useContext(UserContext); // Pega o usuário e a função para definir o estado do contexto
+  const navigate = useNavigate(); // Navegar programaticamente
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  // Função de logout
+  const handleLogout = async () => {
+    try {
+      // Verifique se o usuário e o email estão disponíveis no contexto
+      if (!user || !user.email) {
+        alert("Usuário não encontrado.");
+        return;
+      }
+
+      // Faz a requisição para a rota de logout no backend
+      const response = await Api.post(`/logout`, { email: user.email });
+
+      if (response.status === 200 && response.data.msg) {
+        alert(response.data.msg); // Exibe a mensagem de logout
+        setUser(null); // Limpa o estado do usuário no contexto
+        navigate('/'); // Redireciona para a página principal ou de login
+      }
+    } catch (error) {
+      console.error("Erro ao realizar logout:", error);
+      alert("Ocorreu um erro ao tentar fazer logout. Por favor, tente novamente.");
+    }
   };
 
   const renderMenuItems = () => {
@@ -99,11 +126,9 @@ function Menu({ userRole }) {
       {isOpen && (
         <div className="menu-items">
           {renderMenuItems()}
-          <Link to={'/login'}>
-            <button className='button logout-button'>
-              <LogoutIcon /> Sair
-            </button>
-          </Link>
+          <button className='button logout-button' onClick={handleLogout}>
+            <LogoutIcon /> Sair
+          </button>
         </div>
       )}
     </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import axios from "axios";
+import Api from "../../services/apiConfig";
 import Menu from '../../componentes/menu';
 import { UserContext } from "../../contexts/UserContext"; // Importa o UserContext
 import { Calendar, momentLocalizer } from 'react-big-calendar';
@@ -9,7 +9,6 @@ import './styles.css';
 import styles from './agendap.module.css';
 
 const localizer = momentLocalizer(moment);
-const apiUrl = process.env.REACT_APP_API_URL;
 
 const PsicologoAgenda = () => {
   const { user } = useContext(UserContext); // Acessa o contexto do usuário
@@ -18,7 +17,7 @@ const PsicologoAgenda = () => {
   useEffect(() => {
     const fetchEventos = async () => {
       try {
-        const response = await axios.get(`https://projeto-renovacao.web.app/eventos-psicologo/${user.matricula}`);
+        const response = await Api.get(`/eventos-psicologo/${user.matricula}`);
         const eventosFormatados = response.data.map(evento => ({
           title: evento.descricao,
           start: new Date(evento.data_evento),

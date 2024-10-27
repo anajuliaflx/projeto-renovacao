@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import Api from "../../services/apiConfig";
 import Modal from 'react-modal';
 import Menu from '../../componentes/menu';
 import './styles.css';
@@ -18,7 +18,7 @@ const AdministradorRelatorio = () => {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await axios.get('https://projeto-renovacao.web.app/filtrar-alunos');
+        const response = await Api.get(`/filtrar-alunos`);
         setStudents(response.data);
       } catch (error) {
         console.error('Erro ao buscar alunos:', error);
@@ -34,7 +34,7 @@ const AdministradorRelatorio = () => {
     setIsModalOpen(true);
 
     try {
-      const response = await axios.get(`https://projeto-renovacao.web.app/eventos-datas/${matricula}`);
+      const response = await Api.get(`/eventos-datas/${matricula}`);
       setAvailableDates(response.data);
     } catch (error) {
       console.error('Erro ao buscar datas de eventos:', error);
@@ -43,7 +43,7 @@ const AdministradorRelatorio = () => {
 
   const handleFetchAvaliacoes = async () => {
     try {
-      const response = await axios.get(`https://projeto-renovacao.web.app/avaliacoes/${selectedStudent}`, {
+      const response = await Api.get(`/avaliacoes/${selectedStudent}`, {
         params: { data: selectedDate }
       });
       setAvaliacoes(response.data);
