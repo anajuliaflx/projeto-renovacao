@@ -1,48 +1,47 @@
 import React, { useContext, useState } from 'react';
-import MenuIcon from '@mui/icons-material/Menu'; //menu
-import CloseIcon from '@mui/icons-material/Close'; //fechar
-import LogoutIcon from '@mui/icons-material/Logout'; //deslogar
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'; //agenda
-import MessageIcon from '@mui/icons-material/Message'; //mensagem
-import TheatersIcon from '@mui/icons-material/Theaters'; //trilha
-import PeopleIcon from '@mui/icons-material/People'; //cadastrar
-import AssessmentIcon from '@mui/icons-material/Assessment'; //relatórios
-import TimelineIcon from '@mui/icons-material/Timeline'; //acompanhamento
-import AppRegistrationIcon from '@mui/icons-material/AppRegistration'; //cronograma
-import { Link, useNavigate } from 'react-router-dom';
-import Api from "../../services/apiConfig";
 import { UserContext } from '../../contexts/UserContext';
+import { Link, useNavigate } from 'react-router-dom';
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
+import LogoutIcon from '@mui/icons-material/Logout';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import MessageIcon from '@mui/icons-material/Message';
+import TheatersIcon from '@mui/icons-material/Theaters';
+import PeopleIcon from '@mui/icons-material/People';
+import TimelineIcon from '@mui/icons-material/Timeline';
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import AssessmentIcon from '@mui/icons-material/Assessment';
+import LockIcon from '@mui/icons-material/Lock';
+import api from '../api/apiConfig';
 import './styles.css';
 
-function Menu({ userRole }) {
+function Menu() {
   const [isOpen, setIsOpen] = useState(false);
-  const { user, setUser } = useContext(UserContext); // Pega o usuário e a função para definir o estado do contexto
-  const navigate = useNavigate(); // Navegar programaticamente
+  const { user, setUser } = useContext(UserContext); // Agora obtemos `userRole` diretamente
+  const userRole = user?.tipoUsuario; // `userRole` será `tipoUsuario` do `UserContext`
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
-  // Função de logout
   const handleLogout = async () => {
     try {
-      // Verifique se o usuário e o email estão disponíveis no contexto
       if (!user || !user.email) {
-        alert("Usuário não encontrado.");
+        alert("Nenhum usuário logado.");
         return;
       }
 
-      // Faz a requisição para a rota de logout no backend
-      const response = await Api.post(`/logout`, { email: user.email });
-
-      if (response.status === 200 && response.data.msg) {
-        alert(response.data.msg); // Exibe a mensagem de logout
-        setUser(null); // Limpa o estado do usuário no contexto
-        navigate('/'); // Redireciona para a página principal ou de login
+      const response = await api.post("/logout", { email: user.email });
+      if (response.status === 200) {
+        alert(response.data.msg);
+        setUser(null);
+        localStorage.removeItem('user');
+        navigate("/login");
       }
     } catch (error) {
-      console.error("Erro ao realizar logout:", error);
-      alert("Ocorreu um erro ao tentar fazer logout. Por favor, tente novamente.");
+      console.error("Erro ao realizar logout:", error.response || error);
+      alert("Erro ao realizar logout: " + (error.response?.data?.msg || error.message));
     }
   };
 
@@ -53,17 +52,17 @@ function Menu({ userRole }) {
           <>
             <Link to={'/admincronograma'}>
               <button className='button'>
-                <AppRegistrationIcon /> Cronograma
+                <AppRegistrationIcon /> Adicionar cronograma
+              </button>
+            </Link>
+            <Link to={'/admintrilha'}>
+              <button className='button'>
+                <TheatersIcon /> Adicionar trilha
               </button>
             </Link>
             <Link to={'/adminusuario'}>
               <button className='button'>
                 <PeopleIcon /> Usuários
-              </button>
-            </Link>
-            <Link to={'/adminrelatorio'}>
-              <button className='button'>
-                <AssessmentIcon /> Relatórios
               </button>
             </Link>
             <Link to={'/adminmensagem'}>
@@ -81,9 +80,9 @@ function Menu({ userRole }) {
                 <TheatersIcon /> Trilha educativa
               </button>
             </Link>
-            <Link to={'/alunoagenda'}>
+            <Link to={'/alunocronograma'}>
               <button className='button'>
-                <CalendarMonthIcon /> Agenda
+                <CalendarMonthIcon /> Cronograma
               </button>
             </Link>
             <Link to={'/alunomensagem'}>
@@ -96,9 +95,9 @@ function Menu({ userRole }) {
       case 'psicologo':
         return (
           <>
-            <Link to={'/psicologoagenda'}>
+            <Link to={'/psicologocronograma'}>
               <button className='button'>
-                <CalendarMonthIcon /> Agenda
+                <CalendarMonthIcon /> Cronograma
               </button>
             </Link>
             <Link to={'/psicologoacompanhamento'}>
@@ -111,12 +110,22 @@ function Menu({ userRole }) {
                 <MessageIcon /> Mensagens
               </button>
             </Link>
+            <Link to={'/psicologorelatorio'}>
+              <button className='button'>
+                <AssessmentIcon /> Relatórios
+              </button>
+            </Link>
           </>
         );
       default:
         return null;
     }
   };
+
+  // Não renderiza o menu se o usuário não estiver logado
+  if (!user) {
+    return null; // Ou pode retornar um outro componente de "login" ou "tela de acesso"
+  }
 
   return (
     <div className={`hamburger-menu ${isOpen ? 'open' : ''}`}>
@@ -126,6 +135,11 @@ function Menu({ userRole }) {
       {isOpen && (
         <div className="menu-items">
           {renderMenuItems()}
+          <Link to={'/trocarsenha'}>
+            <button className='button'>
+              <LockIcon /> Alterar senha
+            </button>
+          </Link>
           <button className='button logout-button' onClick={handleLogout}>
             <LogoutIcon /> Sair
           </button>

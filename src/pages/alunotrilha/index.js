@@ -1,15 +1,21 @@
 import React, { useEffect, useState, useContext } from "react";
-import Api from "../../services/apiConfig";
-import styles from './trilha.module.css';
+import api from "../../componentes/api/apiConfig";
 import Menu from '../../componentes/menu';
+//import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../contexts/UserContext';
+import styles from './trilha.module.css';
+import Button from "../../componentes/botao";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import DoneIcon from '@mui/icons-material/Done';
+
 
 const AlunoTrilha = () => {
-  const { user } = useContext(UserContext);
   const [trilhas, setTrilhas] = useState([]);
   const [links, setLinks] = useState([]);
   const [feedback, setFeedback] = useState('');
   const [currentTrilhaId, setCurrentTrilhaId] = useState(null);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     if (user && user.matricula) {
@@ -19,7 +25,7 @@ const AlunoTrilha = () => {
 
   const fetchTrilhas = async (matricula) => {
     try {
-      const response = await Api.get(`/trilhas/${matricula}`);
+      const response = await api.get(`/trilhas/${matricula}`);
       setTrilhas(response.data);
     } catch (error) {
       console.error("Erro ao buscar trilhas:", error);
@@ -28,7 +34,7 @@ const AlunoTrilha = () => {
 
   const fetchLinks = async (trilhaId) => {
     try {
-      const response = await Api.get(`https://projeto-renovacao.web.app/links/${trilhaId}`, {
+      const response = await api.get(`/links/${trilhaId}`, {
         params: { matricula_aluno: user.matricula }
       });
       setLinks(response.data);
@@ -40,7 +46,7 @@ const AlunoTrilha = () => {
 
   const handleMarcarAssistido = async (linkId) => {
     try {
-      const response = await Api.post('https://projeto-renovacao.web.app/marcar-assistido', {
+      const response = await api.post('/marcar-assistido', {
         link_id: linkId,
         matricula_aluno: user.matricula,
       });
@@ -54,10 +60,14 @@ const AlunoTrilha = () => {
   return (
     <div className={styles.body}>
       <Menu userRole="aluno" />
-      <h1 className={styles.headerLarge}>Trilhas de aprendizagem</h1>
+      <h1 className={styles.headerLarge}>Trilhas de Aprendizagem</h1>
       {currentTrilhaId ? (
         <div>
-          <button onClick={() => setCurrentTrilhaId(null)} className={styles.buttonBack}>Voltar</button>
+          <Button
+            id="botao-voltar"
+            label={<><ArrowBackIcon /> Voltar</>}
+            onClick={() => setCurrentTrilhaId(null)}
+          />
           {links.length > 0 ? (
             <div>
               {links.map((link) => (
@@ -68,7 +78,11 @@ const AlunoTrilha = () => {
                   {link.assistido ? (
                     <p>Já assistido</p>
                   ) : (
-                    <button onClick={() => handleMarcarAssistido(link.id)} className={styles.buttonMark}>Marcar como assistido</button>
+                    <Button
+                      id="marcar-concluido"
+                      label={<><DoneIcon /> Marcar como concluído</>}
+                      onClick={() => handleMarcarAssistido(link.id)}
+                    />
                   )}
                 </div>
               ))}
@@ -86,7 +100,11 @@ const AlunoTrilha = () => {
                 <div key={trilha.id} className={styles.trilhaBloco}>
                   <h2>{trilha.titulo}</h2>
                   <p>{trilha.descricao}</p>
-                  <button onClick={() => fetchLinks(trilha.id)} className={styles.button}>Entrar</button>
+                  <Button
+                    id="acessar-trilha"
+                    label={<><VisibilityIcon /> Acessar trilha</>}
+                    onClick={() => fetchLinks(trilha.id)}
+                  />
                 </div>
               ))}
             </div>

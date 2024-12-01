@@ -30,7 +30,7 @@
     color: white;
   }
   
-  .studentTable td button {
+  .studentTable td {
     background-color: #3b5998; /* Azul para o botão Avaliar Aluno */
     color: white;
     padding: 10px 20px;
@@ -40,7 +40,7 @@
     transition: background-color 0.3s;
   }
   
-  .studentTable td button:hover {
+  .studentTable td {
     background-color: #2d4373;
   }
   
@@ -59,26 +59,6 @@
     margin-top: 5px;
     border-radius: 5px;
     border: 1px solid #ddd;
-  }
-  
-  .buttonGroup {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-  }
-  
-  .buttonGroup button {
-    background-color: #3b5998;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .buttonGroup button:hover {
-    background-color: #2d4373;
   }
   
   .modal {

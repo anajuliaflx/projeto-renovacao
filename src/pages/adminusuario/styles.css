@@ -1,3 +1,7 @@
+.cadastroButton{
+  justify-content: flex-end;
+  margin-top: 20px;
+}
 /* Estilos para a tabela de usuários */
 .table-container {
   display: flex;
@@ -49,84 +53,4 @@ h2{
 
 .user-table tr:hover {
   background-color: #ddd;
-}
-
-/* Responsividade para a tabela de usuários */
-@media only screen and (max-width: 1200px) {
-  .user-table th,
-  .user-table td {
-    padding: 5px; /* Reduz o preenchimento das células em telas menores */
-    font-size: 12px; /* Reduz o tamanho da fonte em telas menores */
-  }
-}
-
-@media only screen and (max-width: 992px) {
-  .user-table th,
-  .user-table td {
-    padding: 4px; /* Reduz ainda mais o preenchimento das células em telas menores */
-    font-size: 11px; /* Reduz ainda mais o tamanho da fonte em telas menores */
-  }
-}
-
-@media only screen and (max-width: 768px) {
-  .user-table th,
-  .user-table td {
-    padding: 3px; /* Reduz ainda mais o preenchimento das células em telas menores */
-    font-size: 10px; /* Reduz ainda mais o tamanho da fonte em telas menores */
-  }
-}
-
-@media only screen and (max-width: 576px) {
-  .user-table th,
-  .user-table td {
-    padding: 2px; /* Reduz ainda mais o preenchimento das células em telas menores */
-    font-size: 9px; /* Reduz ainda mais o tamanho da fonte em telas menores */
-  }
-}
-
-@media only screen and (max-width: 360px) {
-  .user-table th,
-  .user-table td {
-    padding: 1px; /* Reduz ainda mais o preenchimento das células em telas muito pequenas */
-    font-size: 8px; /* Reduz ainda mais o tamanho da fonte em telas muito pequenas */
-  }
-}
-
-/* Estilos para a paginação */
-.pagination {
-  margin-top: 20px;
-  text-align: center;
-}
-
-.pagination button {
-  margin: 0 5px;
-  padding: 5px 10px;
-  cursor: pointer;
-}
-
-.pagination button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-.botao-container {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 20px;
-  padding-right: 20px; /* Ajusta o espaçamento à direita */
-}
-
-.botao {
-  padding: 10px 20px;
-  border-radius: 5px; /* Ajusta a borda arredondada */
-  background-color: #3B5998;
-  border: none;
-  color: #ffffff;
-  cursor: pointer;
-  text-decoration: none;
-  display: inline-block; /* Certifica-se de que o botão não ocupa toda a linha */
-  transition: background-color 0.3s; /* Transição suave para o efeito hover */
-}
-
-.botao:hover {
-  background-color: #027c99; /* Cor de fundo quando o mouse passa por cima */
 }

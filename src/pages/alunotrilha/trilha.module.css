@@ -45,26 +45,6 @@
     margin: 10px 0;
 }
 
-.button,
-.buttonBack,
-.buttonMark {
-    padding: 10px 20px;
-    border-radius: 5px;
-    background-color: #3b5998;
-    border: none;
-    color: white;
-    cursor: pointer;
-    text-align: center;
-    transition: background-color 0.3s;
-    font-size: 16px;
-}
-
-.button:hover,
-.buttonBack:hover,
-.buttonMark:hover {
-    background-color: #2d4373;
-}
-
 .feedback {
     color: green;
     margin-top: 20px;

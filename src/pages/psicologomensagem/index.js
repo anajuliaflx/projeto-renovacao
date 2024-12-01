@@ -1,8 +1,13 @@
 import React, { useEffect, useState, useContext } from "react";
-import Api from "../../services/apiConfig";
+import api from '../../componentes/api/apiConfig';
 import Menu from '../../componentes/menu';
-import { UserContext } from "../../contexts/UserContext";
-import styles from './mensagemp.module.css';
+import { UserContext } from '../../contexts/UserContext';
+import './styles.css';
+import Button from "../../componentes/botao";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import SendIcon from '@mui/icons-material/Send';
+import Input from "../../componentes/input";
 
 const PsicologoMensagem = () => {
     const { user } = useContext(UserContext);
@@ -13,11 +18,12 @@ const PsicologoMensagem = () => {
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const limit = 10;
+    const maxLength = 250;
 
     useEffect(() => {
         const fetchMensagens = async () => {
             try {
-                const response = await Api.get(`/mensagens/psicologo?page=${page}&limit=${limit}`);
+                const response = await api.get(`/mensagens/psicologo?page=${page}&limit=${limit}`);
                 setMensagens(response.data.messages);
                 setTotalPages(response.data.totalPages);
             } catch (error) {
@@ -30,7 +36,7 @@ const PsicologoMensagem = () => {
 
     const handleResponder = async (mensagem_id) => {
         try {
-            const response = await Api.post(`https://projeto-renovacao.web.app/resposta`, {
+            const response = await api.post(`/resposta`, {
                 mensagem_id,
                 resposta: respostas[mensagem_id] || '',
                 matricula: user.matricula, // Usando a matrícula do usuário do contexto
@@ -63,43 +69,73 @@ const PsicologoMensagem = () => {
     };
 
     return (
-        <div className={styles.container}>
-            <Menu userRole="psicologo" />
-            <h1>Mensagens diretas</h1>
-            {error && <p className={styles.error}>{error}</p>}
+        <div className="container">
+            <Menu />
+            <h1 className="pageTitle">Mensagens recebidas</h1>
+            <p className="pageSubtitle">Aqui você pode visualizar e responder às mensagens enviadas pelos alunos.</p>
+            {error && <p className="loadingError">{error}</p>}
             {mensagens.length > 0 ? (
-                <ul className={styles.messageList}>
+                <ul className="messageList">
                     {mensagens.map((msg, index) => (
-                        <li key={`${msg.id}-${index}`} className={styles.messageItem}>
-                            <p><strong>Remetente:</strong> {msg.remetente_nome}</p>
-                            <p><strong>Conteúdo:</strong> {msg.mensagem}</p>
-                            <p><strong>Data de Envio:</strong><em>{new Date(msg.data_envio).toLocaleString()}</em></p>
+                        <li key={`${msg.id}-${index}`} className="messageItem">
+                            <p><strong className="boldTextColor">Enviado por: </strong> {msg.remetente_nome}</p>
+                            <p><strong className="boldTextColor">Conteúdo da mensagem recebida: </strong> {msg.mensagem}</p>
+                            <p><strong className="boldTextColor">Enviado em: </strong> <em>{new Date(msg.data_envio).toLocaleString()}</em></p>
                             {msg.resposta ? (
                                 <>
-                                    <p><strong>Resposta:</strong> {msg.resposta}</p>
-                                    <p><strong>Data da resposta:</strong> {new Date(msg.data_resposta).toLocaleString()}</p>
+                                    <p><strong className="boldTextColor">Conteúdo da resposta: </strong> {msg.resposta}</p>
+                                    <p><strong className="boldTextColor">Respondido em: </strong> {new Date(msg.data_resposta).toLocaleString()}</p>
                                 </>
                             ) : (
                                 <>
-                                    <textarea
-                                        value={respostas[msg.id] || ''}
-                                        onChange={(e) => handleRespostaChange(msg.id, e.target.value)}
-                                        placeholder="Escreva sua resposta aqui"
-                                        className={styles.textarea}
+                                    <div className="new-border">
+                                        <textarea
+                                            className="inputField"
+                                            value={respostas[msg.id] || ''}
+                                            onChange={(e) => handleRespostaChange(msg.id, e.target.value)}
+                                            maxLength={maxLength}
+                                            rows="4"
+                                            cols="50"
+                                            placeholder="Escreva sua resposta aqui *"
+                                        />
+                                    </div>
+
+                                    <p className="char-count">{maxLength - (respostas[msg.id] || '').length} caracteres restantes</p>
+
+                                    <Button
+                                        id="responder-mensagem"
+                                        label={<><SendIcon /> Responder mensagem</>}
+                                        type="button"
+                                        onClick={() => handleResponder(msg.id)}
                                     />
-                                    <button onClick={() => handleResponder(msg.id)} className={styles.button}>Responder</button>
                                 </>
                             )}
                         </li>
                     ))}
                 </ul>
             ) : (
-                <p className={styles.noMessage}>Nenhuma mensagem encontrada.</p>
+                <p className="noContentFound">Nenhuma mensagem encontrada.</p>
             )}
-            <div className={styles.pagination}>
-                <button onClick={() => handlePageChange(page - 1)} disabled={page === 1}>Anterior</button>
+            <div className="pageNavigation">
+                <Button
+                    id="pagina-anterior"
+                    label={<ArrowBackIcon />}
+                    type="button"
+                    onClick={() => handlePageChange(page - 1)}
+                    disabled={page === 1 || totalPages === 1}
+                    aria-label="Ir para a página anterior"
+                />
+
                 <span>Página {page} de {totalPages}</span>
-                <button onClick={() => handlePageChange(page + 1)} disabled={page === totalPages}>Próxima</button>
+
+                <Button
+                    id="proxima-pagina"
+                    label={<ArrowForwardIcon />}
+                    type="button"
+                    onClick={() => handlePageChange(page + 1)}
+                    disabled={page === totalPages || totalPages === 1}
+                    aria-label="Ir para a próxima página"
+                />
             </div>
             {feedback && <p>{feedback}</p>}
         </div>

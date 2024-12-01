@@ -1,0 +1,110 @@
+/*body {
+  margin: 0;
+  font-family: 'Lato', sans-serif;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: white;
+ 
+}
+
+h1 {
+  margin: 0;
+  text-align: center;
+  font-size: 36px;
+  color: black;
+  justify-content: center;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.senhaNova {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px ;
+
+}
+
+.senhaAtual {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+ 
+}
+
+.form {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%; 
+}
+
+.column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+}
+
+.formField {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 18px;
+  padding: 10px;
+  box-sizing: border-box;
+  justify-content: center;
+}
+
+@media only screen and (max-width: 576px) {
+  .form {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .inputWithIcon {
+    width: 100%; 
+  }
+}
+
+@media only screen and (min-width: 577px) and (max-width: 768px) {
+  .inputWithIcon {
+    width: 90%; 
+  }
+}
+
+
+@media only screen and (min-width: 769px) and (max-width: 992px) {
+  .inputWithIcon {
+    width: 80%; 
+  }
+}
+
+
+@media only screen and (min-width: 993px) {
+  .inputWithIcon {
+    width: 100%; 
+  }
+}
+*/

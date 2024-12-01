@@ -1,0 +1,82 @@
+.selectContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+    flex-direction: column;
+}
+
+.iconSelectContainer {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #ffffff;
+    width: 100%;
+}
+
+.iconSelectContainer .icon {
+    margin-right: 10px;
+    color: #3b5998;
+    text-decoration-line: none;
+}
+
+.selectField {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: none;
+    font-size: 18px;
+    padding: 8px 0;
+}
+
+.selectField:focus {
+    border-color: #4C5682;
+    box-shadow: 0 0 5px rgba(76, 86, 130, 0.5);
+}
+
+.errorText {
+    color: #ed4337;
+    font-size: 0.9em;
+    font-weight: 600;
+    margin-top: 5px;
+    display: block;
+    align-items: center;
+}
+
+.errorText::before {
+    content: "⚠️";
+    margin-right: 5px;
+}
+
+@media only screen and (max-width: 576px) {
+    .iconSelectContainer {
+      width: 90%;
+    }
+  }
+  
+  @media only screen and (min-width: 577px) and (max-width: 768px) {
+    .iconSelectContainer {
+      width: 80%;
+    }
+  }
+  
+  @media only screen and (min-width: 769px) and (max-width: 992px) {
+    .iconSelectContainer {
+      width: 70%;
+    }
+  }
+  
+  @media only screen and (min-width: 993px) and (max-width: 1200px) {
+    .iconSelectContainer {
+      width: 60%;
+    }
+  }
+  
+  @media only screen and (min-width: 1201px) {
+    .iconSelectContainer {
+      width: 50%;
+    }
+  }

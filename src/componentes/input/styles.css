@@ -1,0 +1,76 @@
+.inputContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+  flex-direction: column;
+}
+
+.iconInputContainer {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #ffffff;
+}
+
+.iconInputContainer .icon {
+  margin-right: 10px;
+  color: #3b5998;
+  text-decoration-line: none;
+}
+
+.inputField {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 18px;
+  padding: 8px 0;
+}
+
+.errorText {
+  color: #ed4337;
+  font-size: .9em;
+  font-weight: 600;
+  margin-top: 5px;
+  display: block;
+  align-items: center;
+}
+
+.errorText::before {
+  content: "⚠️";
+  margin-right: 5px;
+}
+
+@media only screen and (max-width: 576px) {
+  .iconInputContainer {
+    width: 90%;
+  }
+}
+
+@media only screen and (min-width: 577px) and (max-width: 768px) {
+  .iconInputContainer {
+    width: 80%;
+  }
+}
+
+@media only screen and (min-width: 769px) and (max-width: 992px) {
+  .iconInputContainer {
+    width: 70%;
+  }
+}
+
+@media only screen and (min-width: 993px) and (max-width: 1200px) {
+  .iconInputContainer {
+    width: 60%;
+  }
+}
+
+@media only screen and (min-width: 1201px) {
+  .iconInputContainer {
+    width: 50%;
+  }
+}

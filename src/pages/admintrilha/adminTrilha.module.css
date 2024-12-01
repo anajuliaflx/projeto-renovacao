@@ -1,0 +1,70 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centraliza o conteúdo dos formulários */
+}
+
+.form div {
+  margin-bottom: 15px;
+  width: 300px;
+  text-align: center; /* Centraliza o texto dos rótulos */
+}
+
+.label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.inputDate,
+.inputText,
+.textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: center; /* Centraliza o texto dentro dos inputs */
+}
+
+.submitButton {
+  background-color: #3b5998;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 10px;
+  width: 50%; 
+}
+
+.submitButton:hover {
+  background-color: #333;
+}
+
+.notifications {
+  width: 100%;
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center; /* Centraliza o texto dentro do contêiner de notificações */
+}
+
+.notifications h2 {
+  margin-bottom: 15px;
+  font-size: 1.5em;
+  color: #3b5998;
+}
+
+.notifications ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.notifications ul li {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}

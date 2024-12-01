@@ -1,250 +1,103 @@
-import React, { useState, useContext } from "react";
-import Api from "../../services/apiConfig";
-import Modal from 'react-modal';
+import React from "react";
+import { Formik, Form } from "formik";
+import api from '../../componentes/api/apiConfig';
 import Menu from '../../componentes/menu';
-import styles from './cronograma.module.css';
-import { UserContext } from "../../contexts/UserContext";
+import Button from "../../componentes/botao";
+import SaveIcon from '@mui/icons-material/Save';
+import Input from "../../componentes/input";
+import * as yup from 'yup';
+import './styles.css';
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+import DescriptionIcon from '@mui/icons-material/Description';
+import EventIcon from '@mui/icons-material/Event';
 
 const AdministradorCronograma = () => {
-  const { user } = useContext(UserContext);
-  const [dataEvento, setDataEvento] = useState('');
-  const [matriculaAlunoEvento, setMatriculaAlunoEvento] = useState('');
-  const [matriculaPsicologo, setMatriculaPsicologo] = useState('');
-  const [descricaoEvento, setDescricaoEvento] = useState('');
-  const [feedbackEvento, setFeedbackEvento] = useState('');
-
-  const [tituloTrilha, setTituloTrilha] = useState('');
-  const [descricaoTrilha, setDescricaoTrilha] = useState('');
-  const [links, setLinks] = useState([{ url: '', titulo: '', descricao: '' }]);
-  const [trilhaId, setTrilhaId] = useState(null);
-  const [feedbackTrilha, setFeedbackTrilha] = useState('');
-  const [matriculaAlunoTrilha, setMatriculaAlunoTrilha] = useState('');
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleSubmitEvento = async (e) => {
-    e.preventDefault();
-
-    if (matriculaAlunoEvento.length !== 8 || matriculaPsicologo.length !== 8) {
-      setFeedbackEvento('A matrícula do aluno e do psicólogo deve ter exatamente 8 caracteres.');
-      return;
-    }
-
+  const handleSubmitEvento = async (values, { resetForm }) => {
     try {
-      const response = await Api.post(`/adicionar-evento`, {
-        data_evento: dataEvento,
-        matricula_aluno: matriculaAlunoEvento,
-        matricula_psicologo: matriculaPsicologo,
-        descricao: descricaoEvento,
+      const response = await api.post('/adicionar-evento', {
+        data_evento: values.data,
+        matricula_aluno: values.matriculaAluno,
+        matricula_psicologo: values.matriculaPsicologo,
+        descricao: values.descricao,
       });
-      setFeedbackEvento(response.data.msg);
-      setDataEvento('');
-      setMatriculaAlunoEvento('');
-      setMatriculaPsicologo('');
-      setDescricaoEvento('');
+      alert(response.data.msg);
+      resetForm();
     } catch (error) {
-      setFeedbackEvento('Erro ao adicionar o evento.');
+      alert('Erro ao adicionar o evento.');
     }
   };
 
-  const handleSubmitTrilha = async (e) => {
-    e.preventDefault();
-
-    if (matriculaAlunoTrilha.length !== 8) {
-      setFeedbackTrilha('A matrícula do aluno deve ter exatamente 8 caracteres.');
-      return;
-    }
-
-    try {
-      const response = await Api.post(`/adicionar-trilha`, {
-        titulo: tituloTrilha,
-        descricao: descricaoTrilha,
-        matricula_aluno: matriculaAlunoTrilha,
-      });
-      setFeedbackTrilha(response.data.msg);
-      setTrilhaId(response.data.trilhaId);
-      setTituloTrilha('');
-      setDescricaoTrilha('');
-      setIsModalOpen(true);
-    } catch (error) {
-      setFeedbackTrilha('Erro ao adicionar a trilha.');
-    }
-  };
-
-  const handleSubmitLink = async (e) => {
-    e.preventDefault();
-
-    if (!trilhaId) {
-      setFeedbackTrilha('Primeiro adicione uma trilha.');
-      return;
-    }
-
-    try {
-      await Promise.all(links.map(link =>
-        Api.post(`/adicionar-link`, {
-          url: link.url,
-          titulo: link.titulo,
-          descricao: link.descricao,
-          trilha_id: trilhaId,
-        })
-      ));
-      setFeedbackTrilha('Links adicionados com sucesso');
-      setLinks([{ url: '', titulo: '', descricao: '' }]);
-      setIsModalOpen(false); 
-    } catch (error) {
-      setFeedbackTrilha('Erro ao adicionar os links.');
-    }
-  };
-
-  const handleLinkChange = (index, e) => {
-    const { name, value } = e.target;
-    const newLinks = [...links];
-    newLinks[index][name] = value;
-    setLinks(newLinks);
-  };
-
-  const handleAddLink = () => {
-    setLinks([...links, { url: '', titulo: '', descricao: '' }]);
-  };
+  const validations = yup.object().shape({
+    data: yup.string().required('A data do evento é obrigatória'),
+    matriculaAluno: yup.string().length(8, 'A matrícula do aluno deve ter 8 caracteres').required('A matrícula do aluno é obrigatória'),
+    matriculaPsicologo: yup.string().length(8, 'A matrícula do psicólogo deve ter 8 caracteres').required('A matrícula do psicólogo é obrigatória'),
+    descricao: yup.string().required('A descrição do evento é obrigatória'),
+  });
 
   return (
-    <div className={styles.body}>
-      <Menu userRole="administrador" />
-      <header className={styles.header}>
-        <h1>Cronograma</h1>
-      </header>
-      {/* Formulário para adicionar eventos */}
-      <div className={styles.formContainer}>
-        <h2>Cadastrar evento</h2>
-        <form onSubmit={handleSubmitEvento} className={styles.form}>
-          <div>
-            <label>Data do Evento:</label>
-            <input
-              type="date"
-              value={dataEvento}
-              onChange={(e) => setDataEvento(e.target.value)}
-              required
-              className={styles.inputDate}
-            />
-          </div>
-          <div>
-            <label>Matrícula do aluno:</label>
-            <input
-              type="text"
-              value={matriculaAlunoEvento}
-              onChange={(e) => setMatriculaAlunoEvento(e.target.value)}
-              maxLength="8"
-              required
-              className={styles.inputText}
-            />
-          </div>
-          <div>
-            <label>Matrícula do psicólogo:</label>
-            <input
-              type="text"
-              value={matriculaPsicologo}
-              onChange={(e) => setMatriculaPsicologo(e.target.value)}
-              maxLength="8"
-              required
-              className={styles.inputText}
-            />
-          </div>
-          <div>
-            <label>Descrição do Evento:</label>
-            <textarea
-              value={descricaoEvento}
-              onChange={(e) => setDescricaoEvento(e.target.value)}
-              required
-              className={styles.textarea}
-            />
-          </div>
-          <button type="submit" className={styles.submitButton}>Cadastrar evento</button>
-        </form>
-        {feedbackEvento && <p>{feedbackEvento}</p>}
-      </div>
-
-      {/* Formulário para adicionar trilhas */}
-      <div className={styles.formContainer}>
-        <h2>Cadastrar trilha educativa</h2>
-        <form onSubmit={handleSubmitTrilha} className={styles.form}>
-          <div>
-            <label>Título:</label>
-            <input
-              type="text"
-              value={tituloTrilha}
-              onChange={(e) => setTituloTrilha(e.target.value)}
-              required
-              className={styles.inputText}
-            />
-          </div>
-          <div>
-            <label>Descrição:</label>
-            <textarea
-              value={descricaoTrilha}
-              onChange={(e) => setDescricaoTrilha(e.target.value)}
-              required
-              className={styles.textarea}
-            />
-          </div>
-          <div>
-            <label>Matrícula do aluno:</label>
-            <input
-              type="text"
-              value={matriculaAlunoTrilha}
-              onChange={(e) => setMatriculaAlunoTrilha(e.target.value)}
-              maxLength="8"
-              required
-              className={styles.inputText}
-            />
-          </div>
-          <button type="submit" className={styles.submitButton}>Cadastrar trilha</button>
-        </form>
-        {feedbackTrilha && <p>{feedbackTrilha}</p>}
-      </div>
-
-      {/* Modal para adicionar links */}
-      <Modal
-        isOpen={isModalOpen}
-        onRequestClose={() => setIsModalOpen(false)}
-        contentLabel="Adicionar Links"
-        className="modal"
-        overlayClassName="overlay"
+    <div className="container">
+      <Menu />
+      <h1 className="pageTitle">Gerenciar cronograma</h1>
+      <p className="pageSubtitle">Preencha os dados solicitados abaixo para adicionar um novo cronograma</p>  
+      <Formik
+        initialValues={{
+          data: '',
+          matriculaAluno: '',
+          matriculaPsicologo: '',
+          descricao: '',
+        }}
+        onSubmit={handleSubmitEvento}
+        validationSchema={validations}
       >
-        <h2>Adicionar Links</h2>
-        <form onSubmit={handleSubmitLink}>
-          {links.map((link, index) => (
-            <div key={index}>
-              <label>URL:</label>
-              <input
-                type="text"
-                name="url"
-                value={link.url}
-                onChange={(e) => handleLinkChange(index, e)}
-                required
-                className={styles.inputText}
-              />
-              <label>Título:</label>
-              <input
-                type="text"
-                name="titulo"
-                value={link.titulo}
-                onChange={(e) => handleLinkChange(index, e)}
-                required
-                className={styles.inputText}
-              />
-              <label>Descrição:</label>
-              <textarea
-                name="descricao"
-                value={link.descricao}
-                onChange={(e) => handleLinkChange(index, e)}
-                required
-                className={styles.textarea}
-              />
-            </div>
-          ))}
-          <button type="button" onClick={handleAddLink} className={styles.submitButton}>Adicionar mais link</button>
-          <button type="submit" className={styles.submitButton}>Salvar links</button>
-        </form>
-      </Modal>
+        <Form className="formContainer">
+        <div className="formGroup">
+            <Input
+              id="data"
+              name="data"
+              type="date"
+              icon={EventIcon}
+              placeholder="Data do evento *"
+              required
+            />
+
+            <Input
+              id="matriculaAluno"
+              name="matriculaAluno"
+              type="text"
+              icon={AssignmentIndIcon}
+              maxLength={8}
+              placeholder="Matrícula do aluno *"
+              required
+            />
+
+            <Input
+              id="matriculaPsicologo"
+              name="matriculaPsicologo"
+              type="text"
+              icon={AssignmentIndIcon}
+              maxLength={8}
+              placeholder="Matrícula do psicólogo *"
+              required
+            />
+
+            <Input
+              id="descricao"
+              name="descricao"
+              as="textarea"
+              icon={DescriptionIcon}
+              maxLength={100}
+              placeholder="Descrição *"
+              required
+            />
+          </div>
+
+          <Button
+            id="cadastrar-cronograma"
+            label={<><SaveIcon /> Cadastrar cronograma</>}
+            type="submit"
+          />
+        </Form>
+      </Formik>
     </div>
   );
 };

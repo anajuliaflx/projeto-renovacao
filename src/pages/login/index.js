@@ -1,13 +1,16 @@
-import { Link, useNavigate } from "react-router-dom";
-import { ErrorMessage, Formik, Form, Field } from "formik";
-import { UserContext } from "../../contexts/UserContext";
-import EmailIcon from '@mui/icons-material/Email';
-import LockIcon from '@mui/icons-material/Lock';
 import React, { useContext } from "react";
-import Api from "../../services/apiConfig";
-import * as yup from "yup";
-import styles from './login.module.css';
 import "./styles.css";
+import * as yup from "yup";
+import { Formik, Form } from "formik";
+import api from '../../componentes/api/apiConfig';
+import { useNavigate } from "react-router-dom";
+import { UserContext } from '../../contexts/UserContext';
+import EmailIcon from '@mui/icons-material/Email'; // Ícone de email
+import LockIcon from '@mui/icons-material/Lock'; // Ícone de senha
+import Button from "../../componentes/botao";
+import LockOpenIcon from '@mui/icons-material/Lock';
+import CancelIcon from '@mui/icons-material/Cancel';
+import Input from "../../componentes/input";
 
 function Login() {
     const navigate = useNavigate();
@@ -16,7 +19,7 @@ function Login() {
     // Função para realizar o login
     const handleLogin = async (values) => {
         try {
-            const response = await Api.post(`/login`, {
+            const response = await api.post("/login", {
                 email: values.email,
                 senha: values.senha,
             });
@@ -67,33 +70,45 @@ function Login() {
     });
 
     return (
-        <div className={styles.container}>
-            <h1 className={styles.title}>Acessar</h1>
-            <p>Insira seus dados para acesso</p>
+        <div className="container">
+            <h1 className="pageTitle">Acessar</h1>
+            <p className="pageSubtitle">Insira seus dados para acesso</p>
             <Formik initialValues={{ email: '', senha: '' }} onSubmit={handleLogin} validationSchema={validationsLogin}>
-                <Form className={styles.loginForm}>
-                    <div className={styles.loginFormGroup}>
-                        <div className={styles.inputWithIcon}>
-                            <EmailIcon className={styles.icon} />
-                            <Field name="email" className={styles.formField} placeholder="Email" />
-                        </div>
-                        <ErrorMessage component="span" name="email" className={styles.formError} />
+                <Form className="formContainer">
+                    <div className="formGroup">
+                        <Input
+                            id="email"
+                            name="email"
+                            type="email"
+                            icon={EmailIcon}
+                            placeholder="Email *"
+                            required
+                        />
+                    
+                        <Input
+                            id="senha"
+                            name="senha"
+                            type="password"
+                            icon={LockIcon}
+                            placeholder="Senha *"
+                            required
+                        />
                     </div>
-                    <div className={styles.loginFormGroup}>
-                        <div className={styles.inputWithIcon}>
-                            <LockIcon className={styles.icon} />
-                            <Field name="senha" className={styles.formField} type="password" placeholder="Senha" />
-                        </div>
-                        <ErrorMessage component="span" name="senha" className={styles.formError} />
-                    </div>
-                    <button type="submit" className={styles.submitButton}>Login</button>
+                    <Button
+                        id="continuar"
+                        label={<><LockOpenIcon /> Continuar</>}
+                        type="submit"
+                    />
+                    <div />
                 </Form>
+
             </Formik>
-            <div className='botaocon'>
-                <Link to={'/'}>
-                    <button type="submit" className={styles.submitButton}>Voltar</button>
-                </Link>
-            </div>
+            <Button
+                id="cancelar"
+                label={<><CancelIcon /> Cancelar</>}
+                to="/"
+                type="submit"
+            />
         </div>
     );
 }

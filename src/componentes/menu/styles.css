@@ -1,8 +1,8 @@
 .hamburger-menu {
   position: absolute;
-  top: 60px; /* Ajuste conforme a altura do seu header */
+  top: 60px;
   left: 0;
-  z-index: 1000; /* Garante que o menu está acima do calendário */
+  z-index: 1000;
 }
 
 .menu-icon {
@@ -20,17 +20,17 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 0 5px 5px 0;
   padding: 20px;
-  width: auto; /* Largura automática para ajustar ao conteúdo */
-  max-width: 500px; /* Largura máxima */
+  width: auto;
+  max-width: 500px;
   box-sizing: border-box;
-  z-index: 1001; /* Garante que o menu está acima do calendário */
+  z-index: 1001;
 }
 
 .menu-items a {
   display: block;
   padding: 10px;
   text-decoration: none;
-  border-bottom: 1px solid #ccc; /* Linha cinza mais clara */
+  border-bottom: 1px solid #ccc;
 }
 
 .menu-items .button {
@@ -40,21 +40,21 @@
   width: 100%;
   padding: 10px;
   margin: 5px 0;
-  background: white; /* Fundo branco */
+  background: white;
   border: none;
   border-radius: 5px;
   text-align: left;
   cursor: pointer;
-  color: #4C5682; /* Cor do texto */
+  color: #4C5682;
 }
 
 .menu-items .button svg {
-  color: #4C5682; /* Cor dos ícones */
-  margin-right: 10px; /* Espaço entre ícone e texto */
+  color: #4C5682; 
+  margin-right: 10px;
 }
 
 .menu-items .button:hover {
-  background: #f0f0f0; /* Fundo ao passar o mouse */
+  background: #f0f0f0;
 }
 
 .menu-items .logout-button:hover {
@@ -65,8 +65,8 @@
   font-size: 2.5rem;
   position: absolute;
   cursor: pointer;
-  color: #4C5682; /* Cor para o ícone de fechar */
-  z-index: 1002; /* Garante que o ícone de fechar está acima de tudo no menu */
+  color: #4C5682;
+  z-index: 1002; 
   padding: 10px;
 }
 
@@ -76,5 +76,5 @@
 
 .calendar-container {
   position: relative;
-  z-index: 1; /* Garante que o calendário está abaixo do menu */
+  z-index: 1;
 }

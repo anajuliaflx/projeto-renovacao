@@ -5,7 +5,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-end; /* Alinhar conteúdo à direita */
-    padding: 0 20px;
+    padding: 20px;
     box-sizing: border-box; /* Inclui padding na largura total */
 }
 

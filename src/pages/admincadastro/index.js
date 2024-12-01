@@ -1,44 +1,47 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { ErrorMessage, Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import PersonIcon from '@mui/icons-material/Person';
 import EmailIcon from '@mui/icons-material/Email';
-import LockIcon from '@mui/icons-material/Lock';
+import PasswordIcon from '@mui/icons-material/Password';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import PeopleIcon from '@mui/icons-material/People';
-import Menu from '../../componentes/menu';
-import styles from './cadastro.module.css';
 import './styles.css';
-import Api from "../../services/apiConfig";
+import api from '../../componentes/api/apiConfig';
 import * as yup from "yup";
+import Menu from '../../componentes/menu';
+import Button from "../../componentes/botao";
+import AddIcon from '@mui/icons-material/Add';
+import CancelIcon from '@mui/icons-material/Cancel';
+import Input from "../../componentes/input";
+import Select from "../../componentes/select";
 
 function AdministradorCadastro() {
     const [userExists, setUserExists] = useState(false);
     const [errorMsg, setErrorMsg] = useState("");
     const handleRegister = (values, { resetForm }) => {
-        Api.post(`/admincadastro`, {
+        api.post(`/api/admincadastro`, {
             nome: values.nome,
             email: values.email,
             senha: values.senha,
             confirmsenha: values.confirmsenha,
             matricula: values.matricula,
             tipoUsuario: values.tipoUsuario,
-        }).then((response) => {
-            alert(response.data.msg);
-            console.log(response);
-            if (response.data.msg === "Usuário cadastrado com sucesso") {
-                setUserExists(false);
-                setErrorMsg("");
-                resetForm(); // Limpar os valores do formulário apenas se o cadastro for bem-sucedido
-            } else if (response.data.msg === "Email ou matrícula já cadastrados") {
-                setUserExists(true);
-                setErrorMsg(response.data.msg);
-            }
-        }).catch(error => {
-            console.error('Erro ao cadastrar:', error);
-        });
+        })
+            .then(response => {
+                alert(response.data.msg);
+                if (response.data.msg === "Usuário cadastrado com sucesso") {
+                    setUserExists(false);
+                    setErrorMsg("");
+                    resetForm();
+                } else if (response.data.msg === "Email ou matrícula já cadastrados") {
+                    setUserExists(true);
+                    setErrorMsg(response.data.msg);
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao cadastrar:', error);
+            });
     };
-
     const validationsRegister = yup.object().shape({
         nome: yup.string().required("O nome é obrigatório"),
         email: yup.string().email("Email inválido").required("O email é obrigatório"),
@@ -49,9 +52,10 @@ function AdministradorCadastro() {
     });
 
     return (
-        <div className={styles.container}>
-            <Menu userRole="administrador" />
-            <h1>Cadastrar usuário</h1>
+        <div className="container">
+            <Menu />
+            <h1 className="pageTitle">Cadastrar novo usuário</h1>
+            <p className="pageSubtitle">Preencha os dados solicitados abaixo para realizar o cadastro</p>
             <Formik
                 initialValues={{
                     nome: '',
@@ -64,66 +68,79 @@ function AdministradorCadastro() {
                 onSubmit={handleRegister}
                 validationSchema={validationsRegister}
             >
-                <Form className={styles.loginForm}>
-                    <div className={styles.loginFormGroup}>
-                        <div className={styles.inputWithIcon}>
-                            <PersonIcon className={styles.icon} />
-                            <Field name="nome" className={styles.formField} placeholder="Nome Completo" />
-                        </div>
-                        <ErrorMessage component="span" name="nome" className={styles.formError} />
-                    </div>
-                    <div className={styles.loginFormGroup}>
-                        <div className={styles.inputWithIcon}>
-                            <EmailIcon className={styles.icon} />
-                            <Field name="email" className={styles.formField} placeholder="Email" />
-                        </div>
-                        <ErrorMessage component="span" name="email" className={styles.formError} />
-                    </div>
-                    <div className={styles.loginFormGroup}>
-                        <div className={styles.inputWithIcon}>
-                            <LockIcon className={styles.icon} />
-                            <Field name="senha" className={styles.formField} type="password" placeholder="Senha" />
-                        </div>
-                        <ErrorMessage component="span" name="senha" className={styles.formError} />
-                    </div>
-                    <div className={styles.loginFormGroup}>
-                        <div className={styles.inputWithIcon}>
-                            <LockIcon className={styles.icon} />
-                            <Field name="confirmsenha" className={styles.formField} type="password" placeholder="Confirme sua senha" />
-                        </div>
-                        <ErrorMessage component="span" name="confirmsenha" className={styles.formError} />
-                    </div>
-                    <div className={styles.loginFormGroup}>
-                        <div className={styles.inputWithIcon}>
-                            <AssignmentIndIcon className={styles.icon} />
-                            <Field name="matricula" className={styles.formField} placeholder="Matrícula" maxLength="8" />
-                        </div>
-                        <ErrorMessage component="span" name="matricula" className={styles.formError} />
-                    </div>
-                    <div className={styles.loginFormGroup}>
-                        <div className={styles.inputWithIcon}>
-                            <PeopleIcon className={styles.icon} />
-                            <Field as="select" name="tipoUsuario" className={styles.formField}>
-                                <option value="">Escolha o tipo de usuário</option>
-                                <option value="aluno">Aluno</option>
-                                <option value="administrador">Administrador</option>
-                                <option value="psicologo">Psicologo</option>
-                            </Field>
-                        </div>
-                        <ErrorMessage component="span" name="tipoUsuario" className={styles.formError} />
-                    </div>
-                    {userExists && <span className={styles.formError}>{errorMsg}</span>}
-                    <button className={styles.button} type="submit">
-                        Realizar cadastro
-                    </button>
-                </Form>
+                <Form className="formContainer">
+                    <div className="formGroup">
+                        <Input
+                            id="nome"
+                            name="nome"
+                            type="text"
+                            icon={PersonIcon}
+                            placeholder="Nome completo *"
+                            required
+                        />
 
+                        <Input
+                            id="email"
+                            name="email"
+                            type="email"
+                            icon={EmailIcon}
+                            placeholder="Email *"
+                            required
+                        />
+
+                        <Input
+                            id="senha"
+                            name="senha"
+                            type="password"
+                            icon={PasswordIcon}
+                            placeholder="Senha* "
+                            required
+                        />
+
+                        <Input
+                            id="confirmar-senha"
+                            name="confirmsenha"
+                            type="password"
+                            icon={PasswordIcon}
+                            placeholder="Confirme a senha *"
+                            required
+                        />
+
+                        <Input
+                            id="matricula"
+                            name="matricula"
+                            type="number"
+                            icon={AssignmentIndIcon}
+                            maxLength={8}
+                            placeholder="Matrícula *"
+                            required
+                        />
+
+                        <Select
+                            id="tipo-usuario"
+                            name="tipoUsuario"
+                            placeholder="Escolha o tipo de usuário *"
+                            options={[
+                                { value: 'administrador', label: 'Administrador' },
+                                { value: 'aluno', label: 'Aluno' },
+                                { value: 'psicologo', label: 'Psicólogo' }
+                            ]}
+                            icon={PeopleIcon}
+                            required
+                        />
+                    </div>
+                    <Button
+                        id="cadastrar-usuario"
+                        label={<><AddIcon /> Cadastrar usuário</>}
+                        type="submit"
+                    />
+                </Form>
             </Formik>
-            <Link to={'/adminusuario'}>
-                <button className={styles.buttonCancel}>
-                    Cancelar
-                </button>
-            </Link>
+            <Button
+                id="cancelar"
+                label={<><CancelIcon /> Cancelar</>}
+                to="/adminusuario"
+            />
         </div>
     );
 }

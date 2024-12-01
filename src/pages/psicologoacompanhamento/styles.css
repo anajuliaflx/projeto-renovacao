@@ -48,19 +48,6 @@
   justify-content: space-between;
 }
 
-.forms button {
-  padding: 10px 15px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.forms button:hover {
-  background-color: #45a049;
-}
-
 .modal {
   position: absolute;
   top: 50%;

@@ -1,9 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
-import Api from "../../services/apiConfig";
+import { Formik, Form } from "formik";
+import * as yup from "yup";
+import api from '../../componentes/api/apiConfig';
 import Menu from '../../componentes/menu';
-import { UserContext } from "../../contexts/UserContext";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { UserContext } from '../../contexts/UserContext'; // Importa o UserContext
+import Input from '../../componentes/input'; // Componente Input
+import Button from '../../componentes/botao'; // Componente Button
 import './styles.css';
-import styles from '../home/home.module.css';
+import SendIcon from '@mui/icons-material/Send';
 
 const AlunoMensagem = () => {
   const { user } = useContext(UserContext); // Usa o contexto para obter o usuário
@@ -13,13 +19,13 @@ const AlunoMensagem = () => {
   const [mensagensRespostas, setMensagensRespostas] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const limit = 10;
+  const limit = 3;
 
   useEffect(() => {
     const fetchMensagensRespostas = async () => {
       if (user && user.matricula) {
         try {
-          const response = await Api.get(`/mensagens-respostas/${user.matricula}?page=${page}&limit=${limit}`);
+          const response = await api.get(`/mensagens-respostas/${user.matricula}?page=${page}&limit=${limit}`);
           setMensagensRespostas(response.data.messages);
           setTotalPages(response.data.totalPages);
         } catch (error) {
@@ -39,7 +45,7 @@ const AlunoMensagem = () => {
     }
 
     try {
-      const userResponse = await Api.get(`/usuario/${user.matricula}`);
+      const userResponse = await api.get(`/usuario/${user.matricula}`);
       if (userResponse.status === 404) {
         setFeedback('Matrícula não encontrada.');
         return;
@@ -47,7 +53,7 @@ const AlunoMensagem = () => {
 
       if (userResponse.data && userResponse.data.id) {
         const remetente_id = userResponse.data.id;
-        const response = await Api.post(`/mensagem`, {
+        const response = await api.post(`/mensagem`, {
           remetente_id: remetente_id,
           destinatario_tipo: destinatarioTipo,
           mensagem: mensagem,
@@ -56,7 +62,7 @@ const AlunoMensagem = () => {
         setMensagem('');
 
         // Atualiza a lista de mensagens e respostas
-        const updatedMensagensRespostas = await Api.get(`/mensagens-respostas/${user.matricula}?page=${page}&limit=${limit}`);
+        const updatedMensagensRespostas = await api.get(`/mensagens-respostas/${user.matricula}?page=${page}&limit=${limit}`);
         setMensagensRespostas(updatedMensagensRespostas.data.messages);
         setTotalPages(updatedMensagensRespostas.data.totalPages);
       } else {
@@ -80,57 +86,59 @@ const AlunoMensagem = () => {
 
   return (
     <div className="container1">
-      <Menu userRole="aluno" />
+      <Menu />
+      {/*<h1 className="pageTitle">Mensagens: Envio e Histórico</h1>*/}
       <div className="form-section">
-        <h1>Mensagens privadas</h1>
+        <h2>Enviar mensagem</h2>
+        <p className="pageSubtitle">Preencha os campos abaixo para enviar uma mensagem ao administrador ou psicólogo.</p>
         <form onSubmit={handleSubmit} className="form">
-          <div>
-            <label className="label">Matrícula:</label>
-            <input
-              type="text"
-              value={user.matricula}
-              maxLength="8"
-              readOnly
-              className="matricula"
-            />
-          </div>
-          <div>
-            <label className="label">Destinatário:</label>
+          <div className="form2">
+            <label className="labelD">Destinatário: </label>
             <select
+              className="selectField"
+              id="destinatarioTipo"
               value={destinatarioTipo}
               onChange={(e) => setDestinatarioTipo(e.target.value)}
-              className="value1"
+              required
             >
               <option value="administrador">Administrador</option>
               <option value="psicologo">Psicólogo</option>
             </select>
           </div>
-          <div>
-            <label className="label">Mensagem:</label>
+          <div className="new-border">
             <textarea
+              id="mensagem"
               value={mensagem}
               onChange={(e) => setMensagem(e.target.value)}
-              maxLength="400"
+              maxLength="250"
+              rows="4"
+              cols="50"
               required
-              className="text1"
+              className="inputField"
+              placeholder="Digite sua mensagem aqui *"
             />
           </div>
-          <button type="submit" className={styles.submitButton}>Enviar mensagem</button>
+          <p className="char-count">{250 - mensagem.length} caracteres restantes</p>
+          <Button
+            id="enviar-mensagem"
+            label={<><SendIcon /> Enviar mensagem</>}
+            type="submit"
+          />
         </form>
         {feedback && <p>{feedback}</p>}
       </div>
-      
       <div className="response-section">
-        <h2>Mensagens e Respostas</h2>
+        <h2>Histórico de mensagens</h2>
+        <p className="pageSubtitle">Aqui você pode visualizar todas as mensagens enviadas e suas respectivas respostas.</p>
         <div className="mensagens-respostas">
           {mensagensRespostas.map((item, index) => (
             <div key={`${item.mensagem_id}-${item.data_envio}-${index}`} className="mensagem-resposta">
-              <p><strong>Mensagem:</strong> {item.mensagem}</p>
-              <p><strong>Data de envio:</strong> {new Date(item.data_envio).toLocaleString()}</p>
+              <p><strong className="boldTextColor">Conteúdo da mensagem enviada: </strong> {item.mensagem}</p>
+              <p><strong className="boldTextColor">Enviado em: </strong> {new Date(item.data_envio).toLocaleString()}</p>
               {item.resposta ? (
                 <>
-                  <p><strong>Resposta:</strong> {item.resposta}</p>
-                  <p><strong>Data da resposta:</strong> {new Date(item.data_resposta).toLocaleString()}</p>
+                  <p><strong className="boldTextColor">Conteúdo da resposta: </strong> {item.resposta}</p>
+                  <p><strong className="boldTextColor">Respondido em: </strong> {new Date(item.data_resposta).toLocaleString()}</p>
                 </>
               ) : (
                 <p><em>Aguardando resposta...</em></p>
@@ -138,10 +146,26 @@ const AlunoMensagem = () => {
             </div>
           ))}
         </div>
-        <div className="pagination">
-          <button onClick={() => handlePageChange(page - 1)} disabled={page === 1}>Anterior</button>
+        <div className="pageNavigation">
+          <Button
+            id="pagina-anterior"
+            label={<ArrowBackIcon />}
+            type="button"
+            onClick={() => handlePageChange(page - 1)}
+            disabled={page === 1 || totalPages === 1}
+            aria-label="Ir para a página anterior"
+          />
+
           <span>Página {page} de {totalPages}</span>
-          <button onClick={() => handlePageChange(page + 1)} disabled={page === totalPages}>Próxima</button>
+
+          <Button
+            id="proxima-pagina"
+            label={<ArrowForwardIcon />}
+            type="button"
+            onClick={() => handlePageChange(page + 1)}
+            disabled={page === totalPages || totalPages === 1}
+            aria-label="Ir para a próxima página"
+          />
         </div>
       </div>
     </div>

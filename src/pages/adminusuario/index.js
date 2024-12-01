@@ -1,124 +1,149 @@
 import React, { useState, useEffect } from "react";
-import { Link} from "react-router-dom";
 import Menu from '../../componentes/menu';
-import Api from "../../services/apiConfig";
+import api from '../../componentes/api/apiConfig'; // Configuração do axios
 import "./styles.css";
+import Button from "../../componentes/botao";
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import DeleteIcon from '@mui/icons-material/Delete';
 
-function AdministradorUsuario() {
-  const UserList = () => {
-    const [users, setUsers] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
-    const usersPerPage = 10; //total de elementos por pagina
+const AdministradorUsuario = () => {
+    const UserList = () => {
+        const [users, setUsers] = useState([]);
+        const [currentPage, setCurrentPage] = useState(1);
+        const [totalPages, setTotalPages] = useState(1);
+        const usersPerPage = 10; // Total de elementos por página
 
-    useEffect(() => {
-      fetchUsers(currentPage);
-    }, [currentPage]);
+        useEffect(() => {
+            fetchUsers(currentPage);
+        }, [currentPage]);
 
-    const fetchUsers = async (page) => {
-      try {
-        const response = await Api.get(
-          `/adminusuario?page=${page}&limit=${usersPerPage}`
+        const fetchUsers = async (page) => {
+            try {
+                const response = await api.get(`/adminusuario?page=${page}&limit=${usersPerPage}`);
+                if (response.data && response.data.users) {
+                    setUsers(response.data.users);
+                    setTotalPages(response.data.totalPages);
+                } else {
+                    console.log("Nenhum dado de usuário encontrado.");
+                }
+            } catch (error) {
+                console.error("Erro ao buscar usuários:", error);
+            }
+        };
+
+        const deleteUser = async (userId) => {
+            const confirmDelete = window.confirm("Tem certeza de que deseja excluir este usuário?");
+            if (confirmDelete) {
+                try {
+                    await api.delete(`/adminusuario/${userId}`);
+                    fetchUsers(currentPage); // Atualiza a lista de usuários após a exclusão
+                } catch (error) {
+                    console.error("Erro ao excluir usuário:", error);
+                }
+            }
+        };
+
+        return (
+            <div className="container">
+                <Menu />
+                <h1 className="pageTitle">Gerenciar usuários</h1>
+                <p className="pageSubtitle">Aqui você pode visualizar todos os usuários cadastrados e adicionar novos usuários através do botão 'Cadastrar novo usuário'.</p>
+                <Button
+                    id="cadastrar-usuario"
+                    label={<><PersonAddAlt1Icon /> Cadastrar novo usuário</>}
+                    to="/admincadastro"
+                />
+                <h2>Lista de usuários</h2>
+                {users.length > 0 ? (
+                    <div className="table-container">
+                        <table className="user-table">
+                            <thead>
+                                <tr>
+                                    <th>Nome completo</th>
+                                    <th>Matrícula do usuário</th>
+                                    <th>Perfil do usuário</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {users.map((user) => (
+                                    <tr key={user.id}>
+                                        <td>{user.nome}</td>
+                                        <td>{user.matricula}</td>
+                                        <td>{user.tipoUsuario}</td>
+                                        <td>
+                                            <Button
+                                                id="remover-usuario"
+                                                label={<DeleteIcon />}
+                                                type="button"
+                                                onClick={() => deleteUser(user.id)}
+                                                aria-label="Remover usuário"
+                                            />
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                ) : (
+                    <p>Nenhum usuário cadastrado.</p>
+                )}
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={(page) => setCurrentPage(page)}
+                />
+            </div>
         );
-        setUsers(response.data.users);
-        setTotalPages(response.data.totalPages);
-      } catch (error) {
-        console.error("Erro ao buscar usuários:", error);
-      }
     };
 
-    const deleteUser = async (userId) => {
-      const confirmDelete = window.confirm("Tem certeza de que deseja excluir este usuário?");
-      if (confirmDelete) {
-        try {
-          await Api.delete(`/adminusuario/${userId}`);
-          fetchUsers(currentPage); // Atualiza a lista de usuários após a exclusão
-        } catch (error) {
-          console.error("Erro ao excluir usuário:", error);
-        }
-      }
+    const Pagination = ({ currentPage, totalPages, onPageChange }) => {
+        const handlePrevPage = () => {
+            if (currentPage > 1) {
+                onPageChange(currentPage - 1);
+            }
+        };
+
+        const handleNextPage = () => {
+            if (currentPage < totalPages) {
+                onPageChange(currentPage + 1);
+            }
+        };
+
+        return (
+            <div className="pageNavigation">
+                <Button
+                    id="pagina-anterior"
+                    label={<ArrowBackIcon />}
+                    type="button"
+                    onClick={handlePrevPage}
+                    disabled={currentPage === 1}
+                    aria-label="Ir para a página anterior"
+                />
+
+                <span>
+                    Página {currentPage} de {totalPages}
+                </span>
+
+                <Button
+                    id="proxima-pagina"
+                    label={<ArrowForwardIcon />}
+                    type="button"
+                    onClick={handleNextPage}
+                    disabled={currentPage === totalPages || totalPages === 1}
+                    aria-label="Ir para a próxima página"
+                />
+            </div>
+        );
     };
 
     return (
-      <div>
-        <Menu userRole="administrador" />
-        <div className="botao-container">
-          <Link to={'/admincadastro'} className="botao-link">
-            <button className='botao'>Cadastrar Usuário</button>
-          </Link>
+        <div>
+            <UserList />
         </div>
-        <h2>Lista de usuários</h2>
-        {users.length > 0 ? (
-          <div className="table-container">
-            <table className="user-table">
-              <thead>
-                <tr>
-                  <th>Nome</th>
-                  <th>Matrícula</th>
-                  <th>Tipo de Usuário</th>
-                  <th>Ações</th>
-                </tr>
-              </thead>
-              <tbody>
-                {users.map((user) => (
-                  <tr key={user.id}>
-                    <td>{user.nome}</td>
-                    <td>{user.matricula}</td>
-                    <td>{user.tipoUsuario}</td>
-                    <td>
-                      <button onClick={() => deleteUser(user.id)}>Excluir</button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        ) : (
-          <p>Nenhum usuário cadastrado.</p>
-        )}
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={(page) => setCurrentPage(page)}
-        />
-      </div>
     );
-  };
-
-  const Pagination = ({ currentPage, totalPages, onPageChange }) => {
-    const handlePrevPage = () => {
-      if (currentPage > 1) {
-        onPageChange(currentPage - 1);
-      }
-    };
-
-    const handleNextPage = () => {
-      if (currentPage < totalPages) {
-        onPageChange(currentPage + 1);
-      }
-    };
-
-    return (
-      <div className="pagination">
-        <button onClick={handlePrevPage} disabled={currentPage === 1}>
-          Anterior
-        </button>
-        <span>
-          Página {currentPage} de {totalPages}
-        </span>
-        <button onClick={handleNextPage} disabled={currentPage === totalPages}>
-          Próxima
-        </button>
-      </div>
-    );
-  };
-
-  return (
-    <div>
-      <h1>Usuários</h1>
-      <UserList />
-    </div>
-  );
-}
+};
 
 export default AdministradorUsuario;
