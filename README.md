@@ -1,62 +1,69 @@
-
 # <h1 align="center">RenovAção</h1>
 
 <p align="center">
   <img src="src/img/logoreadme.png" alt="Descrição da Imagem">
 </p>
 
-O projeto RenovAção tem como público-alvo os agressores de ciberbullying e as Instituições de Ensino Superior (IES). É uma plataforma que visa oferecer suporte tanto aos agressores quanto às instituições, fornecendo ferramentas para conscientização, prevenção e reabilitação do comportamento agressivo, além de oferecer suporte psicológico e recursos educativos.
+O projeto RenovAção tem como público-alvo os agressores de ciberbullying e as Instituições de Ensino Superior (IES). É uma plataforma que visa oferecer suporte tanto aos agressores quanto às instituições, fornecendo funcionalidades para conscientização, prevenção e reabilitação do comportamento agressivo, além de oferecer suporte psicológico e recursos educativos.
 
-### Propósito da Plataforma RenovAção:
+### Propósito da plataforma RenovAção:
 
 A plataforma RenovAção tem como objetivo primordial oferecer um ambiente seguro e de apoio para indivíduos envolvidos em casos de ciberbullying. Suas principais áreas de atuação incluem:
 
 - **Agenda de cumprimento de cargas horárias:** O administrador pode cadastrar atividades educativas e de reabilitação para os agressores, visando promover a reflexão e mudança de comportamento.
 
-- **Suporte psicológico:** A plataforma proporciona acesso a sessões de apoio psicológico tanto para os agressores quanto para as vítimas de ciberbullying. Isso inclui acompanhamento individualizado e orientações para lidar com os desafios emocionais relacionados ao comportamento agressivo e ao trauma causado pelo ciberbullying.
+- **Suporte psicológico:** A plataforma proporciona acesso a sessões de apoio psicológico para os agressores de ciberbullying e inclui acompanhamento individualizado e orientações para lidar com os desafios emocionais relacionados ao comportamento agressivo causado pelo ciberbullying.
 
-- **Recursos educativos:** Além das intervenções diretas, a RenovAção disponibiliza uma trilha educativa com vídeos, artigos e atividades interativas. Esses recursos visam fornecer conhecimento e habilidades para prevenir o ciberbullying e promover relações saudáveis online.
+- **Recursos educativos:** Além das intervenções diretas, a RenovAção disponibiliza uma trilha educativa com vídeos, artigos e atividades interativas. Esses recursos visam fornecer conhecimento e habilidades para prevenir o ciberbullying e promover relações saudáveis de forma online.
 
-Essas iniciativas da RenovAção não apenas visam a recuperação dos agressores, mas também buscam capacitar as Instituições de Ensino Superior a lidar com casos de ciberbullying e a promover uma cultura de respeito e inclusão digital em seus ambientes online.
+Essas iniciativas da RenovAção não apenas visam a recuperação dos agressores, mas também buscam capacitar as Instituições de Ensino Superior a lidar com casos de ciberbullying e a promover uma cultura de respeito e inclusão digital em seus ambientes.
 
 ## Apêndice
 
 Este apêndice fornece uma visão mais detalhada do projeto de combate ao ciberbullying, com foco nos públicos-alvo e funcionalidades principais.
 
 ## Público-Alvo
-O projeto visa atender principalmente dois grupos:
+O projeto visa atender dois grupos:
 
-Agressor: Estudantes que se envolvem em comportamentos de ciberbullying, conscientizando-os sobre as consequências de suas ações e fornecendo recursos educativos para promover uma mudança de comportamento positiva.
+- **Agressor:** Estudantes que se envolvem em comportamentos de ciberbullying, conscientizando-os sobre as consequências de suas ações e fornecendo recursos educativos para promover uma mudança de comportamento positiva.
 
-Instituições de Ensino Superior (IES): Profissionais do Núcleo de Apoio a Estudante(NAE) das instituições de ensino superior, fornecendo ferramentas para prevenir e lidar com casos de ciberbullying entre os alunos, além de promover um ambiente online seguro e inclusivo.
+- **Instituições de Ensino Superior (IES):** Profissionais do Núcleo de Apoio a Estudante(NAE) das instituições de ensino superior, fornecendo ferramentas para prevenir e lidar com casos de ciberbullying entre os alunos, além de promover um ambiente seguro e inclusivo.
 
 ## Funcionalidades
 
 ### Perfil do Aluno
 
-Trilha Educativa: Oferece uma série de vídeos educativos que abordam temas relacionados ao ciberbullying, suas consequências e estratégias de prevenção.
+- **Trilha educativa:** Oferece uma trilha personalizada para cada aluno com links que abordam temas relacionados ao ciberbullying, suas consequências e estratégias de prevenção.
 
-Agenda: Permite que os alunos visualizem um cronograma com datas importantes, incluindo consultas psicológicas e outras atividades relevantes.
+- **Cronograma:** Permite que os alunos visualizem um cronograma com datas importantes, incluindo consultas psicológicas e outras atividades relevantes.
 
-Mensagens: Fornece um meio de comunicação seguro e privado entre os alunos e outros perfis no sistema, como administradores e psicólogos.
+- **Mensagens:** Fornece um meio de comunicação seguro e privado entre os alunos e outros perfis no sistema, como administradores e psicólogos.
+
+- **Trocar senha:** Permite que o usuário altere sua senha a qualquer momento, garantindo maior autonomia e assegurando a proteção e segurança da sua conta.
 
 ### Perfil do Administrador
 
-Cronograma: Permite ao administrador criar e gerenciar um calendário de eventos, incluindo consultas, workshops e outras atividades relacionadas à prevenção do ciberbullying.
+- **Cronograma:** Permite ao administrador criar e gerenciar um calendário de eventos, incluindo consultas, workshops e outras atividades relacionadas à prevenção do ciberbullying.
 
-Usuários: Permite ao administrador visualizar os usuários existentes no sistema e cadastrar novos usuários, incluindo alunos, psicólogos e outros administradores, atribuindo-lhes os papéis apropriados e configurando suas permissões de acesso.
+- **Trilha:** Permite ao administrador criar uma trilha personalizada para cada aluno com links que abordam temas relacionados ao ciberbullying, suas consequências e estratégias de prevenção.
 
-Relatórios: Oferece acesso a relatórios detalhados sobre o acompanhamento de casos de ciberbullying, avaliação dos atribuída pelos psicólogos e outras métricas relevantes.
+- **Usuários:** Permite ao administrador visualizar os usuários existentes no sistema e cadastrar novos usuários, incluindo alunos, psicólogos e outros administradores, atribuindo-lhes os papéis apropriados e configurando suas permissões de acesso.
 
-Mensagens: Permite que o administrador se comunique diretamente com os alunos e psicólogos por meio de mensagens internas.
+- **Mensagens:** Permite que o administrador responda às mensagens enviadas pelos alunos, garantindo uma comunicação direta e eficiente.
+
+- **Trocar senha:** Permite que o usuário altere sua senha a qualquer momento, garantindo maior autonomia e assegurando a proteção e segurança da sua conta.
 
 ### Perfil do Psicólogo
 
-Agenda: Permite ao psicólogo visualizar e gerenciar suas consultas psicológicas agendadas com os alunos.
+- **Cronograma:** Permite que os psicólogos visualizem um cronograma com datas importantes, incluindo consultas psicológicas e outras atividades relevantes.
 
-Acompanhamento: Oferece ferramentas para o psicólogo acompanhar o progresso dos alunos, avaliar seu bem-estar emocional e oferecer suporte individualizado conforme necessário.
+- **Acompanhamento:** Oferece ferramentas para o psicólogo avaliar o progresso dos alunos e seu bem-estar emocional, realizando o acompanhamento individualizado, desde que haja uma data cadastrada para a avaliação.
 
-Mensagens: Permite que o psicólogo se comunique diretamente com os alunos e administrador por meio de mensagens seguras e confidenciais.
+- **Relatórios:** Disponibiliza as respostas dos relatórios sobre o acompanhamento dos casos de ciberbullying, avaliação dos atribuída pelos psicólogos aos alunos, sendo acessíveis apenas quando houver uma data cadastrada para o acompanhamento e a avaliação tiver sido realizada.
+
+- **Mensagens:** Permite que o psicólogo responda às mensagens enviadas pelos alunos, garantindo uma comunicação direta e eficiente.
+
+- **Trocar senha:** Permite que o usuário altere sua senha a qualquer momento, garantindo maior autonomia e assegurando a proteção e segurança da sua conta.
 
 ## Pré-requisitos
 
@@ -114,6 +121,15 @@ Instale as dependências no diretório functions
 ```bash
   npm install dotenv
 ```
+```bash
+  npm install express-session
+```
+```bash
+  npm install joi
+```
+```bash
+  npm install swagger-ui-express swagger-jsdoc
+```
 
 ### Configure o Banco de Dados
 
@@ -133,7 +149,7 @@ Certifique-se de fornecer as informações corretas do seu banco de dados, inclu
 
 ### Configure a URL base do projeto
 
-Edite a URL base nos arquivos presentes no caminho src/pages
+Edite a URL base no arquivo `apiConfig.js`, localizado em src/componentes/api
 
 ## Execução
 
@@ -147,6 +163,31 @@ E em seguida
   npm start
 ```
 
+## Docker
+[Imagens Docker](https://hub.docker.com/repository/docker/julea/projeto-renovacao/general)
+
+  ### Comandos
+  #### Baixar imagem
+  ```bash
+    docker pull julea/projeto-renovacao:RenovacaoAPI
+  ``` 
+   ```bash
+    docker pull julea/projeto-renovacao:RenovacaoPages
+  ``` 
+  #### Criar e rodar contêiner
+  ##### API
+  ```bash
+    docker run -d -p 5001:5001 --name renovacaoAPI julea/projeto-renovacao:RenovacaoAPI
+  ``` 
+  ##### Pages
+  ```bash
+    docker run -d -p 3000:3000 --name renovacaoPages julea/projeto-renovacao:RenovacaoPages
+  ``` 
+  #### Verificar se está rodando
+   ```bash
+    docker ps
+  ``` 
+
 ## Documentação do projeto
 
 ### Documento
@@ -155,13 +196,13 @@ E em seguida
 
 ### Cores
 
-| Cor               | Hexadecimal                                                |
-| ----------------- | ---------------------------------------------------------------- |
-| Branco       | ![#FFFFFF](https://via.placeholder.com/10/FFFFFF?text=+) #FFFFFF |
-| Preto       | ![#000000](https://via.placeholder.com/10/000000?text=+) #000000 |
-| Ciano forte       | ![#0395BA](https://via.placeholder.com/10/0395BA?text=+) #0395BA |
-| Cinza escuro       | ![#848484](https://via.placeholder.com/10/848484?text=+) #848484 |
-| Azul ligeiramente dessaturado       | ![#8390C8](https://via.placeholder.com/10/8390C8?text=+) #8390C8 |
+| Cor                           | Hexadecimal                                                      |
+| ----------------------------- | ---------------------------------------------------------------- |
+| Branco                        | ![#FFFFFF](https://via.placeholder.com/10/FFFFFF?text=+) #FFFFFF |
+| Preto                         | ![#000000](https://via.placeholder.com/10/000000?text=+) #000000 |
+| Ciano forte                   | ![#0395BA](https://via.placeholder.com/10/0395BA?text=+) #0395BA |
+| Cinza escuro                  | ![#848484](https://via.placeholder.com/10/848484?text=+) #848484 |
+| Azul ligeiramente dessaturado | ![#8390C8](https://via.placeholder.com/10/8390C8?text=+) #8390C8 |
 
 ## Documentação da API
 
@@ -179,13 +220,13 @@ A URL base para todos os endpoints é
 Cria um novo usuário no banco de dados.
 
 #### Corpo da requisição
-| Parâmetro   | Tipo       | Descrição                           |
-| :---------- | :--------- | :---------------------------------- |
-| `nome` | `string` | **Obrigatório**. O nome do usuário. |
-| `email` | `string` | **Obrigatório**. O email do usuário. |
-| `senha` | `string` | **Obrigatório**. A senha do usuário. |
-| `matricula` | `string` | **Obrigatório**. A matrícula do usuário. |
-| `tipoUsuario` | `string` | **Obrigatório**. O tipo do usuário. |
+| Parâmetro     | Tipo     | Descrição                                |
+| :------------ | :------- | :--------------------------------------- |
+| `nome`        | `string` | **Obrigatório**. O nome do usuário.      |
+| `email`       | `string` | **Obrigatório**. O email do usuário.     |
+| `senha`       | `string` | **Obrigatório**. A senha do usuário.     |
+| `matricula`   | `string` | **Obrigatório**. A matrícula do usuário. |
+| `tipoUsuario` | `string` | **Obrigatório**. O tipo do usuário.      |
 
 #### Respostas
 - `200 OK`: Usuário cadastrado com sucesso.
@@ -213,10 +254,10 @@ Cria um novo usuário no banco de dados.
 Autentica um usuário.
 
 #### Corpo da requisição
-| Parâmetro   | Tipo       | Descrição                           |
-| :---------- | :--------- | :---------------------------------- |
-| `email` | `string` | **Obrigatório**. O email do usuário. |
-| `senha` | `string` | **Obrigatório**. A senha do usuário. |
+| Parâmetro | Tipo     | Descrição                            |
+| :-------- | :------- | :----------------------------------- |
+| `email`   | `string` | **Obrigatório**. O email do usuário. |
+| `senha`   | `string` | **Obrigatório**. A senha do usuário. |
 
 #### Respostas
 - `200 OK`: Usuário logado com sucesso.
@@ -252,10 +293,10 @@ Autentica um usuário.
 Lista os usuários com paginação.
 
 #### Parâmetros da query
-| Parâmetro   | Tipo       | Descrição                           |
-| :---------- | :--------- | :---------------------------------- |
-| `page` | `number` | **Opcional**. Número da página (default 1). |
-| `limit` | `number` | **Opcional**. Limite de usuários por página (default 10). |
+| Parâmetro | Tipo     | Descrição                                                 |
+| :-------- | :------- | :-------------------------------------------------------- |
+| `page`    | `number` | **Opcional**. Número da página (default 1).               |
+| `limit`   | `number` | **Opcional**. Limite de usuários por página (default 10). |
 
 #### Respostas
 - `200 OK`: Lista de usuários com paginação.
@@ -278,9 +319,9 @@ Lista os usuários com paginação.
 Exclui um usuário pelo ID.
 
 #### Parâmetros da URL
-| Parâmetro   | Tipo       | Descrição                           |
-| :---------- | :--------- | :---------------------------------- |
-| `id` | `number` | **Obrigatório**. O ID do usuário a ser excluído. | 
+| Parâmetro | Tipo     | Descrição                                        |
+| :-------- | :------- | :----------------------------------------------- |
+| `id`      | `number` | **Obrigatório**. O ID do usuário a ser excluído. |
 
 #### Respostas
 - `200 OK`: Usuário excluído com sucesso.
@@ -302,11 +343,11 @@ Exclui um usuário pelo ID.
 Envia uma mensagem.
 
 #### Corpo da requisição
-| Parâmetro   | Tipo       | Descrição                           |
-| :---------- | :--------- | :---------------------------------- |
-| `remetente_id` | `number` | **Obrigatório**. O ID do remetente. |
+| Parâmetro           | Tipo     | Descrição                                                                 |
+| :------------------ | :------- | :------------------------------------------------------------------------ |
+| `remetente_id`      | `number` | **Obrigatório**. O ID do remetente.                                       |
 | `destinatario_tipo` | `string` | **Obrigatório**. O tipo de destinatário ('administrador' ou 'psicologo'). |
-| `mensagem` | `string` | **Obrigatório**. O conteúdo da mensagem. |
+| `mensagem`          | `string` | **Obrigatório**. O conteúdo da mensagem.                                  |
 
 #### Respostas
 - `200 OK`: Mensagem enviada com sucesso.
@@ -334,8 +375,8 @@ Envia uma mensagem.
 Cria um novo usuário no banco de dados.
 
 #### Parâmetros da URL
-| Parâmetro   | Tipo       | Descrição                           |
-| :---------- | :--------- | :---------------------------------- |
+| Parâmetro   | Tipo     | Descrição                                |
+| :---------- | :------- | :--------------------------------------- |
 | `matricula` | `string` | **Obrigatório**. A matrícula do usuário. |
 
 #### Respostas
@@ -364,16 +405,16 @@ Cria um novo usuário no banco de dados.
 Envia uma resposta a uma mensagem.
 
 #### Parâmetro da URL
-| Parâmetro   | Tipo       | Descrição                           |
-| :---------- | :--------- | :---------------------------------- |
+| Parâmetro     | Tipo     | Descrição                                                            |
+| :------------ | :------- | :------------------------------------------------------------------- |
 | `tipoUsuario` | `string` | **Obrigatório**. O tipo de usuário ('administrador' ou 'psicologo'). |
 
 #### Corpo da requisição
-| Parâmetro   | Tipo       | Descrição                           |
-| :---------- | :--------- | :---------------------------------- |
-| `mensagem_id` | `number` | **Obrigatório**. O ID da mensagem. |
-| `resposta` | `string` | **Obrigatório**. O conteúdo da resposta. |
-| `matricula` | `string` | **Obrigatório**. A matrícula do respondente. |
+| Parâmetro     | Tipo     | Descrição                                    |
+| :------------ | :------- | :------------------------------------------- |
+| `mensagem_id` | `number` | **Obrigatório**. O ID da mensagem.           |
+| `resposta`    | `string` | **Obrigatório**. O conteúdo da resposta.     |
+| `matricula`   | `string` | **Obrigatório**. A matrícula do respondente. |
 
 #### Respostas
 - `200 OK`: Resposta enviada com sucesso.
@@ -403,15 +444,15 @@ Envia uma resposta a uma mensagem.
 Lista as mensagens recebidas pelo tipo de usuário com paginação.
 
 #### Parâmetro da URL
-| Parâmetro   | Tipo       | Descrição                           |
-| :---------- | :--------- | :---------------------------------- |
+| Parâmetro     | Tipo     | Descrição                                                            |
+| :------------ | :------- | :------------------------------------------------------------------- |
 | `tipoUsuario` | `string` | **Obrigatório**. O tipo de usuário ('administrador' ou 'psicologo'). |
 
 #### Corpo da requisição
-| Parâmetro   | Tipo       | Descrição                           |
-| :---------- | :--------- | :---------------------------------- |
-| `page` | `number` | **Opcional**. Número da página (default 1). |
-| `limit` | `number` | **Opcional**. Limite de mensagens por página (default 10). |
+| Parâmetro | Tipo     | Descrição                                                  |
+| :-------- | :------- | :--------------------------------------------------------- |
+| `page`    | `number` | **Opcional**. Número da página (default 1).                |
+| `limit`   | `number` | **Opcional**. Limite de mensagens por página (default 10). |
 
 #### Respostas
 - `200 OK`: Lista de mensagens com paginação.
@@ -440,15 +481,15 @@ Lista as mensagens recebidas pelo tipo de usuário com paginação.
 Envia uma resposta a uma mensagem.
 
 #### Parâmetro da URL
-| Parâmetro   | Tipo       | Descrição                           |
-| :---------- | :--------- | :---------------------------------- |
+| Parâmetro   | Tipo     | Descrição                              |
+| :---------- | :------- | :------------------------------------- |
 | `matricula` | `string` | **Obrigatório**. A matrícula do aluno. |
 
 #### Corpo da requisição
-| Parâmetro   | Tipo       | Descrição                           |
-| :---------- | :--------- | :---------------------------------- |
-| `page` | `number` | **Opcional**. Número da página (default 1). |
-| `limit` | `number` | **Opcional**. Limite de mensagens por página (default 10). |
+| Parâmetro | Tipo     | Descrição                                                  |
+| :-------- | :------- | :--------------------------------------------------------- |
+| `page`    | `number` | **Opcional**. Número da página (default 1).                |
+| `limit`   | `number` | **Opcional**. Limite de mensagens por página (default 10). |
 
 #### Respostas
 - `200 OK`: Lista de mensagens e respostas com paginação.
@@ -477,12 +518,12 @@ Envia uma resposta a uma mensagem.
 Adiciona um novo evento ao sistema.
 
 #### Corpo da requisição
-| Parâmetro   | Tipo       | Descrição                           |
-| :---------- | :--------- | :---------------------------------- |
-| `data_evento` | `string` | **Obrigatório**. A data do evento. |
-| `matricula_aluno` | `string` | **Obrigatório**. A matrícula do aluno. |
+| Parâmetro             | Tipo     | Descrição                                  |
+| :-------------------- | :------- | :----------------------------------------- |
+| `data_evento`         | `string` | **Obrigatório**. A data do evento.         |
+| `matricula_aluno`     | `string` | **Obrigatório**. A matrícula do aluno.     |
 | `matricula_psicologo` | `string` | **Obrigatório**. A matrícula do psicólogo. |
-| `descricao` | `string` | **Obrigatório**. A descrição do evento. |
+| `descricao`           | `string` | **Obrigatório**. A descrição do evento.    |
 
 #### Respostas
 - `200 OK`: Evento adicionado com sucesso.
@@ -510,10 +551,10 @@ Adiciona um novo evento ao sistema.
 Lista todos os eventos.
 
 #### Parâmetro da URL
-| Parâmetro   | Tipo       | Descrição                           |
-| :---------- | :--------- | :---------------------------------- |
+| Parâmetro             | Tipo     | Descrição                               |
+| :-------------------- | :------- | :-------------------------------------- |
 | `matricula_psicologo` | `string` | **Opcional**. A matrícula do psicólogo. |
-| `matricula_aluno` | `string` | **Opcional**. A matrícula do aluno. |
+| `matricula_aluno`     | `string` | **Opcional**. A matrícula do aluno.     |
 
 #### Respostas
 - `200 OK`: Lista de eventos.
@@ -543,8 +584,8 @@ Lista todos os eventos.
 Lista eventos associados a um aluno específico.
 
 #### Parâmetro da URL
-| Parâmetro   | Tipo       | Descrição                           |
-| :---------- | :--------- | :---------------------------------- |
+| Parâmetro         | Tipo     | Descrição                              |
+| :---------------- | :------- | :------------------------------------- |
 | `matricula_aluno` | `string` | **Obrigatório**. A matrícula do aluno. |
 
 #### Respostas
@@ -575,8 +616,8 @@ Lista eventos associados a um aluno específico.
 Lista eventos associados a um psicólogo específico.
 
 #### Parâmetro da URL
-| Parâmetro   | Tipo       | Descrição                           |
-| :---------- | :--------- | :---------------------------------- |
+| Parâmetro             | Tipo     | Descrição                                  |
+| :-------------------- | :------- | :----------------------------------------- |
 | `matricula_psicologo` | `string` | **Obrigatório**. A matrícula do psicólogo. |
 
 #### Respostas
@@ -607,10 +648,10 @@ Lista eventos associados a um psicólogo específico.
 Adiciona uma nova trilha ao sistema.
 
 #### Corpo da requisição
-| Parâmetro   | Tipo       | Descrição                           |
-| :---------- | :--------- | :---------------------------------- |
-| `titulo` | `string` | **Obrigatório**. O título da trilha. |
-| `descricao` | `string` | **Opcional**. A descrição da trilha. |
+| Parâmetro         | Tipo     | Descrição                              |
+| :---------------- | :------- | :------------------------------------- |
+| `titulo`          | `string` | **Obrigatório**. O título da trilha.   |
+| `descricao`       | `string` | **Opcional**. A descrição da trilha.   |
 | `matricula_aluno` | `string` | **Obrigatório**. A matrícula do aluno. |
 
 #### Respostas
@@ -640,12 +681,12 @@ Adiciona uma nova trilha ao sistema.
 Adiciona um novo link a uma trilha existente.
 
 #### Corpo da requisição
-| Parâmetro   | Tipo       | Descrição                           |
-| :---------- | :--------- | :---------------------------------- |
-| `url` | `string` | **Obrigatório**. A URL do link. |
-| `titulo` | `string` | **Obrigatório**. O título do link. |
+| Parâmetro   | Tipo     | Descrição                          |
+| :---------- | :------- | :--------------------------------- |
+| `url`       | `string` | **Obrigatório**. A URL do link.    |
+| `titulo`    | `string` | **Obrigatório**. O título do link. |
 | `descricao` | `string` | **Opcional**. A descrição do link. |
-| `trilha_id` | `number` | **Obrigatório**. O ID da trilha. |
+| `trilha_id` | `number` | **Obrigatório**. O ID da trilha.   |
 
 #### Respostas
 - `200 OK`: Link adicionado com sucesso.
@@ -667,9 +708,9 @@ Adiciona um novo link a uma trilha existente.
 Marca um link como assistido por um aluno.
 
 #### Corpo da requisição
-| Parâmetro   | Tipo       | Descrição                           |
-| :---------- | :--------- | :---------------------------------- |
-| `link_id` | `number` | **Obrigatório**. O ID do link. |
+| Parâmetro         | Tipo     | Descrição                              |
+| :---------------- | :------- | :------------------------------------- |
+| `link_id`         | `number` | **Obrigatório**. O ID do link.         |
 | `matricula_aluno` | `string` | **Obrigatório**. A matrícula do aluno. |
 
 #### Respostas
@@ -698,8 +739,8 @@ Marca um link como assistido por um aluno.
 Lista todas as trilhas associadas a um aluno específico.
 
 #### Parâmetro da URL
-| Parâmetro   | Tipo       | Descrição                           |
-| :---------- | :--------- | :---------------------------------- |
+| Parâmetro         | Tipo     | Descrição                              |
+| :---------------- | :------- | :------------------------------------- |
 | `matricula_aluno` | `string` | **Obrigatório**. A matrícula do aluno. |
 
 #### Respostas
@@ -733,13 +774,13 @@ Lista todas as trilhas associadas a um aluno específico.
 Lista todos os links associados a uma trilha específica.
 
 #### Parâmetro da URL
-| Parâmetro   | Tipo       | Descrição                           |
-| :---------- | :--------- | :---------------------------------- |
+| Parâmetro   | Tipo     | Descrição                        |
+| :---------- | :------- | :------------------------------- |
 | `trilha_id` | `number` | **Obrigatório**. O ID da trilha. |
 
 #### Corpo da requisição
-| Parâmetro   | Tipo       | Descrição                           |
-| :---------- | :--------- | :---------------------------------- |
+| Parâmetro         | Tipo     | Descrição                           |
+| :---------------- | :------- | :---------------------------------- |
 | `matricula_aluno` | `string` | **Opcional**. A matrícula do aluno. |
 
 #### Respostas
@@ -794,11 +835,11 @@ Lista todas as notificações do sistema.
 Adiciona uma nova notificação ao sistema.
 
 #### Corpo da requisição
-| Parâmetro   | Tipo       | Descrição                           |
-| :---------- | :--------- | :---------------------------------- |
-| `mensagem` | `string` | **Obrigatório**. A mensagem da notificação. |
-| `matricula_aluno` | `string` | **Obrigatório**. A matrícula do aluno. |
-| `titulo_trilha` | `string` | **Obrigatório**. O título da trilha. |
+| Parâmetro         | Tipo     | Descrição                                   |
+| :---------------- | :------- | :------------------------------------------ |
+| `mensagem`        | `string` | **Obrigatório**. A mensagem da notificação. |
+| `matricula_aluno` | `string` | **Obrigatório**. A matrícula do aluno.      |
+| `titulo_trilha`   | `string` | **Obrigatório**. O título da trilha.        |
 
 #### Respostas
 - `200 OK`: Notificação adicionada com sucesso.
@@ -820,28 +861,28 @@ Adiciona uma nova notificação ao sistema.
 Salva uma nova avaliação para um aluno.
 
 #### Corpo da requisição
-| Parâmetro   | Tipo       | Descrição                           |
-| :---------- | :--------- | :---------------------------------- |
-| `matricula_aluno` | `string` | **Obrigatório**. A matrícula do aluno. |
-| `matricula_psicologo` | `string` | **Obrigatório**. A matrícula do psicólogo. |
-| `data_consulta` | `string` | **Obrigatório**. A data da consulta. |
-| `comportamento` | `string` | **Obrigatório**. O comportamento do aluno. |
-| `expressao_sentimentos` | `boolean` | **Obrigatório**. Expressão de sentimentos. |
-| `dificuldades_expressao` | `string` | **Opcional**. Dificuldades de expressão. |
+| Parâmetro                | Tipo      | Descrição                                   |
+| :----------------------- | :-------- | :------------------------------------------ |
+| `matricula_aluno`        | `string`  | **Obrigatório**. A matrícula do aluno.      |
+| `matricula_psicologo`    | `string`  | **Obrigatório**. A matrícula do psicólogo.  |
+| `data_consulta`          | `string`  | **Obrigatório**. A data da consulta.        |
+| `comportamento`          | `string`  | **Obrigatório**. O comportamento do aluno.  |
+| `expressao_sentimentos`  | `boolean` | **Obrigatório**. Expressão de sentimentos.  |
+| `dificuldades_expressao` | `string`  | **Opcional**. Dificuldades de expressão.    |
 | `reconhecimento_impacto` | `boolean` | **Obrigatório**. Reconhecimento do impacto. |
-| `explicacao_impacto` | `string` | **Opcional**. Explicação do impacto. |
-| `arrependimento` | `boolean` | **Obrigatório**. Arrependimento. |
-| `forma_arrependimento` | `string` | **Opcional**. Forma de arrependimento |
-| `identificacao_motivo` | `boolean` | **Obrigatório**. Identificação do motivo. |
-| `explicacao_motivo` | `string` | **Opcional**. Explicação do motivo. |
-| `estrategias` | `string` | **Obrigatório**. Estratégias adotadas. |
-| `descricao_estrategias` | `string` | **Opcional**. Descrição das estratégias. |
-| `metas` | `string` | **Obrigatório**. Metas estabelecidas. |
-| `descricao_metas` | `string` | **Opcional**. Descrição das metas. |
-| `progresso_metas` | `string` | **Obrigatório**. Progresso das metas. |
-| `detalhes_progresso` | `string` | **Opcional**. Detalhes do progresso. |
-| `avaliacao_geral` | `string` | **Obrigatório**. Avaliação geral. |
-| `comentarios` | `string` | **Opcional**. Comentários adicionais. |
+| `explicacao_impacto`     | `string`  | **Opcional**. Explicação do impacto.        |
+| `arrependimento`         | `boolean` | **Obrigatório**. Arrependimento.            |
+| `forma_arrependimento`   | `string`  | **Opcional**. Forma de arrependimento       |
+| `identificacao_motivo`   | `boolean` | **Obrigatório**. Identificação do motivo.   |
+| `explicacao_motivo`      | `string`  | **Opcional**. Explicação do motivo.         |
+| `estrategias`            | `string`  | **Obrigatório**. Estratégias adotadas.      |
+| `descricao_estrategias`  | `string`  | **Opcional**. Descrição das estratégias.    |
+| `metas`                  | `string`  | **Obrigatório**. Metas estabelecidas.       |
+| `descricao_metas`        | `string`  | **Opcional**. Descrição das metas.          |
+| `progresso_metas`        | `string`  | **Obrigatório**. Progresso das metas.       |
+| `detalhes_progresso`     | `string`  | **Opcional**. Detalhes do progresso.        |
+| `avaliacao_geral`        | `string`  | **Obrigatório**. Avaliação geral.           |
+| `comentarios`            | `string`  | **Opcional**. Comentários adicionais.       |
 
 
 #### Respostas
@@ -864,8 +905,8 @@ Salva uma nova avaliação para um aluno.
 Lista todas as avaliações associadas a um aluno específico.
 
 #### Parâmetro da URL
-| Parâmetro   | Tipo       | Descrição                           |
-| :---------- | :--------- | :---------------------------------- |
+| Parâmetro         | Tipo     | Descrição                              |
+| :---------------- | :------- | :------------------------------------- |
 | `matricula_aluno` | `string` | **Obrigatório**. A matrícula do aluno. |
 
 #### Respostas
@@ -910,8 +951,8 @@ Lista todas as avaliações associadas a um aluno específico.
 Lista todas as datas de avaliações associadas a um aluno específico.
 
 #### Parâmetro da URL
-| Parâmetro   | Tipo       | Descrição                           |
-| :---------- | :--------- | :---------------------------------- |
+| Parâmetro         | Tipo     | Descrição                              |
+| :---------------- | :------- | :------------------------------------- |
 | `matricula_aluno` | `string` | **Obrigatório**. A matrícula do aluno. |
 
 #### Respostas
@@ -928,14 +969,134 @@ Lista todas as datas de avaliações associadas a um aluno específico.
     "msg": "Erro ao buscar datas de avaliações"
   }
 
-## Melhorias
-
-
 ## Contribuindo
+Contribuições são sempre bem-vindas! Se você deseja melhorar este projeto, siga as etapas abaixo para garantir um fluxo organizado e eficiente:
 
+1. Faça um fork do repositório
+Clique no botão Fork no canto superior direito da página do repositório (no GitHub).
+Isso criará uma cópia do repositório na sua conta.
 
-## Feedback
+2. Clone o repositório forkado
+No terminal, execute o seguinte comando (substitua seu usuario pelo seu nome de usuário no GitHub):
 
+ ```bash
+  git clone https://github.com/anajuliaflx/projeto-renovacao.git
+ ```
+
+3. Configure o repositório remoto original
+Adicione o repositório original como um "remote" chamado upstream para manter seu fork atualizado:
+
+```bash
+git remote add upstream https://github.com/anajuliaflx/projeto-renovacao.git
+git remote -v
+```
+
+4. Crie uma nova branch
+Sempre crie uma nova branch para trabalhar na sua contribuição. Escolha um nome que descreva a mudança que você pretende fazer:
+
+```bash
+git checkout -b nome-da-sua-branch
+```
+
+-   Exemplo:
+```bash
+git checkout -b corrigir-bug-login
+```
+
+5. Faça as mudanças
+Edite os arquivos necessários no seu editor de código. Após terminar, salve suas alterações.
+
+6. Commit das alterações
+Adicione suas alterações ao controle de versão e faça um commit com uma mensagem descritiva:
+
+```bash
+git add .
+git commit -m "Descrição breve do que foi alterado"
+```
+
+- Exemplo:
+
+```bash
+git commit -m "Corrige bug no formulário de login"
+```
+
+7. Envie a branch para o seu fork
+Suba sua branch para o repositório forkado no GitHub:
+
+```bash
+git push origin nome-da-sua-branch
+```
+
+8. Crie um Pull Request
+    1. Acesse o repositório original no GitHub.
+    2. Clique em Compare & Pull Request.
+    3. Preencha as informações necessárias, descrevendo as mudanças feitas.
+    4. Envie o Pull Request para revisão.
+
+9. Mantenha seu fork atualizado
+Para evitar conflitos futuros, mantenha seu fork sincronizado com o repositório original:
+
+```bash
+git checkout main
+git pull upstream main
+git push origin main
+```
+
+10. Acompanhe a revisão
+Os mantenedores podem comentar no seu Pull Request pedindo ajustes ou melhorias. Faça as alterações solicitadas e envie os novos commits para a mesma branch:
+
+```bash
+git add .
+git commit -m "Realiza ajustes solicitados na revisão"
+git push origin nome-da-sua-branch
+```
+
+- Dicas
+    - Certifique-se de seguir o guia de estilo e padrões do projeto.
+    - Escreva mensagens de commit claras e descritivas.
+    - Teste suas alterações antes de enviar o Pull Request.
+
+## Licença
+
+Este projeto está licenciado sob a [Creative Commons CC0 1.0 Universal (CC0).](./LICENSE).  
+
+Você pode compartilhar e adaptar este material para qualquer propósito, desde que:
+- Atribua os créditos apropriados.
+- Licencie suas alterações sob os mesmos termos.  
+
+Leia o arquivo `LICENSE` para mais informações ou visite [Creative Commons CC0 1.0 Universal (CC0).](https://creativecommons.org/publicdomain/zero/1.0/deed.en).
+
+## Imagens
+<p align="center">
+  <img src="renovacao-docs/img/Pastas do Projeto.png" alt="Pastas do Projeto">
+</p>
+
+<p align="center">
+  <img src="renovacao-docs/img/Arquivos da Pasta Principal.png" alt="Arquivos da Pasta Principal">
+</p>
+
+<p align="center">
+  <img src="renovacao-docs/img/Pastas do Page.png" alt="Pastas do Page">
+</p>
+
+<p align="center">
+  <img src="renovacao-docs/img/Pastas e Arquivos Extras.png" alt="Pastas e Arquivos Extras">
+</p>
+
+<p align="center">
+  <img src="renovacao-docs/img/Pastas do Servidor (renovacao_api).png" alt="Pastas do Servidor (renovacao_api)">
+</p>
+
+## Documentos
+- [Apresentação](./renovacao-docs/docs/RenovAção%20-%20Apresentação.pdf)
+- [Ferramentas](./renovacao-docs/docs/Definição%20de%20Ferramentas.pdf)
+- [Fluxo de Trabalho do Git](./renovacao-docs/docs/Fluxo%20de%20Trabalho%20do%20Git.pdf)
+- [UseCase](./renovacao-docs/UseCase/UseCase%20-%20RenovAção.pdf)
+- [MockUP](./renovacao-docs/mockup/MockUP%20RenovAção.pdf)
+- [MindMap](./renovacao-docs/mindmap/MindMap.pdf)
+- [DataBase](./renovacao-docs/database/)
+- [Diagrama de Classes](./renovacao-docs/classes/Diagrama%20Renovação.pdf)
+- [Tabela de Custos](./renovacao-docs/docs/RenovAção%20-%20Custos.pdf)
 
 ## Autores
 

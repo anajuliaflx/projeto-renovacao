@@ -1,0 +1,21 @@
+
+# Use uma imagem base do Node.js
+FROM node:21.7.3
+
+# Diretório de trabalho no contêiner
+WORKDIR /app
+
+# Copie o `package.json` e o `package-lock.json` para a raiz
+COPY package*.json ./
+
+# Instale as dependências do projeto
+RUN npm install
+
+# Copie o restante dos arquivos para o contêiner
+COPY . .
+
+# Exponha a porta usada pelo React (3000 por padrão)
+EXPOSE 3000
+
+# Comando para rodar o frontend
+CMD ["npm", "start"]

@@ -8,4 +8,4 @@
 - [ ]  Criar um CRUD da trilha educativa para o administrador
 - [ ]  No cronograma colocar detalhes do evento e exibir ao clicar no evento
 - [ ]  Ajustar para que o admin não consiga se "remover" do sistema
-- [ ]  Crud dos usuarios(exceto a senha )
+- [ ]  Crud dos usuarios(exceto a senha)
