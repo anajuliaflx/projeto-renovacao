@@ -192,7 +192,7 @@ E em seguida
 
 ### Documento
 
-[Projeto RenovAção]
+- [Documentação](./renovacao-docs/docs/RenovAção%20-%20Documentação.pdf)
 
 ### Cores
 
@@ -1088,7 +1088,8 @@ Leia o arquivo `LICENSE` para mais informações ou visite [Creative Commons CC0
 </p>
 
 ## Documentos
-- [Apresentação](./renovacao-docs/docs/RenovAção%20-%20Apresentação.pdf)
+- [Apresentação Sistemas Distribuidos](./renovacao-docs/docs/RenovAção%20-%20Apresentação.pdf)
+- [Apresentação Projeto Integrador](./renovacao-docs/docs/RenovAção%20-%20Apresentação%20-%20Prática.pdf)
 - [Ferramentas](./renovacao-docs/docs/Definição%20de%20Ferramentas.pdf)
 - [Fluxo de Trabalho do Git](./renovacao-docs/docs/Fluxo%20de%20Trabalho%20do%20Git.pdf)
 - [UseCase](./renovacao-docs/UseCase/UseCase%20-%20RenovAção.pdf)
